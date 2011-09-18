@@ -2,7 +2,7 @@
 /**
 Plugin Name: Spam Captcha
 Description: <p>This plugins avoids spam actions on your website.</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): <ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul></p><p>This plugin is under GPL licence</p>
-Version: 1.0.1
+Version: 1.0.2
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -64,7 +64,7 @@ class spam_captcha extends pluginSedLex {
 		add_action('comment_approved_to_spam', array($this,'change_to_spam'), 1, 1);
 		add_action('comment_unapproved_to_spam', array($this,'change_to_spam'), 1, 1);
 
-		add_action( 'comment_form', array($this,'add_error_to_comment_form'), 1, 1);
+		add_action( 'comment_form', array($this,'add_error_to_comment_form'), 2, 1);
 		
 		// Important variables initialisation (Do not modify)
 		$this->path = __FILE__ ; 
@@ -120,6 +120,7 @@ class spam_captcha extends pluginSedLex {
 			case 'akismet_enable' 		: return false 	; break ; 
 			
 			case 'captcha_enable' 		: return false 	; break ; 
+			case 'captcha_logged' 		: return false 	; break ; 
 			case 'captcha_number' 		: return 4 	; break ; 
 			case 'captcha_height' 		: return 32 	; break ; 
 			case 'captcha_width' 		: return 80 	; break ; 
@@ -184,11 +185,11 @@ class spam_captcha extends pluginSedLex {
 				
 				$params->add_title(__("Do you want to enable CAPTCHA for posted comments?", $this->pluginID)) ; 
 				if  ( (!function_exists("imagecreate")) || (!function_exists("imagefill")) || (!function_exists("imagecolorallocate")) || (!function_exists("imagettftext")) || (!function_exists("imageline")) || (!function_exists("imagepng")) ) {
-					$params->add_comment(__("Your server does not seems to have GD installed with the following functions: <code>imagecreate</code>, <code>imagefill</code>, <code>imagecolorallocate</code>, <code>imagettftext</code>, <code>imageline</code>, <code>imagepng</code>", $this->pluginID)) ; 
+					$params->add_comment(sprintf(__("Your server does not seems to have GD installed with the following functions: %s", $this->pluginID), "<code>imagecreate</code>, <code>imagefill</code>, <code>imagecolorallocate</code>, <code>imagettftext</code>, <code>imageline</code>, <code>imagepng</code>")) ; 
 					$params->add_comment(__("Thus, it is not possible to activate this option... sorry !", $this->pluginID)) ; 
 				} else {
 					$params->add_param('captcha_enable', __('Yes/No (for the comment):', $this->pluginID)) ; 
-					$params->add_comment(__("If the user is logged, no captcha will be displayed", $this->pluginID)) ; 
+					$params->add_param('captcha_logged', __('Use Capctha even if user is logged:', $this->pluginID)) ; 					
 					$params->add_param('captcha_number', __('Number of letters:', $this->pluginID)) ; 
 					$params->add_comment(sprintf(__("Default value %s", $this->pluginID),$this->get_default_option('captcha_number'))) ; 
 					$params->add_param('captcha_width', __('Width of image:', $this->pluginID)) ; 
@@ -208,7 +209,7 @@ class spam_captcha extends pluginSedLex {
 					$params->add_param('captcha_noise', __('Variation of the color of the background:', $this->pluginID)) ; 
 					$params->add_comment(__("The color of the background are not the homogenous", $this->pluginID)) ; 
 					$params->add_param('captcha_html', __('The HTML that will be inserted in your page to display captcha image:', $this->pluginID)) ; 
-					$params->add_comment(sprintf(__("The default html is: %s (please note that %%image%% will be replace with the captcha image)", $this->pluginID),"<br><code>&lt;div class='captcha_image'&gt; <br>%image%<br>&lt;input type='text' id='captcha_comment' name='captcha_comment' /&gt;<br/>&lt;p&gt;Please type the characters of this captcha image in the input box&lt;/p&gt;&lt;/div&gt;</code><br>")) ; 
+					$params->add_comment(sprintf(__("The default html is: %s (please note that %s will be replace with the captcha image)", $this->pluginID),"<br><code>&lt;div class='captcha_image'&gt; <br>%image%<br>&lt;input type='text' id='captcha_comment' name='captcha_comment' /&gt;<br/>&lt;p&gt;Please type the characters of this captcha image in the input box&lt;/p&gt;&lt;/div&gt;</code><br>", "%image%")) ; 
 
 					
 				}
@@ -264,13 +265,13 @@ class spam_captcha extends pluginSedLex {
 		if ($comment['comment_type'] == 'pingback' || $comment['comment_type'] == 'trackback') {
 			return $comment ; 
 		}
-		if (($this->get_param('captcha_enable')==true)&&(!is_user_logged_in())) {
+		if (($this->get_param('captcha_enable')==true)&&((!is_user_logged_in())||($this->get_param('captcha_logged')))) {
 			if ($_SESSION['keyCaptcha']!=md5($_POST['captcha_comment'])) {
 				// we save it...
 				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW())") ; 
 					
 				$permalink = get_permalink( $comment['comment_post_ID'] );
-				wp_redirect(add_query_arg(array("error"=>"captcha"),$permalink."#error", 302)) ; 
+				wp_redirect(add_query_arg(array("error_checker"=>"captcha"),$permalink."#error", 302)) ; 
 				die();
 			}
 		}
@@ -282,7 +283,7 @@ class spam_captcha extends pluginSedLex {
 	*
 	*/
 	function add_captcha_image($id_post) {
-		if (($this->get_param('captcha_enable')==true)&&(!is_user_logged_in())) {
+		if (($this->get_param('captcha_enable')==true)&&((!is_user_logged_in())||($this->get_param('captcha_logged')))) {
 			$html = $this->get_param('captcha_html') ; 
 			echo str_replace("%image%", "<img src='".add_query_arg(array("display_captcha"=>"true"))."' alt='".__("Please type the characters of this captcha image in the input box", $this->pluginID)."'>", $html) ; 
 		}
@@ -420,7 +421,7 @@ class spam_captcha extends pluginSedLex {
 					// we save it...
 					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (".$id.", 'spam', 'spam', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW())") ; 
 					// we redirect the page to inform the user
-					wp_redirect(add_query_arg(array("error"=>"spam"),get_permalink($comment->comment_post_ID)."#error"),302);
+					wp_redirect(add_query_arg(array("error_checker"=>"spam"),get_permalink($comment->comment_post_ID)."#error"),302);
 					die() ; 
 				} else {
 					// we save it...
@@ -453,12 +454,12 @@ class spam_captcha extends pluginSedLex {
 	*
 	*/
 	function add_error_to_comment_form($id_post) {
-		if ($_GET['error']=="spam") {
+		if ($_GET['error_checker']=="spam") {
 			echo "<a name='error'><div class='error_spam_captcha'><p>" ; 
 			echo __('You have submitted a comment which is considered as a spam... If not, please modify it and retry', $this->pluginID) ; 
 			echo "</p></div>" ; 
 		}
-		if ($_GET['error']=="captcha") {
+		if ($_GET['error_checker']=="captcha") {
 			echo "<a name='error'><div class='error_spam_captcha'><p>" ; 
 			echo __('You have mistyped the captcha : to prove that your are not a spam machine, please retry!', $this->pluginID) ; 
 			echo "</p></div>" ; 

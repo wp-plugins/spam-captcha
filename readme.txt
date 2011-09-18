@@ -24,13 +24,26 @@ This plugins avoids spam actions on your websites by using captcha, and akismet 
 5. Enjoy !
 
 == Screenshots ==
+1. The result page
+2. The configuration page of the plugin
+3. An error when mistyping a captcha
+4. An error when detecting a spam
 
 == Changelog ==
+
+= 1.0.2 =
+* Captcha may be enable with logged users
+* Add Czech translation
+* Add French translation
 
 = 1.0.1 =
 * First release (thank you for your feedback)
 
 == Frequently Asked Questions ==
 
+* Where can I read more?
+
+Visit http://www.sedlex.fr/cote_geek/
  
-InfoVersion:2504cadd57314f8c856ab41217af1187
+ 
+InfoVersion:d5575a8f76536f7a52f33a8884c6bb92

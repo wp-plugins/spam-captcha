@@ -1,0 +1,139 @@
+msgid ""
+msgstr ""
+"Generated: SL Framework (http://www.sedlex.fr)\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-09-18T17:36:41+00:00\n"
+"Last-Translator: SedLex <http://www.sedlex.fr/>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: France\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes\n"
+
+msgid "The following table summarizes the number of rejected comments"
+msgstr "Le tableau suivant synthétise le nombre de commentaires rejetés "
+
+msgid "Type of protection"
+msgstr "Type de protection"
+
+msgid "Summary"
+msgstr "Synthèse"
+
+msgid "CAPTCHA protection:"
+msgstr "Protection par Captcha :"
+
+msgid "%s messages have been blocked as the CAPTCHA test failed"
+msgstr "%s messages ont été bloqués car le test par CAPTCHA a échoué"
+
+msgid "AKISMET protection:"
+msgstr "Protection par Akismet :"
+
+msgid "Summary of Protection"
+msgstr "Synthèse de la protection"
+
+msgid "Do you want to enable CAPTCHA for posted comments?"
+msgstr "Voulez-vous activer les Captcha pour les commentaires soumis ?"
+
+msgid "Your server does not seems to have GD installed with the following functions: %s"
+msgstr "Votre serveur ne semble pas avoir la librairie GD installée avec les fonctions suivantes: %s"
+
+msgid "Thus, it is not possible to activate this option... sorry !"
+msgstr "Ainsi, il n&#039;est pas possible d&#039;activer cette option... désolé !"
+
+msgid "Yes/No (for the comment):"
+msgstr "Oui/Non (pour les commentaires) :"
+
+msgid "Use Capctha even if user is logged:"
+msgstr "Si l&#039;utililisateur est enregistré, aucun Captcha ne sera affiché"
+
+msgid "Number of letters:"
+msgstr "Nombre de lettres :"
+
+msgid "Default value %s"
+msgstr "La valeur par défaut : %s"
+
+msgid "Width of image:"
+msgstr "Largeur de l&#039;image :"
+
+msgid "Height of image:"
+msgstr "Hauteur de l&#039;image :"
+
+msgid "Maximum +/- angle of letters:"
+msgstr "Angle maximal +/- des lettres :"
+
+msgid "Size of letters:"
+msgstr "Taille des lettres :"
+
+msgid "Color of the background:"
+msgstr "Couleur du fond :"
+
+msgid "Color of the font:"
+msgstr "Couleur de la casse (lettres) :"
+
+msgid "Variation of the color of the letters:"
+msgstr "Variation des couleurs des lettres :"
+
+msgid "The color of the letters are not the identical"
+msgstr "La couleur des lettres n&#039;est pas identique"
+
+msgid "Variation of the color of the background:"
+msgstr "Variation des couleurs du fond :"
+
+msgid "The color of the background are not the homogenous"
+msgstr "La couleur du fond n&#039;est pas homogène"
+
+msgid "The HTML that will be inserted in your page to display captcha image:"
+msgstr "Le HTML qui sera inséré dans vos pages afin d&#039;affficher les images de Captcha :"
+
+msgid "The default html is: %s (please note that %s will be replace with the captcha image)"
+msgstr "Le HTML par défaut est : %s (merci de noter que %s sera remplacé avec l&#039;image de Captcha)"
+
+msgid "Do you want to use Akismet API to check spam against posted comments?"
+msgstr "Voulez-vous utiliser l&#039;API de Akismet afin de vérifier que les commentaires ne sont pas des spams ?"
+
+msgid "Yes/No:"
+msgstr "Oui/Non :"
+
+msgid "The Akismet ID:"
+msgstr "L&#039;identifiant d&#039;Akismet"
+
+msgid "Your Akismet ID is correct."
+msgstr "Votre identifiant est correct."
+
+msgid "Your Akismet ID does not seem to be correct."
+msgstr "Votre identifiant n&#039;est pas correct."
+
+msgid "To get an Akismet ID, see %s here %s."
+msgstr "Pour récupérer un identifiant, voir %s ici %s."
+
+msgid "Parameters"
+msgstr "Paramètres"
+
+msgid "Manage translations"
+msgstr "Gérer les traductions"
+
+msgid "This form is an easy way to contact the author and to discuss issues / incompatibilities / etc."
+msgstr "Ce formulaire vous permet de contacter facilement l&#039;auteur afin de discuter de vos problèmes / des incompatibilités / etc."
+
+msgid "Give feedback"
+msgstr "Donner un feedback"
+
+msgid "Please type the characters of this captcha image in the input box"
+msgstr "Merci de taper les caractères de l&#039;image Captcha dans le champ"
+
+msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
+msgstr "Vous avez soumis un commentaire qui est considéré comme un spam... Si ce n&#039;est pas le cas, merci de le modifier et retenter."
+
+msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
+msgstr "Vous n&#039;avez pas taper correctement le Captcha : pour prouver que vous n&#039;êtes pas une machine, merci de retenter !"
+
