@@ -13,7 +13,19 @@ This plugins avoids spam actions on your websites
 
 == Description ==
 
-This plugins avoids spam actions on your websites by using captcha, and akismet API to detect spam
+This plugins avoids spam actions on your websites by using Captcha, and Akismet API to detect spam
+
+You may configure (for the captcha):
+* The color of the background
+* The color of the letters
+* The size of the image
+* The size of the letters
+* The slant of the letters
+* …
+    
+= Localization =
+* Czech (thanks to Kumerson)
+* French (thanks to me)
 
 == Installation ==
 
@@ -31,9 +43,12 @@ This plugins avoids spam actions on your websites by using captcha, and akismet 
 
 == Changelog ==
 
+= 1.0.3 =
+* Correction of a bug when submitting a comment from the admin panel
+
 = 1.0.2 =
 * Captcha may be enable with logged users
-* Add Czech translation
+* Add Czech translation (thanks to Kumerson)
 * Add French translation
 
 = 1.0.1 =
@@ -46,4 +61,4 @@ This plugins avoids spam actions on your websites by using captcha, and akismet 
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:d5575a8f76536f7a52f33a8884c6bb92
+InfoVersion:b0c67b97a2168ead5a9963963618299f

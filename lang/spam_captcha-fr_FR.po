@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-09-18T17:36:41+00:00\n"
+"PO-Revision-Date: 2011-09-19T17:42:08+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,6 +38,12 @@ msgstr "%s messages ont été bloqués car le test par CAPTCHA a échoué"
 msgid "AKISMET protection:"
 msgstr "Protection par Akismet :"
 
+msgid "This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)"
+msgstr "Ce plugin a stoppé %s commentaires considérés comme spam (et a en raté %s que vous avez manuellement marqué comme étant du spam)"
+
+msgid "Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)"
+msgstr "De plus, ce plugin a traité %s commentaires normaux (et en marqué %s comme spam alors que vous avez indiqué que ceux-ci n&#039;en étaient pas)"
+
 msgid "Summary of Protection"
 msgstr "Synthèse de la protection"
 
@@ -55,6 +61,12 @@ msgstr "Oui/Non (pour les commentaires) :"
 
 msgid "Use Capctha even if user is logged:"
 msgstr "Si l&#039;utililisateur est enregistré, aucun Captcha ne sera affiché"
+
+msgid "WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s"
+msgstr "ATTENTION : Si vous activez cette option, le captcha ne fonctionnera que pour les utilisateurs avec un rôle parmi : %s"
+
+msgid "Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s"
+msgstr "Le Captcha sera affiché (par exemple pour vérifier que l&#039;affichage est correct, que les feuilles de styles fonctionnent...) mais sera non fonctionnel avec les utilisateurs ayant un rôle parmi : %s"
 
 msgid "Number of letters:"
 msgstr "Nombre de lettres :"

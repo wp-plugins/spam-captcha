@@ -294,6 +294,110 @@ msgstr ""
 msgid "Please see below:"
 msgstr ""
 
+#: core/feedback.class.php:39
+#: core/translation.class.php:438
+#: core/translation.class.php:520
+#@ SL_framework
+msgid "Your name:"
+msgstr ""
+
+#: core/feedback.class.php:40
+#@ SL_framework
+msgid "Your email (for response):"
+msgstr ""
+
+#: core/feedback.class.php:41
+#@ SL_framework
+msgid "Your comments:"
+msgstr ""
+
+#: core/feedback.class.php:43
+#@ SL_framework
+msgid "Please note that additional information on your wordpress installation will be sent to the author in order to help the debugging if needed (such as : the wordpress version, the installed plugins, etc.)"
+msgstr ""
+
+#: core/feedback.class.php:44
+#@ SL_framework
+msgid "Send feedback"
+msgstr ""
+
+#: core/feedback.class.php:49
+#@ SL_framework
+msgid "No email have been provided for the author of this plugin. Therefore, the feedback is impossible"
+msgstr ""
+
+#: core/feedback.class.php:120
+#@ SL_framework
+msgid "The feedback has been sent"
+msgstr ""
+
+#: core/feedback.class.php:124
+#: core/translation.class.php:646
+#@ SL_framework
+msgid "An error occured sending the email."
+msgstr ""
+
+#: core/feedback.class.php:124
+#: core/translation.class.php:646
+#@ SL_framework
+msgid "Make sure that your wordpress is able to send email."
+msgstr ""
+
+#: core/parameters.class.php:129
+#@ SL_framework
+msgid "Error: the submitted value is not an integer and thus, the parameter has not been updated!"
+msgstr ""
+
+#: core/parameters.class.php:142
+#@ SL_framework
+msgid "Warning: some characters have been removed because they are not allowed here"
+msgstr ""
+
+#: core/parameters.class.php:147
+#@ SL_framework
+msgid "Error: the submitted string does not match the constrains"
+msgstr ""
+
+#: core/parameters.class.php:321
+#@ SL_framework
+msgid "Update"
+msgstr ""
+
+#: core/parameters.class.php:333
+#@ SL_framework
+msgid "Some parameters have not been updated due to errors (see below) !"
+msgstr ""
+
+#: core/parameters.class.php:339
+#@ SL_framework
+msgid "Parameters have been updated (but with some warnings) !"
+msgstr ""
+
+#: core/parameters.class.php:345
+#@ SL_framework
+msgid "Parameters have been updated successfully !"
+msgstr ""
+
+#: core/utils.class.php:123
+#@ SL_framework
+msgid "KB"
+msgstr ""
+
+#: core/utils.class.php:127
+#@ SL_framework
+msgid "MB"
+msgstr ""
+
+#: core/utils.class.php:130
+#@ SL_framework
+msgid "GB"
+msgstr ""
+
+#: core/otherplugins.class.php:55
+#@ SL_framework
+msgid "Homepage:"
+msgstr ""
+
 #: core/translation.class.php:256
 #@ SL_framework
 msgid "The available translation for the SL framework (contained in the '%s' folder)"
@@ -392,13 +496,6 @@ msgid "Translation"
 msgstr ""
 
 #: core/translation.class.php:438
-#: core/translation.class.php:520
-#: core/feedback.class.php:39
-#@ SL_framework
-msgid "Your name:"
-msgstr ""
-
-#: core/translation.class.php:438
 #@ SL_framework
 msgid "(if your name/pseudo is already in the list, there is no need to fill this input)"
 msgstr ""
@@ -434,18 +531,6 @@ msgstr ""
 msgid "The translation %s have been sent"
 msgstr ""
 
-#: core/translation.class.php:646
-#: core/feedback.class.php:124
-#@ SL_framework
-msgid "An error occured sending the email."
-msgstr ""
-
-#: core/translation.class.php:646
-#: core/feedback.class.php:124
-#@ SL_framework
-msgid "Make sure that your wordpress is able to send email."
-msgstr ""
-
 #: core/translation.class.php:794
 #: core/translation.class.php:797
 #@ SL_framework
@@ -468,90 +553,5 @@ msgstr ""
 #: core/translation.class.php:806
 #@ SL_framework
 msgid "%s file has been created from this file"
-msgstr ""
-
-#: core/parameters.class.php:129
-#@ SL_framework
-msgid "Error: the submitted value is not an integer and thus, the parameter has not been updated!"
-msgstr ""
-
-#: core/parameters.class.php:142
-#@ SL_framework
-msgid "Warning: some characters have been removed because they are not allowed here"
-msgstr ""
-
-#: core/parameters.class.php:147
-#@ SL_framework
-msgid "Error: the submitted string does not match the constrains"
-msgstr ""
-
-#: core/parameters.class.php:321
-#@ SL_framework
-msgid "Update"
-msgstr ""
-
-#: core/parameters.class.php:333
-#@ SL_framework
-msgid "Some parameters have not been updated due to errors (see below) !"
-msgstr ""
-
-#: core/parameters.class.php:339
-#@ SL_framework
-msgid "Parameters have been updated (but with some warnings) !"
-msgstr ""
-
-#: core/parameters.class.php:345
-#@ SL_framework
-msgid "Parameters have been updated successfully !"
-msgstr ""
-
-#: core/otherplugins.class.php:55
-#@ SL_framework
-msgid "Homepage:"
-msgstr ""
-
-#: core/feedback.class.php:40
-#@ SL_framework
-msgid "Your email (for response):"
-msgstr ""
-
-#: core/feedback.class.php:41
-#@ SL_framework
-msgid "Your comments:"
-msgstr ""
-
-#: core/feedback.class.php:43
-#@ SL_framework
-msgid "Please note that additional information on your wordpress installation will be sent to the author in order to help the debugging if needed (such as : the wordpress version, the installed plugins, etc.)"
-msgstr ""
-
-#: core/feedback.class.php:44
-#@ SL_framework
-msgid "Send feedback"
-msgstr ""
-
-#: core/feedback.class.php:49
-#@ SL_framework
-msgid "No email have been provided for the author of this plugin. Therefore, the feedback is impossible"
-msgstr ""
-
-#: core/feedback.class.php:120
-#@ SL_framework
-msgid "The feedback has been sent"
-msgstr ""
-
-#: core/utils.class.php:123
-#@ SL_framework
-msgid "KB"
-msgstr ""
-
-#: core/utils.class.php:127
-#@ SL_framework
-msgid "MB"
-msgstr ""
-
-#: core/utils.class.php:130
-#@ SL_framework
-msgid "GB"
 msgstr ""
 

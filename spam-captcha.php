@@ -2,7 +2,7 @@
 /**
 Plugin Name: Spam Captcha
 Description: <p>This plugins avoids spam actions on your website.</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): <ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul></p><p>This plugin is under GPL licence</p>
-Version: 1.0.2
+Version: 1.0.3
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -175,7 +175,7 @@ class spam_captcha extends pluginSedLex {
 				$nb_false_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='ok'") ; 
 				$nb_false_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='spam'") ; 
 				
-				$cel2 = new adminCell("<p>".sprintf(__('This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)'), "<b>".$nb_spam."</b>", "<b>".$nb_false_ham."</b>")."</p><p>".sprintf(__('Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)'), "<b>".$nb_ham."</b>", "<b>".$nb_false_spam."</b>")."</p>") ; 		
+				$cel2 = new adminCell("<p>".sprintf(__('This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)', $this->pluginID), "<b>".$nb_spam."</b>", "<b>".$nb_false_ham."</b>")."</p><p>".sprintf(__('Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)', $this->pluginID), "<b>".$nb_ham."</b>", "<b>".$nb_false_spam."</b>")."</p>") ; 		
 				$table->add_line(array($cel1, $cel2), '2') ; 
 				echo $table->flush() ; 
 			$tabs->add_tab(__('Summary of Protection',  $this->pluginID), ob_get_clean() ) ; 	
@@ -190,6 +190,7 @@ class spam_captcha extends pluginSedLex {
 				} else {
 					$params->add_param('captcha_enable', __('Yes/No (for the comment):', $this->pluginID)) ; 
 					$params->add_param('captcha_logged', __('Use Capctha even if user is logged:', $this->pluginID)) ; 					
+					$params->add_comment(sprintf(__("WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s", $this->pluginID)." <br/>".__("Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s", $this->pluginID), "<em>Subscriber</em>, <em>Contributor</em>, <em>Author</em>", "<em>Editor</em>, <em>Administrator</em>")) ; 
 					$params->add_param('captcha_number', __('Number of letters:', $this->pluginID)) ; 
 					$params->add_comment(sprintf(__("Default value %s", $this->pluginID),$this->get_default_option('captcha_number'))) ; 
 					$params->add_param('captcha_width', __('Width of image:', $this->pluginID)) ; 
@@ -261,12 +262,27 @@ class spam_captcha extends pluginSedLex {
 		global $wpdb;
 		session_start() ; 
 		
-		// on ne fait rien pour les trackbacks et les pingback (car il ne sont pas censé avoir des captcha...)
+		// on ne fait rien pour les trackbacks et les pingback (car il ne sont pas cense avoir des captcha...)
 		if ($comment['comment_type'] == 'pingback' || $comment['comment_type'] == 'trackback') {
 			return $comment ; 
 		}
+
 		if (($this->get_param('captcha_enable')==true)&&((!is_user_logged_in())||($this->get_param('captcha_logged')))) {
-			if ($_SESSION['keyCaptcha']!=md5($_POST['captcha_comment'])) {
+			
+			// First we check if the user may edit comment... if so we return the comment 
+			if ((is_numeric($comment['user_ID']))&&($comment['user_ID']>0)) {
+				$user = new WP_User( $comment['user_ID'] );
+				if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
+					foreach ( $user->roles as $role ) {
+						if (($role=="administrator")||($role=="editor")){
+							return $comment ; 
+						}
+					}
+				}
+			}
+			
+			// If not we check the captcha
+			if (($_POST['captcha_comment']=="")||($_SESSION['keyCaptcha']!=md5($_POST['captcha_comment']))) {
 				// we save it...
 				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW())") ; 
 					
