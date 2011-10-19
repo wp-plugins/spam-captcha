@@ -791,15 +791,16 @@ if (!class_exists('pluginSedLex')) {
 														$info_core .=  "<li style='padding-left:3em; '>" ; 
 														$info_core .= "<img id='wait_svn_".$md5."' src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/ajax-loader.gif' style='display:none;'>" ; 
 														$info_core .= "<img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/arrow-left.png'>&nbsp;" ; 
-														$info_core .= "<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_local\"); return false;'>".__("Overwrite the local plugin files with files stored the SVN repository", 'SL_framework')."</a>" ;
+														$info_core .= "<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_local_quick\"); return false;'>".__("Overwrite the local plugin files with files stored the SVN repository", 'SL_framework')."</a>" ;
+														$info_core .=  " (<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_local\"); return false;'>".__("Slower version but sometimes more reliable", 'SL_framework')."</a>)" ; 
 														$info_core .=  "</li>" ;
 														
 														$md5 = md5($plugin_name." to_repo") ; 
 														$info_core .= "<li style='padding-left:3em; '>" ; 
 														$info_core .= "<img id='wait_svn_".$md5."' src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/ajax-loader.gif' style='display:none;'>" ; 
 														$info_core .= "<img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/arrow-right.png'>&nbsp;" ; 
-														$info_core .=  "<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_repo\"); return false;'>".__("Update the SVN repository with your current local plugin files", 'SL_framework')."</a>" ; 
-														$info_core .=  " (<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_repo_quick\"); return false;'>".__("Faster version", 'SL_framework')."</a>)" ; 
+														$info_core .=  "<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_repo_quick\"); return false;'>".__("Update the SVN repository with your current local plugin files", 'SL_framework')."</a>" ; 
+														$info_core .=  " (<a href='#' onClick='showSvnPopup(\"".$md5."\", \"".$plugin_name."\", \"to_repo\"); return false;'>".__("Slower version but sometimes more reliable", 'SL_framework')."</a>)" ; 
 														$info_core .=  "</li>" ; 
 														
 														$info_core .=  "</ul>" ; 

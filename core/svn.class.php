@@ -225,8 +225,14 @@ if (!class_exists("svnAdmin")) {
 			
 			// Instructions
 			$instructions = "" ; 
-			$instructions .= chr(bindec("10"."000000")) ; 		// Copy from the new file
-			$instructions .= $this->getChr(strlen($file)) ; 	// the length to be copied (i.e. here size of the new file)
+			$size = strlen($file) ; 
+			$block_window = 32767 ; // i.e. en binaire 111111111111111
+			while ($size != 0) {
+				$instructions .= chr(bindec("10"."000000")) ; 		// Copy from the new file
+				$tocopy = min($block_window, $size) ; 
+				$instructions .= $this->getChr($tocopy) ; 	// the length to be copied (i.e. here size of the new file)
+				$size = max(0, $size-$block_window) ; 
+			}
 			
 			// header
 			$header .= $this->getChr(0) ; 						// Source offset 0
@@ -634,6 +640,11 @@ if (!class_exists("svnAdmin")) {
 		function printRawResult($raw) {
 			if ($raw['header']['Return-Code-HTTP']=='401'){
 				return "<span style='color:#CC0000'>".__("Your credentials do not seem to be correct. Please check them!", "SL_framework")."</span>" ; 
+			}
+			if ($raw['header']['Return-Code-HTTP']=='500'){
+				if (strpos($raw['content'], "previous representation is currently being written")===false) {
+					//return "<span style='color:#CC0000'>".__("This file have not been written in the repository due to server problem. Nevertheless, you should retry as it often works better with a second try !", "SL_framework")."</span>" ; 
+				}
 			}
 			return "<span style='color:#CC0000'>".nl2br(str_replace(" ", "&nbsp;", htmlentities(print_r($raw, true))))."</span>" ;  
 		}
