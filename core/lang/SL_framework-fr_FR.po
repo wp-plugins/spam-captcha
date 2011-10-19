@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-09-11T13:51:43+00:00\n"
+"PO-Revision-Date: 2011-09-26T11:33:12+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,15 @@ msgstr "La documentation pour développeurs sera affichée à partir de maintena
 
 msgid "The developpers documentations will be hidden now !"
 msgstr "La documentation pour développeurs sera masquée à partir de maintenant !"
+
+msgid "The SVN interface will be displayed now !"
+msgstr "L&#039;interface SVN sera affichée à partir de maintenant !"
+
+msgid "The SVN interface will be hidden now !"
+msgstr "L&#039;interface SVN sera masquée à partir de maintenant !"
+
+msgid "The SVN parameters have been updated !"
+msgstr "Les paramètres SVN ont été mis à jour !"
 
 msgid "%s has been updated with %s !"
 msgstr "%s a été mis à jour avec %s"
@@ -101,11 +110,47 @@ msgstr "Mettre à jour le core du plugin (seulement si vous savez ce que vous fa
 msgid "This core is currently used by the framework and plugins !"
 msgstr "Ce core est actuellement utilisé par le framework et les plugins !"
 
+msgid "SVN management"
+msgstr "Gestion SVN"
+
+msgid "An error occurs when requesting %s"
+msgstr "Une erreur est survenue pendant la requête"
+
+msgid "You do not seem to have a repository for Wordpress because %s returns a 404 error. Thus, ask for one here: %s"
+msgstr "Vous ne semblez pas avoir de dépôt Wordpress car %s retourne une erreur 404. Demandez un dépôt ici : %s"
+
+msgid "Overwrite the local plugin files with files stored the SVN repository"
+msgstr "Ecraser le plugin local avec les fichiers du dépôt SVN"
+
+msgid "Update the SVN repository with your current local plugin files"
+msgstr "Mettre à jour le dépôt SVN avec les fichiers de votre plugin local"
+
 msgid "Show the advanced options and parameters:"
 msgstr "Montrer les options et affichages avancés"
 
+msgid "Show/Hide"
+msgstr "Montrer/Cacher"
+
 msgid "Show the developpers documentation:"
 msgstr "Montrer la documentation pour développeurs"
+
+msgid "Enable SVN to commit your developed plugin to wordpress.org:"
+msgstr "Activer SVN pour soumettre vos propres plugins à wordpress.org :"
+
+msgid "Enable/Disable"
+msgstr "Activer/Désactiver"
+
+msgid "Your SVN Login:"
+msgstr "Votre identifiant SVN :"
+
+msgid "Your SVN password:"
+msgstr "Votre mot de passe SVN :"
+
+msgid "The author name displayed in the Wordpress plugin (probably close to your login):"
+msgstr "Votre nom d&#039;auteur affiché dans les plugins Wordpress (probablement assez proche de votre login)"
+
+msgid "Update"
+msgstr "Mise à jour"
 
 msgid "List of SL plugins"
 msgstr "Liste des plugins SL"
@@ -113,8 +158,8 @@ msgstr "Liste des plugins SL"
 msgid "The following description is a quick tutorial on about how to create a plugin with the SL framework. (Please note that the following description is in English for developpers, sorry for this inconvenience)"
 msgstr "La description qui suit est un rapide tutorial à propos de la création d&#039;un plugin avec le framework SL. (La suite de la description est en anglais pour les développeurs. Nous sommes désolé de la gène occasionnée)"
 
-msgid "How to create a new Plugin with the SL framework"
-msgstr "Comment développer un nouveau plugin avec le framework SL"
+msgid "How to develop a plugin?"
+msgstr "Comment développer un plugin ?"
 
 msgid "Framework documentation"
 msgstr "Documentation du framework"
@@ -161,9 +206,6 @@ msgstr "Voir aussi :"
 msgid "Version of"
 msgstr "Version de"
 
-msgid "bytes"
-msgstr "octets"
-
 msgid "MD5 fingerprint of the framework:"
 msgstr "Empreinte MD5 du framework:"
 
@@ -187,6 +229,51 @@ msgstr "Il y a des problèmes avec les droits des répertoires. Merci de les cor
 
 msgid "Please see below:"
 msgstr "Merci de voir ci-dessous :"
+
+msgid "Update the SVN repository %s with your current local plugin files"
+msgstr "Mettre à jour le dépôt SVN %s avec les fichiers du plugin local"
+
+msgid "Overwrite the local plugin %s files with files stored the SVN repository"
+msgstr "Remplacer le plugin local %s avec les fichiers stockés sur le dépôt SVN"
+
+msgid "Update the local cache"
+msgstr "Mettre à jour le cache local"
+
+msgid "Compare the local cache with the plugins files"
+msgstr "Comparer le cache local avec les fichiers du plugin"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "Commit comment:"
+msgstr "Commentaire de soumission :"
+
+msgid "Yes, the SVN version will be deleted and be replaced by the local version"
+msgstr "Oui, la version SVN sera supprimée and remplacée par la version locale"
+
+msgid "Yes, the local version will be deleted and be replaced by the files stored on the SVN repository"
+msgstr "Oui, la version locale sera supprimée et remplacée avec les fichiers stockés sur le dépôt SVN"
+
+msgid "Retry the SVN preparation!"
+msgstr "Retenter la préparartion SVN !"
+
+msgid "Add a file: %s"
+msgstr "Ajouter le fichier : %s"
+
+msgid "Delete a file: %s"
+msgstr "Supprimer le fichier : %s"
+
+msgid "Final commit:"
+msgstr "Soumission finale :"
+
+msgid "The commit has ended and you may restart a normal life by closing the window..."
+msgstr "La soumission est terminée et vous pouvez recommencer une vie normale en fermant la fenêtre..."
+
+msgid "Thank you!"
+msgstr "Merci"
+
+msgid "The overwrite has ended and you may restart a normal life by closing the window..."
+msgstr "Le remplacement est terminé et vous pouvez recommencer une vie normale en fermant la fenêtre..."
 
 msgid "The available translation for the SL framework (contained in the '%s' folder)"
 msgstr "La traduction disponible pour le framework SL (contenu dans le répertoire &#039;%s&#039;)"
@@ -287,18 +374,6 @@ msgstr "Le fichier %s a été créé pour %s"
 msgid "%s file has been created from this file"
 msgstr "Le fichier %s a été créé à partir de ce fichier"
 
-msgid "Homepage:"
-msgstr "Page d&#039;accueil :"
-
-msgid "KB"
-msgstr "ko"
-
-msgid "MB"
-msgstr "Mo"
-
-msgid "GB"
-msgstr "Go"
-
 msgid "Error: the submitted value is not an integer and thus, the parameter has not been updated!"
 msgstr "Erreur : la valeur soumises n&#039;est pas un entier, la valeur du paramètre n&#039;est donc pas mise à jour"
 
@@ -307,9 +382,6 @@ msgstr "Attention : certains caractères ont été supprimés car ils ne sont pa
 
 msgid "Error: the submitted string does not match the constrains"
 msgstr "Erreur : la chaine de caractère soumise ne respecte pas les contraines imposées"
-
-msgid "Update"
-msgstr "Mise à jour"
 
 msgid "Some parameters have not been updated due to errors (see below) !"
 msgstr "Des paramètres n&#039;ont pas été mis à jour à cause d&#039;erreurs (voir ci-dessous) !"
@@ -337,4 +409,55 @@ msgstr "Aucun email n&#039;a été communiqué par l&#039;auteur de ce plugin. A
 
 msgid "The feedback has been sent"
 msgstr "Le feedback a été envoyé"
+
+msgid "Close popup"
+msgstr "Fermer le popup"
+
+msgid "Homepage:"
+msgstr "Page d&#039;accueil :"
+
+msgid "The file %s cannot be created. Therefore, no svn script can be created. Please make the folder writable or visit %s to install a SubVersion package on your server."
+msgstr "Le fichier %s ne peut pas être créé. Ainsi, aucun script SVN ne peut être créé. Merci de permettre l&#039;écriture dans le répertoire ou allez sur %s pour installer SubVersion sur votre serveur."
+
+msgid "The folder %s does not exists and cannot be created. Therefore, no svn script can be created in that folder. Please create this folder (and make it writable) or visit %s to install a SubVersion package on your server."
+msgstr "Le répertoire %s n&#039;existe pas et ne peut pas être créé. Ainsi, aucun script SVN ne peut être créé dans ce répertoire. Merci de créer ce répertoire (et permettez l&#039;écriture dans ce répertoire) ou allez sur %s pour installer SubVersion sur votre serveur."
+
+msgid "The operating system of your server is %s. No installation of SVN has been found. Please visit %s to install a SubVersion package on your server."
+msgstr "Le système d&#039;exploitation de votre serveur est %s. Aucune installation de SVN n&#039;a été trouvé. Merci visiter %s pour installer SubVersion sur votre serveur."
+
+msgid "The exec function is disabled on your installation. This function is mandatory to be able to use SVN."
+msgstr "La fonction exec est désactivée sur votre server. Cette fonction est obligatoire pour utiliser SVN. "
+
+msgid "SVN command:"
+msgstr "Commande SVN :"
+
+msgid "%s returns the following code: %s"
+msgstr "%s retourne le code suivant : %s"
+
+msgid "Checkout has failed! Please retry ..."
+msgstr "Checkout a échoué ! Merci de ré-essayer ..."
+
+msgid "Indeed, it is known that the Checkout command have some difficulties to work. You may have to re-test several times (1-20 times) to finally succeed."
+msgstr "En effet, il est connu que la command checkout a quelques problème de fonctionnement. Vous pouvez avoir à re-essayer plusieurs fois (1-20 fois) pour y réussir finalement."
+
+msgid "Do not panic: once the checkout have worked one time, the update command will be used and it is far more robust!"
+msgstr "Ne paniquez pas : une fois que la commande checkout a fonctionné une seul fois, la commande d&#039;update sera utilisée et est beaucoup plus robuste."
+
+msgid "NOTE: The command outputs the following information:"
+msgstr "NOTE : La commande a retourné les informations suivantes :"
+
+msgid "The checkout have begun but have been interrupted without any reason!"
+msgstr "La commande checkout a commencé mais a été interrompu pour une raison inconnu !"
+
+msgid "NOTE: The command does not output any information."
+msgstr "NOTE : La commande n&#039;a pas retourné d&#039;information."
+
+msgid "KB"
+msgstr "ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
 

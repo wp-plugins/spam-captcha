@@ -43,7 +43,7 @@ class my_plugin extends pluginSedLex {
 		$this->table_sql = '' ; 
 		// The name of the SQL table (Do no modify except if you know what you do)
 		$this->table_name = $wpdb->prefix . "pluginSL_" . get_class() ; 
-		
+
 		//Initilisation of plugin variables if needed (Please modify)
 		$this->your_var1 = 1 ; 
 		$this->your_var2 = array() ; 
@@ -90,7 +90,7 @@ class my_plugin extends pluginSedLex {
 	*
 	* @return int the number of notifications available
 	*/
-	
+	 
 	public function _notify() {
 		return 0 ; 
 	}
@@ -232,6 +232,15 @@ class my_plugin extends pluginSedLex {
 				$trans = new feedbackSL($plugin, $this->pluginID) ; 
 				$trans->enable_feedback() ; 
 			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() ) ; 	
+			
+			ob_start() ; 
+				echo "<p>".__('Here is the plugins developped by the author:',  $this->pluginID) ."</p>" ; 
+				// A liste of plugin slug to be excluded
+				$exlude = array() ; 
+				// Replace sedLex by your own author name
+				$trans = new otherPlugins("sedLex", $exlude) ; 
+				$trans->list_plugins() ; 
+			$tabs->add_tab(__('Other possible plugins',  $this->pluginID), ob_get_clean() ) ; 	
 			
 			echo $tabs->flush() ; 
 			

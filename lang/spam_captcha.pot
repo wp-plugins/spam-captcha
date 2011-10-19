@@ -225,3 +225,13 @@ msgstr ""
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr ""
 
+#: core/templates/my-plugin.php:237
+#@ spam_captcha
+msgid "Here is the plugins developped by the author:"
+msgstr ""
+
+#: core/templates/my-plugin.php:243
+#@ spam_captcha
+msgid "Other possible plugins"
+msgstr ""
+

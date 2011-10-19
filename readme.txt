@@ -24,8 +24,18 @@ You may configure (for the captcha):
 * …
     
 = Localization =
+
 * Czech (thanks to Kumerson)
+* German (thanks to Diego)
 * French (thanks to me)
+
+= Features of the framework = 
+
+This plugin use SL framework.
+
+You may translate this plugin with an embedded feature which is very easy to use by any end-users (without any external tools / knowledge).
+
+You may also create a new plugin. You will download, from the plugin, an "hello World" plugin: You just have to fill the blank and follow the comments.
 
 == Installation ==
 
@@ -36,12 +46,17 @@ You may configure (for the captcha):
 5. Enjoy !
 
 == Screenshots ==
+
 1. The result page
 2. The configuration page of the plugin
 3. An error when mistyping a captcha
 4. An error when detecting a spam
 
 == Changelog ==
+
+= 1.0.4 =
+* Core update
+* German translation added by Diego
 
 = 1.0.3 =
 * Correction of a bug when submitting a comment from the admin panel
@@ -61,4 +76,4 @@ You may configure (for the captcha):
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:b0c67b97a2168ead5a9963963618299f
+InfoVersion:ab1df7ba20da251591cf6b318579135d
