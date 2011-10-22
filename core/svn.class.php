@@ -17,6 +17,10 @@ if (!class_exists("svnAdmin")) {
 		/** ====================================================================================================================================================
 		* Constructor of the class
 		* 
+		* @param string $host the host of the svn repository (for instance svn.wp-plugins.org)
+		* @param interger $port the port of the webdav repository
+		* @param string $login your login
+		* @param string $mdp your password
 		* @return svnAdmin the box object
 		*/
 		
@@ -34,7 +38,7 @@ if (!class_exists("svnAdmin")) {
 		* @param string $base the relative path of the folder to be looked into (from the repository)
 		* @param boolean $rec true if the listing should be reccursive (useful if you want the list of an entire repository with sub-folders)
 		* @param boolean $credentials true if the repository requires credentials to list files
-		* @return array 'isOk' => whether the request is successful, 'list' => the list of files and folders
+		* @return array 'isOk' => whether the request is successful, 'list' => the list of files and folders, 'raw_result' the request and the respond in an array (useful for debugging purpose)
 		*/	
 		
 		function listFilesInRepository($base, $rec=true, $credentials=false) {
@@ -74,17 +78,18 @@ if (!class_exists("svnAdmin")) {
 						}
 					}
 				}
-				return array("isOK" => true, "list" => $ls);
+				return array("isOK" => true, "list" => $ls, "raw_result" => $result);
 			} else {
 				return array("isOK" => false, "raw_result" => $result) ;						
 			}
 		}
 
 		/** ====================================================================================================================================================
-		* Get the activity collection set 
+		* Get the activity collection folder (required to put/delete file in the repo)
 		* 
-		* @param string $base the relative path of the folder to be looked into (from the repository)
-		* @return string the activity collection set
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'activity_folder' => the activity folder, 'raw_result' the request and the respond in an array (useful for debugging purpose)
 		*/			
 		
 		function getActivityFolder($base, $credentials=false) {
@@ -99,9 +104,11 @@ if (!class_exists("svnAdmin")) {
 		}
 		
 		/** ====================================================================================================================================================
-		* Get getRepository VCC
+		* Get VCC (Version Controlled Resource)
 		* 
-		* 
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'vcc' => the version controlled folder, 'raw_result' the request and the respond in an array (useful for debugging purpose)
 		*/			
 		
 		function getVCC($base, $credentials=false) {
@@ -116,9 +123,11 @@ if (!class_exists("svnAdmin")) {
 		}
 		
 		/** ====================================================================================================================================================
-		* Get getRepository Revision
+		* Get Repository Revision
 		* 
-		* 
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'revision' => the revision number, 'raw_result' the request and the respond in an array (useful for debugging purpose)
 		*/			
 		
 		function getRevision($base, $credentials=false) {
@@ -136,11 +145,14 @@ if (!class_exists("svnAdmin")) {
 		/** ====================================================================================================================================================
 		* Create an activity
 		* 
-		* 
+		* @param string $activity_n_uuid it is the activity folder concatenated with an random UUID (composed with hexadecimal digit xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getActivityFolder
 		*/			
 		
-		function createActivity($base, $credentials=false) {
-			$result = $this->sendSVNRequest($this->host, $base, "MKACTIVITY", "", array(), $credentials) ; 	
+		function createActivity($activity_n_uuid, $credentials=false) {
+			$result = $this->sendSVNRequest($this->host, $activity_n_uuid, "MKACTIVITY", "", array(), $credentials) ; 	
 			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 
 				return array("isOK" => true, "raw_result" => $result) ;
 			} else {
@@ -149,13 +161,18 @@ if (!class_exists("svnAdmin")) {
 		}
 		
 		/** ====================================================================================================================================================
-		* Valide la creation
+		* Get the commit comment URL
 		* 
-		* 
+		* @param string $vcc the VCC of the repository
+		* @param string $activity_n_uuid it is the activity folder concatenated with the random UUID (composed with hexadecimal digit xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'url' the comment url, 'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getVCC
+		* @see svnAdmin::getActivityFolder
 		*/			
 		
-		function getCommitCommentURL($vcc, $base, $credentials=false) {
-			$result = $this->sendSVNRequest($this->host, $vcc, "CHECKOUT", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:checkout xmlns:D=\"DAV:\"><D:activity-set><D:href>".$base."</D:href></D:activity-set><D:apply-to-version/></D:checkout>", array(), $credentials) ; 		
+		function getCommitCommentURL($vcc, $activity_n_uuid, $credentials=false) {
+			$result = $this->sendSVNRequest($this->host, $vcc, "CHECKOUT", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:checkout xmlns:D=\"DAV:\"><D:activity-set><D:href>".$activity_n_uuid."</D:href></D:activity-set><D:apply-to-version/></D:checkout>", array(), $credentials) ; 		
 			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 
 				$url = str_replace("http://".$this->host, "", $result["header"]["Location"]) ; 
 				return array("isOK" => true, "url" => $url, "raw_result" => $result) ;  
@@ -167,12 +184,20 @@ if (!class_exists("svnAdmin")) {
 		/** ====================================================================================================================================================
 		* Set a commit comment
 		* 
-		* 
+		* @param string $comment the comment to be added
+		* @param string $comment_url the comment url
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful,'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getCommitCommentURL
 		*/			 
 		
-		function setCommitComment($comment, $base, $credentials=false) {
-			$comment =  htmlentities($comment, ENT_QUOTES | ENT_IGNORE, "UTF-8");
-			$result = $this->sendSVNRequest($this->host, $base, "PROPPATCH", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:propertyupdate xmlns:D=\"DAV:\" xmlns:V=\"http://subversion.tigris.org/xmlns/dav/\" xmlns:C=\"http://subversion.tigris.org/xmlns/custom/\" xmlns:S=\"http://subversion.tigris.org/xmlns/svn/\"><D:set><D:prop><S:log >".$comment."</S:log></D:prop></D:set></D:propertyupdate>", array(), $credentials) ; 		
+		function setCommitComment($comment, $comment_url, $credentials=false) {
+		
+			$replacements = array('&lt;', '&gt;');
+			$entities = array('<', '>');
+			$comment = str_replace($entities, $replacements, $comment);
+			
+			$result = $this->sendSVNRequest($this->host, $comment_url, "PROPPATCH", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:propertyupdate xmlns:D=\"DAV:\" xmlns:V=\"http://subversion.tigris.org/xmlns/dav/\" xmlns:C=\"http://subversion.tigris.org/xmlns/custom/\" xmlns:S=\"http://subversion.tigris.org/xmlns/svn/\"><D:set><D:prop><S:log >".$comment."</S:log></D:prop></D:set></D:propertyupdate>", array(), $credentials) ; 		
 			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 
 				return array("isOK" => true, "raw_result" => $result) ; 
 			} else {
@@ -181,9 +206,11 @@ if (!class_exists("svnAdmin")) {
 		}		
 		
 		/** ====================================================================================================================================================
-		* Get a version folder
+		* Get the version folder
 		* 
-		* 
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'version_folder' => the version folder,'raw_result' the request and the respond in an array (useful for debugging purpose)
 		*/			
 		
 		function getVersionFolder($base, $credentials=false) {
@@ -198,13 +225,18 @@ if (!class_exists("svnAdmin")) {
 		}	
 		
 		/** ====================================================================================================================================================
-		* Valide la creation
+		* Get the folder to put files or delete files
 		* 
-		* 
+		* @param string $version the version folder
+		* @param string $activity_n_uuid it is the activity folder concatenated with the random UUID (composed with hexadecimal digit xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'put_folder' the put url, 'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getVersionFolder
+		* @see svnAdmin::getActivityFolder
 		*/			
 		
-		function getPutFolder($version, $base, $credentials=false) {
-			$result = $this->sendSVNRequest($this->host, $version, "CHECKOUT", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:checkout xmlns:D=\"DAV:\"><D:activity-set><D:href>".$base."</D:href></D:activity-set></D:checkout>", array(), $credentials) ; 		
+		function getPutFolder($version, $activity_n_uuid, $credentials=false) {
+			$result = $this->sendSVNRequest($this->host, $version, "CHECKOUT", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:checkout xmlns:D=\"DAV:\"><D:activity-set><D:href>".$activity_n_uuid."</D:href></D:activity-set></D:checkout>", array(), $credentials) ; 		
 			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 
 				$url = str_replace("http://".$this->host, "", $result["header"]["Location"]) ; 
 				return array("put_folder" => $url, "isOK" => true, "raw_result" => $result) ; 
@@ -214,87 +246,109 @@ if (!class_exists("svnAdmin")) {
 		}
 		
 		/** ====================================================================================================================================================
-		* Add a file
+		* Put a file in the repo
 		* 
-		* 
+		* @param string $put_folder_n_file the put folder concatenated with the file name
+		* @param string $file the complete url of the file on your disk
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'svn_header' the svn header sent (useful for debugging), 'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getPutFolder
 		*/			
 		
-		function putFile($base, $file, $credentials=false) {
+		function putFile($put_folder_n_file, $file, $credentials=false) {
 			$file = file_get_contents($file) ; 
-			$header = "SVN".chr(0) ; // Version 0 of the SVN diff protocol (see https://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff)
 			
-			// Instructions
-			$instructions = "" ; 
-			$size = strlen($file) ; 
-			$block_window = 32767 ; // i.e. en binaire 111111111111111
-			while ($size != 0) {
+			$top_header = "SVN".chr(0) ; // Version 0 of the SVN diff protocol (see https://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff)
+			
+			$maxsize = 102400 ; // Si un fichier est plus grand, alors ca bug !! il faut alors le découper en plusieurs "window"
+			$content = "" ; 
+			$numwin = 0 ; 
+			$info = array() ; 
+			$info[] = array("HEADER ".$this->asc2bin("SVN".chr(0))) ; 
+			while (strlen($file)!=0) {
+				$numwin ++ ; 
+				// Taille de la window
+				$lenfile = min($maxsize, strlen($file) ) ; 
+				
+				// Instructions
+				$instructions = "" ; 
 				$instructions .= chr(bindec("10"."000000")) ; 		// Copy from the new file
-				$tocopy = min($block_window, $size) ; 
-				$instructions .= $this->getChr($tocopy) ; 	// the length to be copied (i.e. here size of the new file)
-				$size = max(0, $size-$block_window) ; 
+				$instructions .= $this->getChr($lenfile) ; 			// the length to be copied (i.e. here size of the new file)
+				
+				// header
+				$header = $this->getChr(0) ; 				// Source offset 0
+				$header .= $this->getChr(0) ; 				// Source length 0
+				$header .= $this->getChr($lenfile) ; 			// Target length (i.e. the size of the file)
+				$header .= $this->getChr(strlen($instructions)) ; 	// Number of instructions bytes
+				$header .= $this->getChr($lenfile) ; 			// New data length
+				
+				$info[] = array("SOURCE OFFSET ".$this->asc2bin($this->getChr(0))." - SOURCE LENGTH ".$this->asc2bin($this->getChr(0) )." - TARGET LENGTH : ".$this->asc2bin($this->getChr($lenfile)) ." - INSTRUCTION LENGTH : ".$this->asc2bin($this->getChr(strlen($instructions)))." - NEW DATA LENGTH : ".$this->asc2bin($this->getChr($lenfile))." - INSTRUCTIONS : ".$this->asc2bin($instructions)) ; 
+				
+				$content .= $header.$instructions.substr($file, 0, $lenfile) ;
+				//maj du file
+				$file = substr($file, $lenfile) ; 
 			}
-			
-			// header
-			$header .= $this->getChr(0) ; 						// Source offset 0
-			$header .= $this->getChr(0) ; 						// Source length 0
-			$header .= $this->getChr(strlen($file)) ; 			// Target length (i.e. the size of the file)
-			$header .= $this->getChr(strlen($instructions)) ; 	// Number of instructions bytes
-			$header .= $this->getChr(strlen($file)) ; 			// New data length
-			
 			//http://websvn.cyberspectrum.de/wsvn/tl_svn/trunk/system/modules/svnupdate/SubVersionMessageDiff.php
 						
-			$result = $this->sendSVNRequest($this->host, $base, "PUT", $header.$instructions.$file, array("Content-Type: application/vnd.svn-svndiff"), $credentials) ; 		
+			$result = $this->sendSVNRequest($this->host, $put_folder_n_file, "PUT", $top_header.$content, array("Content-Type: application/vnd.svn-svndiff"), $credentials) ; 		
 			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 
-				return array("isOK" => true, "raw_result" => $result, "svn_header" => "HEADER : ".$this->asc2bin("SVN".chr(0))." - SOURCE OFFSET : ".$this->asc2bin($this->getChr(0))." - SOURCE LENGTH : ".$this->asc2bin($this->getChr(0) )." - TARGET LENGTH : ".$this->asc2bin($this->getChr(strlen($file))) ." - INSTRUCTION LENGTH : ".$this->asc2bin($this->getChr(strlen($instructions)))." - NEW DATA LENGTH : ".$this->asc2bin($this->getChr(strlen($file)))." - INSTRUCTIONS : ".$this->asc2bin($instructions) ) ;	
+				return array("isOK" => true, "raw_result" => $result, "svn_header" => $info ) ;	
 			} else {
-				return array("isOK" => false, "raw_result" => $result, "svn_header" => "HEADER : ".$this->asc2bin("SVN".chr(0))." - SOURCE OFFSET : ".$this->asc2bin($this->getChr(0))." - SOURCE LENGTH : ".$this->asc2bin($this->getChr(0) )." - TARGET LENGTH : ".$this->asc2bin($this->getChr(strlen($file))) ." - INSTRUCTION LENGTH : ".$this->asc2bin($this->getChr(strlen($instructions)))." - NEW DATA LENGTH : ".$this->asc2bin($this->getChr(strlen($file)))." - INSTRUCTIONS : ".$this->asc2bin($instructions) ) ;	
+				return array("isOK" => false, "raw_result" => $result, "svn_header" => $info ) ;	
 			}
 		} 
 		
-		function getChr($int) {
-			$bin = decbin($int) ; 
-			$result = "" ; 
-			$c = true ; 
-			$iteration = "0" ; 
-			while ($c) {
-				if (strlen($bin)>7) {
-					// On pars de la fin ! car le premier on mets 0 puis 1
-					$les7DerniersCaracteres = substr($bin, strlen($bin)-7,7) ;
-					$lesAutresCaracteres = substr($bin, 0, strlen($bin)-7) ;
-					$result = chr(bindec($iteration . $les7DerniersCaracteres)) . $result ; 
-					$iteration = "1" ; 
-					$bin = $lesAutresCaracteres ; 
-				} else {
-					$tmp = chr(bindec($iteration . substr("0000000",0,7 - strlen($bin)) . $bin)) ; 
-					$result = $tmp . $result ;
-					$c = false ; 
-				}
-			}
-			return $result ; 
-		}
-		
-		function asc2bin ($ascii) {
-			while ( strlen($ascii) > 0 ){
-				$byte = "";
-				$i = 0;
-				$byte = substr($ascii, 0, 1);
-				while ( $byte!= chr($i) ) { $i++; }
-				$byte = base_convert($i, 10, 2);
-				$byte = str_repeat("0", (8 - strlen($byte)) ) . $byte; /* This is an endian (architexture) specific line, you may need to alter it. */
-				$ascii = substr($ascii, 1);
-				$binary .= $byte." ";
-			}
-			return $binary;
-		} 
-				
 		/** ====================================================================================================================================================
-		* Merge all
+		* Put folder in the repository
 		* 
-		* 
+		* @param string $put_folder_n_folder the put folder concatenated with the folder to add 
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful,'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getPutFolder	
 		*/			
 		
-		function merge($base, $uuid, $credentials=false) {
-			$result = $this->sendSVNRequest($this->host, $base, "MERGE", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:merge xmlns:D=\"DAV:\"><D:source><D:href>".$uuid."</D:href></D:source><D:no-auto-merge/><D:no-checkout/><D:prop><D:checked-in/><D:version-name/><D:resourcetype/><D:creationdate/><D:creator-displayname/></D:prop></D:merge>", array(), $credentials) ; 		
+		function putFolder($put_folder_n_folder, $credentials=true) {
+			$result = $this->sendSVNRequest($this->host, $put_folder_n_folder, "MKCOL", "", array(), $credentials) ; 		
+			
+			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 				
+				return array("isOK" => true, "raw_result" => $result) ;	
+			} else {
+				return array("isOK" => false, "raw_result" => $result) ;	
+			}		
+			
+		}
+		
+		/** ====================================================================================================================================================
+		* Put folder in the repository
+		* 
+		* @param string $put_folder_n_filefolder the put folder concatenated with the folder/file to add 
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful,'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getPutFolder	
+		*/			
+		
+		function deleteFileFolder($put_folder_n_filefolder, $credentials=true) {
+			$result = $this->sendSVNRequest($this->host, $put_folder_n_filefolder, "DELETE", "", array(), $credentials) ; 		
+			
+			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 				
+				return array("isOK" => true, "raw_result" => $result) ;	
+			} else {
+				return array("isOK" => false, "raw_result" => $result) ;	
+			}		
+		}
+				
+		/** ====================================================================================================================================================
+		* Merge the commit ... thus all the change will be taken in account
+		* 
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param string $activity_n_uuid it is the activity folder concatenated with the random UUID (composed with hexadecimal digit xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'commit_info' the commit information, 'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getActivityFolder
+		*/			
+		
+		function merge($base, $activity_n_uuid, $credentials=false) {
+			$result = $this->sendSVNRequest($this->host, $base, "MERGE", "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:merge xmlns:D=\"DAV:\"><D:source><D:href>".$activity_n_uuid."</D:href></D:source><D:no-auto-merge/><D:no-checkout/><D:prop><D:checked-in/><D:version-name/><D:resourcetype/><D:creationdate/><D:creator-displayname/></D:prop></D:merge>", array(), $credentials) ; 		
 			
 			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 				
 				preg_match("/version-name>([^<]*)<([^>]*)version-name/", $result['content'], $rev) ;
@@ -309,14 +363,16 @@ if (!class_exists("svnAdmin")) {
 		/** ====================================================================================================================================================
 		* Get a single file of the repository
 		* 
-		* 
+		* @param string $base_file the relative path of the file to get (for instance /yourplugin/trunk/file1.txt)
+		* @param string $store the local path to store the file retrieved (for instance /home/foo/yourplugin/file1.txt)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'siez' the size in bytes of the retrieved file
 		*/			
 		
 		function getFile($base_file, $store, $credentials=true) {
 			
-			$replacements = array('%20', '%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%3F', '%25', '%23', '%5B', '%5D');
-			$entities = array(' ', '!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "?", "%", "#", "[", "]");
-    		
+			$replacements = array('%20');
+			$entities = array(' ');
 			$base_file = str_replace($entities, $replacements, $base_file);
 
 			$content = @file_get_contents("http://".$this->host.$base_file) ; 
@@ -327,13 +383,19 @@ if (!class_exists("svnAdmin")) {
 			} else {
 				return array("isOK" => false) ;			
 			}
-			
 		}
 		
 		/** ====================================================================================================================================================
 		* Get all files of the repository
 		* 
-		* 
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param string $vcc the VCC 
+		* @param string $rev the revision number 
+		* @param string $store the local path to store the file retrieved (for instance /home/foo/yourplugin/)
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'info' the list of retrieved files/folder, 'raw_result' the request and the respond in an array (useful for debugging purpose)
+		* @see svnAdmin::getVCC
+		* @see svnAdmin::getRevision		
 		*/			
 		
 		function getAllFiles($base, $vcc, $rev, $store, $credentials=true) {
@@ -366,29 +428,44 @@ if (!class_exists("svnAdmin")) {
 					$file = $xml->getElementsByTagNameNS ( 'svn:' , 'add-file' );
 					foreach ($file as $f) {
 						$url = $f->getElementsByTagNameNS ( 'DAV:' , 'checked-in' )->item(0)->firstChild->textContent ; 
+						
 						// on recupere le contenu du fichier
 						$content = $f->getElementsByTagNameNS ( 'svn:' , 'txdelta' )->item(0)->textContent ; 
 						$content = base64_decode($content) ; 
+						$true_content = "" ; 
 						// On supprime l'entete SVN binaire (voir https://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff)
 						$offset = 4 ; // on passe le PHP\0
-						$val = $this->popInt($content, $offset) ; 			// Read source view offset
-						$val = $this->popInt($content, $val['new_offset']) ; 		// Read source view length
-						$val = $this->popInt($content, $val['new_offset']) ; 		// Read target view length
-						$val = $this->popInt($content, $val['new_offset']) ; 		// Read instructions length
-						$val = $this->popInt($content, $val['new_offset']) ; 		// New data length
-						$data_length = $val['int'] ;
+						// Window 
+						while (strlen($content)!=$offset) {
+							$val = $this->popInt($content, $offset) ; 			// Read source view offset
+							$val = $this->popInt($content, $val['new_offset']) ; 		// Read source view length
+							$val = $this->popInt($content, $val['new_offset']) ; 		// Read target view length
+							$val = $this->popInt($content, $val['new_offset']) ; 		// Read instructions length
+							$insl = $val['int'] ;
+							$val = $this->popInt($content, $val['new_offset']) ; 		// New data length
+																	// After we have the instruction ($insl the number of bytes)
+							$data_length = $val['int'] ;
+							$debut_text = $val['new_offset']+$insl ; 
+							if ($data_length==0)
+								break ; 
+							$true_content .= substr($content, $debut_text, $data_length) ; 
+							$offset = $debut_text+$data_length ;
+						}
 						
-						$content = substr($content, -$data_length) ; 
-						if ($data_length==0)
-							$content = "" ; 
+						
+						
 						
 						$tmp = explode($base, $url, 2) ; 
 						if (count($tmp)==2) {
 							$url = $tmp[1] ; 
 						}
 						
+						$replacements = array(' ');
+						$entities = array('%20');
+						$url = str_replace($entities, $replacements, $url);
+						
 						// On crée les  fichiers en cache
-						if (@file_put_contents($store.$url, $content)!==false) {
+						if (@file_put_contents($store.$url, $true_content)!==false) {
 							$info[] = array("url"=>$url, "ok"=>true, "folder"=>false , "size"=>strlen($content) )  ; 
 						} else {
 							$info[] = array("url"=>$url, "ok"=>false, "folder"=>false, "size" =>strlen($content) )  ; 
@@ -408,64 +485,13 @@ if (!class_exists("svnAdmin")) {
 			
 		}
 		
-		function pop($string, $offset){
-                        $res=substr($string, $offset, 1);
-			return array('byte'=>$res, 'new_offset'=>$offset+1) ;
-		}
-		
-		function popInt($string, $offset) {
-			$n=0;
-			while(true){
-				$res = $this->pop($string, $offset) ;
-				$c = $res['byte'] ; 
-				$offset =  $res['new_offset'] ; 
-				$c=ord($c);
-				$n = (($n << 7)) | ($c & 0x7f);
-				if (!($c & 0x80))
-					break;
-			}
-			return array('int'=>$n, 'new_offset'=>$offset) ;
-		}
-
-		
 		/** ====================================================================================================================================================
-		* Put folder in the repository
-		* 
-		* 
-		*/			
-		
-		function putFolder($base, $credentials=true) {
-			$result = $this->sendSVNRequest($this->host, $base, "MKCOL", "", array(), $credentials) ; 		
-			
-			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 				
-				return array("isOK" => true, "raw_result" => $result) ;	
-			} else {
-				return array("isOK" => false, "raw_result" => $result) ;	
-			}		
-			
-		}
-		
-		/** ====================================================================================================================================================
-		* Put folder in the repository
-		* 
-		* 
-		*/			
-		
-		function deleteFileFolder($base, $credentials=true) {
-			$result = $this->sendSVNRequest($this->host, $base, "DELETE", "", array(), $credentials) ; 		
-			
-			if (substr($result['header']['Return-Code-HTTP'], 0, 1)=="2") { 				
-				return array("isOK" => true, "raw_result" => $result) ;	
-			} else {
-				return array("isOK" => false, "raw_result" => $result) ;	
-			}		
-			
-		}
-		
-		
-		/** ====================================================================================================================================================
-		* 
-		* 
+		* Prepare the commit
+		*
+		* @param string $base the relative path of the folder (for instance /yourplugin/trunk/)
+		* @param string $comment the comment for the commit
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array 'isOk' => whether the request is successful, 'step' indicated the step which fails, 'putFolder'  the put folder , 'activityFolder' the acivity folder, 'uuid' the random uuid used for this commit,  'raw_result' the request and the respond in an array (useful for debugging purpose)
 		*/			
 		
 		function prepareCommit($base, $comment, $credentials=false) {
@@ -520,10 +546,21 @@ if (!class_exists("svnAdmin")) {
 		/** ====================================================================================================================================================
 		* Send a SVN request
 		* 
+		* @param string $host the host (for instance svn.wp-plugins.org)
+		* @param string $relative_uri the base url (for instance /yourplugin/trunk/)
+		* @param string $type the type of request (e.g. GET, PROPFIND, PROPPATCH, etc.)
+		* @param string $content the content of the http request
+		* @param array $additional_headers if addiotionnal header are required (for instance array('Content-Type: text/plain'))
+		* @param boolean $credentials true if the repository requires credentials 
+		* @return array the response and the content sent
 		*/			
 		
 		function sendSVNRequest($host, $relative_uri, $type, $content, $additional_headers=array(), $credentials=false) {
 			
+			$replacements = array('%20');
+			$entities = array(' ');
+			$relative_uri = str_replace($entities, $replacements, $relative_uri);
+
 			$header = $type." ".$relative_uri." HTTP/1.1\r\n" ;
 			$header .= "Host: ".$host."\r\n" ;
 			$header .= "User-Agent: ".$this->user_agent."\r\n" ;
@@ -558,8 +595,10 @@ if (!class_exists("svnAdmin")) {
 		}
 		
 		/** ====================================================================================================================================================
-		* 
-		* 
+		* Parse HTTP response message (support of chuncked encoding)
+		*
+		* @param string $message the HTTP message
+		* @return array the parsed response
 		*/			
 		
 		function httpMessageParse($message) {
@@ -621,8 +660,10 @@ if (!class_exists("svnAdmin")) {
 		}
 
 		/** ====================================================================================================================================================
+		*  Convert plain XML text into DOM document
 		* 
-		* 
+		* @param string $content the plain XML text
+		* @return DOMdocument the parsed XML
 		*/			
 		
 		function xmlContentParse($content) {
@@ -633,8 +674,10 @@ if (!class_exists("svnAdmin")) {
 		}
 		
 		/** ====================================================================================================================================================
+		* Print the raw response in order to render it into a human readeable message
 		* 
-		* 
+		* @param string $raw the raw message to render
+		* @return string the readeable message
 		*/			
 		
 		function printRawResult($raw) {
@@ -648,6 +691,93 @@ if (!class_exists("svnAdmin")) {
 			}
 			return "<span style='color:#CC0000'>".nl2br(str_replace(" ", "&nbsp;", htmlentities(print_r($raw, true))))."</span>" ;  
 		}
+		
+		
+		/** ====================================================================================================================================================
+		* Extract from a string one single byte
+		* 
+		* @param string $string the string from which the byte should be extracted
+		* @param integer $offset the offset from which the byte should be extracted from the string
+		* @return array 'byte' is the extracted byte, "new_offset' is the new offset (i.e. the offset+1)
+		*/
+		
+		function pop($string, $offset){
+                        $res=substr($string, $offset, 1);
+			return array('byte'=>$res, 'new_offset'=>$offset+1) ;
+		}
+		
+		/** ====================================================================================================================================================
+		* Extract integers that are encoded using a variable-length format (see https://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff)
+		* 
+		* @param string $string the string from which the integer should be extracted
+		* @param integer $offset the offset from which the integer should be extracted from the string
+		* @return array 'int' is the extracted integer, "new_offset' is the new offset 
+		*/
+
+		function popInt($string, $offset) {
+			$n=0;
+			while(true){
+				$res = $this->pop($string, $offset) ;
+				$c = $res['byte'] ; 
+				$offset =  $res['new_offset'] ; 
+				$c=ord($c);
+				$n = (($n << 7)) | ($c & 0x7f);
+				if (!($c & 0x80))
+					break;
+			}
+			return array('int'=>$n, 'new_offset'=>$offset) ;
+		}
+		
+		/** ====================================================================================================================================================
+		* Convert a integer in a variable-length format (see https://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff)
+		* 
+		* @param integer $int the integer to convert
+		* @return string the bytes representing the integer in a variable-length format 
+		*/
+
+		function getChr($int) {
+			$bin = decbin($int) ; 
+			$result = "" ; 
+			$c = true ; 
+			$iteration = "0" ; 
+			while ($c) {
+				if (strlen($bin)>7) {
+					// On part de la fin ! car le premier on mets 0 puis 1
+					$les7DerniersCaracteres = substr($bin, strlen($bin)-7,7) ;
+					$lesAutresCaracteres = substr($bin, 0, strlen($bin)-7) ;
+					$result = chr(bindec($iteration . $les7DerniersCaracteres)) . $result ; 
+					$iteration = "1" ; 
+					$bin = $lesAutresCaracteres ; 
+				} else {
+					$tmp = chr(bindec($iteration . substr("0000000",0,7 - strlen($bin)) . $bin)) ; 
+					$result = $tmp . $result ;
+					$c = false ; 
+				}
+			}
+			return $result ; 
+		}
+		
+		/** ====================================================================================================================================================
+		* Convert a byte-string into binary represention (string)
+		* 
+		* @param string $ascii the byte-string to convert
+		* @return string the binary representation (8-blocks with space)
+		*/
+		
+		function asc2bin ($ascii) {
+			while ( strlen($ascii) > 0 ){
+				$byte = "";
+				$i = 0;
+				$byte = substr($ascii, 0, 1);
+				while ( $byte!= chr($i) ) { $i++; }
+				$byte = base_convert($i, 10, 2);
+				$byte = str_repeat("0", (8 - strlen($byte)) ) . $byte; /* This is an endian (architexture) specific line, you may need to alter it. */
+				$ascii = substr($ascii, 1);
+				$binary .= $byte." ";
+			}
+			return $binary;
+		} 
+		
 	}
 }
 

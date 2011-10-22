@@ -21,10 +21,11 @@ You may configure (for the captcha):
 * The size of the image
 * The size of the letters
 * The slant of the letters
-* …
+* etc.
     
 = Localization =
 
+* Chinese (thanks to Bladin)
 * Czech (thanks to Kumerson)
 * German (thanks to Diego)
 * French (thanks to me)
@@ -36,6 +37,13 @@ This plugin use SL framework.
 You may translate this plugin with an embedded feature which is very easy to use by any end-users (without any external tools / knowledge).
 
 You may also create a new plugin. You will download, from the plugin, an "hello World" plugin: You just have to fill the blank and follow the comments.
+
+Moreover, all the plugins developped with this framework is able to use astonishing tools, such as :
+
+* embedded SVN client (subversion) to easily commit/update the plugin in wordpress.org repository ; 
+* detailled documentation of all available classes and methodes ; 
+* updating the core with a single click ; 
+* etc.
 
 == Installation ==
 
@@ -53,6 +61,10 @@ You may also create a new plugin. You will download, from the plugin, an "hello 
 4. An error when detecting a spam
 
 == Changelog ==
+
+= 1.1.0 =
+* Core update
+* Chinese translation added by Bladin
 
 = 1.0.4 =
 * Core update
@@ -76,4 +88,4 @@ You may also create a new plugin. You will download, from the plugin, an "hello 
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:2a803a7c3d5083c88d48126be2512847
+InfoVersion:ab58b8be17c7bfd76a27d3adf372dfa1

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-09-19T17:42:08+00:00\n"
+"PO-Revision-Date: 2011-10-22T19:55:39+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -148,4 +148,10 @@ msgstr "Vous avez soumis un commentaire qui est considéré comme un spam... Si 
 
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "Vous n&#039;avez pas taper correctement le Captcha : pour prouver que vous n&#039;êtes pas une machine, merci de retenter !"
+
+msgid "Here is the plugins developped by the author:"
+msgstr "Voici les plugins développés par l&#039;auteur :"
+
+msgid "Other possible plugins"
+msgstr "Autres plugins possibles"
 

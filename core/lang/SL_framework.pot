@@ -174,20 +174,31 @@ msgstr ""
 msgid "You do not seem to have a repository for Wordpress because %s returns a 404 error. Thus, ask for one here: %s"
 msgstr ""
 
-#: core.class.php:794
+#: core.class.php:792
 #@ SL_framework
 msgid "Overwrite the local plugin files with files stored the SVN repository"
 msgstr ""
 
-#: core.class.php:795
-#: core.class.php:803
-#@ SL_framework
-msgid "Slower version but sometimes more reliable"
-msgstr ""
-
+#: core.class.php:793
 #: core.class.php:802
 #@ SL_framework
+msgid "Quick"
+msgstr ""
+
+#: core.class.php:794
+#: core.class.php:803
+#@ SL_framework
+msgid "Slow"
+msgstr ""
+
+#: core.class.php:801
+#@ SL_framework
 msgid "Update the SVN repository with your current local plugin files"
+msgstr ""
+
+#: core.class.php:806
+#@ SL_framework
+msgid "The slow version may be useful if you have issues with the quick version."
 msgstr ""
 
 #: core.class.php:832
@@ -389,122 +400,123 @@ msgstr ""
 msgid "Overwrite the local plugin %s files with files stored the SVN repository"
 msgstr ""
 
-#: core.class.php:1480
-#: core.class.php:1536
-#@ SL_framework
-msgid "folder created"
-msgstr ""
-
-#: core.class.php:1482
-#: core.class.php:1538
-#@ SL_framework
-msgid "folder creation has failed !"
-msgstr ""
-
-#: core.class.php:1486
-#: core.class.php:1599
-#@ SL_framework
-msgid "%s bytes transfered"
-msgstr ""
-
-#: core.class.php:1507
-#@ SL_framework
-msgid "An error occurred during the retrieval of files on the server ! Sorry ..."
-msgstr ""
-
-#: core.class.php:1518
+#: core.class.php:1478
+#: core.class.php:1524
 #@ SL_framework
 msgid "Updating the local cache"
 msgstr ""
 
-#: core.class.php:1519
+#: core.class.php:1485
+#: core.class.php:1542
 #@ SL_framework
-msgid "To be sure that you compare the local plugin with the latest repoository files, it is necessary to download it locally. Please wait during the update..."
+msgid "folder created"
+msgstr ""
+
+#: core.class.php:1487
+#: core.class.php:1544
+#@ SL_framework
+msgid "folder creation has failed !"
+msgstr ""
+
+#: core.class.php:1491
+#: core.class.php:1605
+#@ SL_framework
+msgid "%s bytes transfered"
+msgstr ""
+
+#: core.class.php:1512
+#@ SL_framework
+msgid "An error occurred during the retrieval of files on the server ! Sorry ..."
 msgstr ""
 
 #: core.class.php:1525
 #@ SL_framework
+msgid "To be sure that you compare the local plugin with the latest repoository files, it is necessary to download it locally. Please wait during the update (your are using the slow version which may be more reliable especially with big plugins)..."
+msgstr ""
+
+#: core.class.php:1531
+#@ SL_framework
 msgid "Update of the files of the %s plugin in progress (%s files)"
 msgstr ""
 
-#: core.class.php:1565
+#: core.class.php:1571
 #@ SL_framework
 msgid "An error occurred when listing the files of the %s plugin ! Sorry ..."
 msgstr ""
 
-#: core.class.php:1623
-#: core.class.php:1660
+#: core.class.php:1629
+#: core.class.php:1666
 #@ SL_framework
 msgid "Browsing the modifications"
 msgstr ""
 
-#: core.class.php:1624
-#: core.class.php:1661
+#: core.class.php:1630
+#: core.class.php:1667
 #@ SL_framework
 msgid "Comparing %s with %s"
 msgstr ""
 
-#: core.class.php:1631
-#: core.class.php:1668
+#: core.class.php:1637
+#: core.class.php:1674
 #: core/svn.class.old.php:379
 #: core/svn.class.old.php:392
 #@ SL_framework
 msgid "Confirmation"
 msgstr ""
 
-#: core.class.php:1633
+#: core.class.php:1639
 #: core/svn.class.old.php:381
 #@ SL_framework
 msgid "Commit comment:"
 msgstr ""
 
-#: core.class.php:1635
+#: core.class.php:1641
 #: core/svn.class.old.php:383
 #@ SL_framework
 msgid "Yes, the SVN version will be deleted and be replaced by the local version"
 msgstr ""
 
-#: core.class.php:1670
+#: core.class.php:1676
 #@ SL_framework
 msgid "Yes, the local version will be overwritten with the repository files"
 msgstr ""
 
-#: core.class.php:1695
+#: core.class.php:1701
 #@ SL_framework
 msgid "Sending to the repository in progress..."
 msgstr ""
 
-#: core.class.php:1704
+#: core.class.php:1710
 #@ SL_framework
 msgid "Preparation of the sending done !"
 msgstr ""
 
-#: core.class.php:1790
+#: core.class.php:1796
 #@ SL_framework
 msgid "Sending the file is finished ! Now merging the change in the repository ..."
 msgstr ""
 
-#: core.class.php:1804
+#: core.class.php:1810
 #@ SL_framework
 msgid "Error while preparing the sending!"
 msgstr ""
 
-#: core.class.php:1912
+#: core.class.php:1920
 #@ SL_framework
 msgid "The commit has ended [ %s ]... You should received an email quickly !"
 msgstr ""
 
-#: core.class.php:1914
+#: core.class.php:1922
 #@ SL_framework
 msgid "The commit has ended but there is an error!"
 msgstr ""
 
-#: core.class.php:1933
+#: core.class.php:1941
 #@ SL_framework
 msgid "Sending to the local files in progress..."
 msgstr ""
 
-#: core.class.php:1996
+#: core.class.php:2004
 #@ SL_framework
 msgid "The rollback has ended ..."
 msgstr ""
@@ -559,9 +571,14 @@ msgstr ""
 msgid "Parameters have been updated successfully !"
 msgstr ""
 
-#: core/svn.class.php:636
+#: core/svn.class.php:685
 #@ SL_framework
 msgid "Your credentials do not seem to be correct. Please check them!"
+msgstr ""
+
+#: core/svn.class.php:689
+#@ SL_framework
+msgid "This file have not been written in the repository due to server problem. Nevertheless, you should retry as it often works better with a second try !"
 msgstr ""
 
 #: core/translation.class.php:256
