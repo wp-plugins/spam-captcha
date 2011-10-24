@@ -16,6 +16,7 @@ This plugins avoids spam actions on your websites
 This plugins avoids spam actions on your websites by using Captcha, and Akismet API to detect spam
 
 You may configure (for the captcha):
+
 * The color of the background
 * The color of the letters
 * The size of the image
@@ -63,7 +64,7 @@ Moreover, all the plugins developped with this framework is able to use astonish
 == Changelog ==
 
 = 1.1.0 =
-* Core update
+* SVN support
 * Chinese translation added by Bladin
 
 = 1.0.4 =
@@ -88,4 +89,4 @@ Moreover, all the plugins developped with this framework is able to use astonish
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:ab58b8be17c7bfd76a27d3adf372dfa1
+InfoVersion:e21fbd08772788c3adcadfbb76bbc3b0
