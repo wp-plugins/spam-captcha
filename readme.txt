@@ -26,6 +26,7 @@ You may configure (for the captcha):
     
 = Localization =
 
+* Japanese translation (thanks to Hasegawa)
 * Chinese (thanks to Bladin)
 * Czech (thanks to Kumerson)
 * German (thanks to Diego)
@@ -63,6 +64,10 @@ Moreover, all the plugins developped with this framework is able to use astonish
 
 == Changelog ==
 
+= 1.1.1 =
+* Japanese translation (by Hasegawa)
+* Update of the core
+
 = 1.1.0 =
 * SVN support
 * Chinese translation added by Bladin
@@ -89,4 +94,4 @@ Moreover, all the plugins developped with this framework is able to use astonish
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:e21fbd08772788c3adcadfbb76bbc3b0
+InfoVersion:41984f6391b7b892ac913c11ebdde708
