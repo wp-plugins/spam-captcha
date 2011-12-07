@@ -26,6 +26,7 @@ You may configure (for the captcha):
     
 = Localization =
 
+* Spanish translation (by Krazz)
 * Russian translation (by IgorPulbere)
 * Japanese translation (thanks to Hasegawa)
 * Chinese (thanks to Bladin)
@@ -65,6 +66,9 @@ Moreover, all the plugins developped with this framework is able to use astonish
 
 == Changelog ==
 
+= 1.1.3 =
+* Spanish translation (by Krazz)
+
 = 1.1.2 =
 * Russian translation (by IgorPulbere)
 
@@ -98,4 +102,4 @@ Moreover, all the plugins developped with this framework is able to use astonish
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:ce02f20a5fcbeda9e6e872894abcfa4d
+InfoVersion:cbbc60834d71af2a4bfebe7944822f76
