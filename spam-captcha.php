@@ -2,7 +2,7 @@
 /**
 Plugin Name: Spam Captcha
 Description: <p>This plugins avoids spam actions on your website.</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): <ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul></p><p>This plugin is under GPL licence</p>
-Version: 1.1.3
+Version: 1.1.4
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -183,12 +183,12 @@ class spam_captcha extends pluginSedLex {
 			ob_start() ; 	
 				$params = new parametersSedLex($this, "tab-parameters") ; 
 				
-				$params->add_title(__("Do you want to enable CAPTCHA for posted comments?", $this->pluginID)) ; 
+				$params->add_title(__("Do you want to enable CAPTCHA for posting comments?", $this->pluginID)) ; 
 				if  ( (!function_exists("imagecreate")) || (!function_exists("imagefill")) || (!function_exists("imagecolorallocate")) || (!function_exists("imagettftext")) || (!function_exists("imageline")) || (!function_exists("imagepng")) ) {
 					$params->add_comment(sprintf(__("Your server does not seems to have GD installed with the following functions: %s", $this->pluginID), "<code>imagecreate</code>, <code>imagefill</code>, <code>imagecolorallocate</code>, <code>imagettftext</code>, <code>imageline</code>, <code>imagepng</code>")) ; 
 					$params->add_comment(__("Thus, it is not possible to activate this option... sorry !", $this->pluginID)) ; 
 				} else {
-					$params->add_param('captcha_enable', __('Yes/No (for the comment):', $this->pluginID)) ; 
+					$params->add_param('captcha_enable', __('Yes/No (for commenting only):', $this->pluginID)) ; 
 					$params->add_param('captcha_logged', __('Use Capctha even if user is logged:', $this->pluginID)) ; 					
 					$params->add_comment(sprintf(__("WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s", $this->pluginID)." <br/>".__("Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s", $this->pluginID), "<em>Subscriber</em>, <em>Contributor</em>, <em>Author</em>", "<em>Editor</em>, <em>Administrator</em>")) ; 
 					$params->add_param('captcha_number', __('Number of letters:', $this->pluginID)) ; 
@@ -228,21 +228,25 @@ class spam_captcha extends pluginSedLex {
 					$params->add_comment(sprintf(__("To get an Akismet ID, see %s here %s.", $this->pluginID),"<a href='http://akismet.com/get/'>", "</a>")) ; 
 				}
 				$params->flush() ; 
-			$tabs->add_tab(__('Parameters',  $this->pluginID), ob_get_clean() ) ; 	
+			$tabs->add_tab(__('Parameters',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
 
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
 				$trans = new translationSL($this->pluginID, $plugin) ; 
 				$trans->enable_translation() ; 
-			$tabs->add_tab(__('Manage translations',  $this->pluginID), ob_get_clean() ) ; 	
+			$tabs->add_tab(__('Manage translations',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_trad.png") ; 	
 
 			ob_start() ; 
-				echo __('This form is an easy way to contact the author and to discuss issues / incompatibilities / etc.',  $this->pluginID) ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
 				$trans = new feedbackSL($plugin, $this->pluginID) ; 
 				$trans->enable_feedback() ; 
-			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() ) ; 	
+			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_mail.png") ; 	
 			
+			ob_start() ; 
+				$trans = new otherPlugins("sedLex", array('wp-pirates-search')) ; 
+				$trans->list_plugins() ; 
+			$tabs->add_tab(__('Other plugins',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_plug.png") ; 	
+
 			echo $tabs->flush() ; 
 			
 			

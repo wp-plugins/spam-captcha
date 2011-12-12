@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-10-22T19:55:39+00:00\n"
+"PO-Revision-Date: 2011-12-12T14:37:48+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,8 +47,8 @@ msgstr "De plus, ce plugin a traité %s commentaires normaux (et en marqué %s c
 msgid "Summary of Protection"
 msgstr "Synthèse de la protection"
 
-msgid "Do you want to enable CAPTCHA for posted comments?"
-msgstr "Voulez-vous activer les Captcha pour les commentaires soumis ?"
+msgid "Do you want to enable CAPTCHA for posting comments?"
+msgstr "Voulez-vous activer les CAPTCHA pour les commentaires postés ?"
 
 msgid "Your server does not seems to have GD installed with the following functions: %s"
 msgstr "Votre serveur ne semble pas avoir la librairie GD installée avec les fonctions suivantes: %s"
@@ -56,8 +56,8 @@ msgstr "Votre serveur ne semble pas avoir la librairie GD installée avec les fo
 msgid "Thus, it is not possible to activate this option... sorry !"
 msgstr "Ainsi, il n&#039;est pas possible d&#039;activer cette option... désolé !"
 
-msgid "Yes/No (for the comment):"
-msgstr "Oui/Non (pour les commentaires) :"
+msgid "Yes/No (for commenting only):"
+msgstr "Oui/Non (seuelement pour les commentaires soumis) :"
 
 msgid "Use Capctha even if user is logged:"
 msgstr "Si l&#039;utililisateur est enregistré, aucun Captcha ne sera affiché"
@@ -134,11 +134,11 @@ msgstr "Paramètres"
 msgid "Manage translations"
 msgstr "Gérer les traductions"
 
-msgid "This form is an easy way to contact the author and to discuss issues / incompatibilities / etc."
-msgstr "Ce formulaire vous permet de contacter facilement l&#039;auteur afin de discuter de vos problèmes / des incompatibilités / etc."
-
 msgid "Give feedback"
 msgstr "Donner un feedback"
+
+msgid "Other plugins"
+msgstr "Autres plugins"
 
 msgid "Please type the characters of this captcha image in the input box"
 msgstr "Merci de taper les caractères de l&#039;image Captcha dans le champ"
@@ -148,10 +148,4 @@ msgstr "Vous avez soumis un commentaire qui est considéré comme un spam... Si 
 
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "Vous n&#039;avez pas taper correctement le Captcha : pour prouver que vous n&#039;êtes pas une machine, merci de retenter !"
-
-msgid "Here is the plugins developped by the author:"
-msgstr "Voici les plugins développés par l&#039;auteur :"
-
-msgid "Other possible plugins"
-msgstr "Autres plugins possibles"
 

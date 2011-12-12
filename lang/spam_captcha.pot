@@ -47,7 +47,7 @@ msgstr ""
 
 #: spam-captcha.php:186
 #@ spam_captcha
-msgid "Do you want to enable CAPTCHA for posted comments?"
+msgid "Do you want to enable CAPTCHA for posting comments?"
 msgstr ""
 
 #: spam-captcha.php:188
@@ -62,7 +62,7 @@ msgstr ""
 
 #: spam-captcha.php:191
 #@ spam_captcha
-msgid "Yes/No (for the comment):"
+msgid "Yes/No (for commenting only):"
 msgstr ""
 
 #: spam-captcha.php:192
@@ -193,45 +193,32 @@ msgid "Parameters"
 msgstr ""
 
 #: spam-captcha.php:237
-#: core/templates/my-plugin.php:227
 #@ spam_captcha
 msgid "Manage translations"
 msgstr ""
 
-#: spam-captcha.php:240
-#: core/templates/my-plugin.php:230
-#@ spam_captcha
-msgid "This form is an easy way to contact the author and to discuss issues / incompatibilities / etc."
-msgstr ""
-
-#: spam-captcha.php:244
-#: core/templates/my-plugin.php:234
+#: spam-captcha.php:243
 #@ spam_captcha
 msgid "Give feedback"
 msgstr ""
 
-#: spam-captcha.php:304
+#: spam-captcha.php:248
+#@ spam_captcha
+msgid "Other plugins"
+msgstr ""
+
+#: spam-captcha.php:308
 #@ spam_captcha
 msgid "Please type the characters of this captcha image in the input box"
 msgstr ""
 
-#: spam-captcha.php:475
+#: spam-captcha.php:479
 #@ spam_captcha
 msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
 msgstr ""
 
-#: spam-captcha.php:480
+#: spam-captcha.php:484
 #@ spam_captcha
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
-msgstr ""
-
-#: core/templates/my-plugin.php:237
-#@ spam_captcha
-msgid "Here is the plugins developped by the author:"
-msgstr ""
-
-#: core/templates/my-plugin.php:243
-#@ spam_captcha
-msgid "Other possible plugins"
 msgstr ""
 
