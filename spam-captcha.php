@@ -2,7 +2,7 @@
 /**
 Plugin Name: Spam Captcha
 Description: <p>This plugins avoids spam actions on your website.</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): <ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul></p><p>This plugin is under GPL licence</p>
-Version: 1.1.4
+Version: 1.1.5
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -158,6 +158,8 @@ class spam_captcha extends pluginSedLex {
 			//===============================================================================================
 			// After this comment, you may modify whatever you want
 			
+			// On verifie que les droits sont corrects
+			$this->check_folder_rights( array() ) ; 
 			
 			$tabs = new adminTabs() ; 
 			

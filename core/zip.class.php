@@ -16,8 +16,8 @@ if (!class_exists("SL_Zip")) {
 	class SL_Zip {
 		var $filelist = array();
 		var $starttime =0 ; 
-		var $removepath = "" ; 
-		var $addpath = "" ; 
+		var $removepath  ; 
+		var $addpath ; 
 		
 		function SL_Zip() {
 			$this->starttime = microtime(true) ; 
@@ -75,7 +75,7 @@ if (!class_exists("SL_Zip")) {
 		*/
 		
 		function removePath($remove) {
-			$this->removePath = $remove ; 
+			$this->removepath = $remove ; 
 		}	
 		
 		/** ====================================================================================================================================================
@@ -86,7 +86,7 @@ if (!class_exists("SL_Zip")) {
 		*/
 		
 		function addPath($add) {
-			$this->addPath = $add ; 
+			$this->addpath = $add ; 
 		}	
 		
 		/** ====================================================================================================================================================
@@ -102,9 +102,10 @@ if (!class_exists("SL_Zip")) {
 				$timeprocess = time() - (int)$timestart ; 
 				// We ensure that the process has not been started a too long time ago
 				if ($timeprocess<200) {
-					return array("step"=>"in progress") ; 
+					return array("step"=>"in progress", "for"=>$timeprocess) ; 
+				} else {
+					@unlink($path."/in_progress") ; 
 				}
-				
 			} 
 			
 			// We search for a tmp file
@@ -124,10 +125,11 @@ if (!class_exists("SL_Zip")) {
 		* @param string $splitfilename the path of the zip file to create
 		* @param integer $chunk_size the maximum size of the archive
 		* @param integer $maxExecutionTime the maximum execution time in second (if this time is exceeded, the function will return false. You just have to relaunch this function to complete the zip from where it has stopped)
+		* @param integer $maxExecutionTime the maximum memory allocated by the process (in bytes)
 		* @return array with the name of the file (or false if the max eceution time has been exceeded)
 		*/
 		
-		function createZip($splitfilename, $chunk_size=1000000000000000, $maxExecutionTime=0) {
+		function createZip($splitfilename, $chunk_size=1000000000000000, $maxExecutionTime=150, $maxAllocatedMemory=4000000) {
 			$zipfile_comment = "Compressed/Splitted by the SL framework (SedLex)";
 			
 			if ($chunk_size!=1000000000000000)
@@ -153,6 +155,8 @@ if (!class_exists("SL_Zip")) {
 				// We ensure that the process has not been started a too long time ago
 				if ($timeprocess<200) {
 					return array('finished'=>false, 'error' => sprintf(__("An other process is still running (it runs for %s seconds)", "SL_framework"), $timeprocess)) ; 
+				} else {
+					@unlink(dirname($splitfilename)."/in_progress") ; 
 				}
 			}
 			// We create a file with the time inside to indicate that this process is doing something
@@ -175,7 +179,7 @@ if (!class_exists("SL_Zip")) {
 				// We check that the time is not exceeded
 				$nowtime = microtime(true) ; 
 				if ($maxExecutionTime!=0) {
-					if ($nowtime - $this->starttime > $maxExecutionTime) {
+					if (($nowtime - $this->starttime > $maxExecutionTime) || ($maxAllocatedMemory<=strlen($data_segments))){
 						// We remove the file already inserted in the zip
 						$this->filelist =  array_slice($this->filelist,$k);
 						// We save the content on the disk
@@ -226,6 +230,11 @@ if (!class_exists("SL_Zip")) {
 				$last_mod_file_date = $hexddate;
 							
 				//Set Local File Header
+				$newfilename = str_replace("//", "/", $this->addpath.str_replace($this->removepath, "", $filename)) ; 
+				if (substr($newfilename, 0, 1)=="/") {
+					$newfilename = substr($newfilename, 1) ; 
+				}
+				
 				$local_file_header_signature = "\x50\x4b\x03\x04";//4 bytes  (0x04034b50) local_file_header_signature
 				$version_needed_to_extract = "\x14\x00";  //2 bytes version_needed_to_extract
 				$general_purpose_bit_flag = "\x00\x00";  //2 bytes general_purpose_bit_flag
@@ -233,10 +242,11 @@ if (!class_exists("SL_Zip")) {
 				$crc_32 = pack('V', crc32($filedata)); //  4 bytes crc_32
 				$compressed_size = pack('V', strlen($compressed_filedata));// 4 bytes compressed_size
 				$uncompressed_size = pack('V', strlen($filedata));//4 bytes uncompressed_size
-				$filename_length = pack('v', strlen(str_replace("//", "/", $this->addPath.str_replace($this->removePath, "", $filename))));// 2 bytes filename_length
+				$filename_length = pack('v', strlen($newfilename));// 2 bytes filename_length
 				$extra_field_length = pack('v', 0);  //2 bytes extra_field_length
 				
-				$local_file_header = $local_file_header_signature . $version_needed_to_extract . $general_purpose_bit_flag .$compression_method .$last_mod_file_time .$last_mod_file_date .$crc_32 .$compressed_size .$uncompressed_size .$filename_length .$extra_field_length . str_replace("//", "/", $this->addPath.str_replace($this->removePath, "", $filename));
+				
+				$local_file_header = $local_file_header_signature . $version_needed_to_extract . $general_purpose_bit_flag .$compression_method .$last_mod_file_time .$last_mod_file_date .$crc_32 .$compressed_size .$uncompressed_size .$filename_length .$extra_field_length . $newfilename;
 								
 				//Set Data Descriptor
 				$data_descriptor =  $crc_32.$compressed_size . $uncompressed_size;          //4+4+4 bytes
@@ -262,7 +272,7 @@ if (!class_exists("SL_Zip")) {
 					$old_offset = $new_offset;
 				}
 			
-				$file_headers .= $central_file_header_signature . $version_made_by . $version_needed_to_extract . $general_purpose_bit_flag . $compression_method . $last_mod_file_time . $last_mod_file_date . $crc_32 .$compressed_size .$uncompressed_size .$filename_length .$extra_field_length . $file_comment_length .  $disk_number_start . $internal_file_attributes . $external_file_attributes . $relative_offset_local_header . str_replace("//", "/", $this->addPath.str_replace($this->removePath, "", $filename));
+				$file_headers .= $central_file_header_signature . $version_made_by . $version_needed_to_extract . $general_purpose_bit_flag . $compression_method . $last_mod_file_time . $last_mod_file_date . $crc_32 .$compressed_size .$uncompressed_size .$filename_length .$extra_field_length . $file_comment_length .  $disk_number_start . $internal_file_attributes . $external_file_attributes . $relative_offset_local_header . $newfilename;
 				
 			}
 			

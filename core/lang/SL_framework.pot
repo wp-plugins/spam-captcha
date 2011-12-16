@@ -545,7 +545,7 @@ msgstr ""
 msgid "Error: %s function is not found"
 msgstr ""
 
-#: core/zip.class.php:155
+#: core/zip.class.php:157
 #@ SL_framework
 msgid "An other process is still running (it runs for %s seconds)"
 msgstr ""
