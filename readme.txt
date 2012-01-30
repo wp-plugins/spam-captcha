@@ -1,53 +1,56 @@
 === Spam Captcha ===
 
-Contributors: SedLex
 Author: SedLex
+Contributors: SedLex
 Author URI: http://www.sedlex.fr
-Plugin URI: http://wordpress.org/extend/plugins/spam-captcha
-Tags: plugin
+Plugin URI: http://wordpress.org/extend/plugins/spam-captcha/
+Tags: spam, captcha, comments, comment, akismet, block
 Requires at least: 3.0
-Tested up to: 3.2
+Tested up to: 3.3.1
 Stable tag: trunk
 
-This plugins avoids spam actions on your websites
+This plugins avoids spam actions on your website (comments and contact form).
 
 == Description ==
 
-This plugins avoids spam actions on your websites by using Captcha, and Akismet API to detect spam
+This plugins avoids spam actions on your website (comments and contact form).
 
-You may configure (for the captcha):
+Captcha image and Akismet API are available for this plugin.
+
+You may configure (for the captcha): 
 
 * The color of the background
 * The color of the letters
 * The size of the image
 * The size of the letters
 * The slant of the letters
-* etc.
-    
+* â¦
+
+This plugin is under GPL licence
+
 = Localization =
 
-* Spanish translation (by Krazz)
-* Russian translation (by IgorPulbere)
-* Japanese translation (thanks to Hasegawa)
-* Chinese (thanks to Bladin)
-* Czech (thanks to Kumerson)
-* German (thanks to Diego)
-* French (thanks to me)
+* Czech (Czech Republic) translation provided by SedLex, Kumerson
+* German (Germany) translation provided by Diego
+* English (United States), default language
+* Spanish (Spain) translation provided by Krazz
+* French (France) translation provided by SedLex
+* Japanese (Japan) translation provided by hasegawa
+* Russian (Russia) translation provided by IgorPulbere
+* Chinese (People's Republic of China) translation provided by bladin
 
-= Features of the framework = 
+= Features of the framework =
 
-This plugin use SL framework.
+This plugin uses the SL framework. This framework eases the creation of new plugins by providing incredible tools and frames.
 
-You may translate this plugin with an embedded feature which is very easy to use by any end-users (without any external tools / knowledge).
+For instance, a new created plugin comes with
 
-You may also create a new plugin. You will download, from the plugin, an "hello World" plugin: You just have to fill the blank and follow the comments.
-
-Moreover, all the plugins developped with this framework is able to use astonishing tools, such as :
-
-* embedded SVN client (subversion) to easily commit/update the plugin in wordpress.org repository ; 
-* detailled documentation of all available classes and methodes ; 
-* updating the core with a single click ; 
+* A translation interface to simplify the localization of the text of the plugin ; 
+* An embedded SVN client (subversion) to easily commit/update the plugin in wordpress.org repository ; 
+* A detailled documentation of all available classes and methodes ; 
 * etc.
+
+Have fun !
 
 == Installation ==
 
@@ -66,7 +69,10 @@ Moreover, all the plugins developped with this framework is able to use astonish
 
 == Changelog ==
 
-= 1.1.4 =
+= 1.2.0 =
+* Major release of the framework
+
+= 1.1.5 =
 * Path issue
 
 = 1.1.4 =
@@ -108,4 +114,4 @@ Moreover, all the plugins developped with this framework is able to use astonish
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:60b9c6d8d84001a9e90f4b5f18650244
+InfoVersion:c02d4ec18d080178d69b457a63365ce2
