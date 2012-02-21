@@ -32,6 +32,7 @@ if (!class_exists("textDiff")) {
 		* @param string $text2 the text to compare with
 		* @return array
 		*/
+		
 		public function diff($text1, $text2) {
 			$this->text1 = $text1 ;
 			$this->text2 = $text2 ;
@@ -93,6 +94,24 @@ if (!class_exists("textDiff")) {
 			$return .= "</ol></div>\n"  ;
 			
 			return $return ; 
+		}
+		
+		/**====================================================================================================================================================
+		 * Displays a simple human readable HTML representation of ALL the text marked with  differences .
+		 *
+		 * @return string  HTML with differences.
+		 */
+		 
+		function show_simple_difference() {
+			$renderer = new Text_Diff_Renderer_inline() ; 
+			$result = $renderer->render($this->text_diff) ; 
+			
+			$result = str_replace("<del>", "<span class='diff_del'>", $result) ; 
+			$result = str_replace("<ins>", "<span class='diff_ins'>", $result) ; 
+			$result = str_replace("</ins>", "</span>", $result) ; 
+			$result = str_replace("</del>", "</span>", $result) ; 
+			
+			return $result ; 
 		}
 
 		/**====================================================================================================================================================

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-09-23T11:56:21+00:00\n"
+"PO-Revision-Date: 2012-02-19T18:15:11+00:00\n"
 "Last-Translator: Diego <www.diegos.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -148,4 +148,13 @@ msgstr "Ihr Kommentar wurde vom System als Spam eingestuft. Falls dem nicht so i
 
 msgid "Sie haben den Code falsch eingegeben : Zum Schutz vor Spam-Bots muss der dargestellte Code korrekt eingegeben werden. Bitte versuchen Sie es nochmal."
 msgstr "Sie haben den Code falsch eingegeben : Zum Schutz vor Spam-Bots muss der dargestellte Code korrekt eingegeben werden. Bitte versuchen Sie es nochmal."
+
+msgid "Please type the characters of this captcha image in the input box"
+msgstr "Bitte die Buchstaben des captcha Bildes im Eingabefeld eintippen"
+
+msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
+msgstr "Du hast einen Kommentar eingegeben, welcher als Spam erkannt wurde... Falls das nicht so ist, bitte versuche ihn zu modifizieren und versuche es noch einmal."
+
+msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
+msgstr "Du hast das captcha falsch eingegeben: Um zu beweisen, dass du kein Spambot bist, versuche es bitte noch einmal!"
 

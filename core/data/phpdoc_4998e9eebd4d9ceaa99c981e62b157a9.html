@@ -87,10 +87,10 @@
 							</tr> 
 							<tr class="alternate" valign="top" id="ligne1"> 
 								<td class="column-columnname">
-									<span id="cell_1_1" ><a name='pluginSedLex_check_folder_rights'><p><b>check_folder_rights</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Ensure that the needed folders are writable by the webserver.</p><p>Will check usual folders and files.</p><p>You may add this in your configuration page <code>$this-&gt;check_folder_rights( array(array($theFolderToCheck, "rwx")) ) ;</code></p><p>If not a error msg is printed</p></span>
+									<span id="cell_1_1" ><a name='pluginSedLex_check_folder_rights'><p><b>check_folder_rights</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Ensure that the needed folders are writable by the webserver.</p><p>Will check usual folders and files.</p><p>You may add this in your configuration page <code>$this-&gt;check_folder_rights( array(array($theFolderToCheck, "rw")) ) ;</code></p><p>If not a error msg is printed</p></span>
 								</td>
 								<td class="column-columnname">
-									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$folders</b> (<i>array</i>) list of array with a first element (the complete path of the folder to check) and a second element (the needed rights &quot;r&quot;, &quot;w&quot; or &quot;x&quot; [or a combination of those])</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>void</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>void check_folder_rights ($folders) ; </code></p></span>
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$folders</b> (<i>array</i>) list of array with a first element (the complete path of the folder to check) and a second element (the needed rights &quot;r&quot;, &quot;w&quot; [or a combination of those])</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>void</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>void check_folder_rights ($folders) ; </code></p></span>
 								</td>
 							</tr> 
 						</tbody>
@@ -438,7 +438,7 @@
 									<span id="cell_1_1" ><a name='SL_Database_is_inProgress'><p><b>is_inProgress</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Tells whether a database extraction is in progress</p></span>
 								</td>
 								<td class="column-columnname">
-									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>??</i>) ??</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>array</b> the 'step' could be 'in progress' (a process is still running), 'nothing' (no sql is being created) or 'to be completed' (and the 'name_sql' will be the name of the sql file being created) or 'error' (and the 'msg' will display the error messgae)</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>array is_inProgress ($path) ; </code></p></span>
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>??</i>) ??</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>array</b> the 'step' could be 'in progress' (a process is still running), 'nothing' (no sql is being created) or 'to be completed' (and the 'name_sql' will be the name of the sql file being created) or 'error' (and the 'error' will display the error messgae)</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>array is_inProgress ($path) ; </code></p></span>
 								</td>
 							</tr> 
 							<tr class="alternate" valign="top" id="ligne1"> 
@@ -1073,7 +1073,7 @@
 					<div class="postbox">
 						<h3 class="hndle"><span>Utils<span class='desc_phpDoc'>[CLASSE]</span></span></h3>
 						<div class="inside" style="padding: 5px 10px 5px 20px;">
-							<p>This PHP class regroups a few useful method to manage directory, string, ...</p><p>Voici les méthodes de la classe:</p><ul><li class='li_class'><b><a href='#Utils_dirSize'>Utils::dirSize</a></b>: Compute the size of a directory (reccursively or not)</li><li class='li_class'><b><a href='#Utils_is_really_int'>Utils::is_really_int</a></b>: Test if the argument is really an integer (even if string)</li><li class='li_class'><b><a href='#Utils_rand_str'>Utils::rand_str</a></b>: Randomize a string</li><li class='li_class'><b><a href='#Utils_create_identifier'>Utils::create_identifier</a></b>: Create an simple identifier from a given string. It removes all non alphanumeric characters and strip spaces</li><li class='li_class'><b><a href='#Utils_byteSize'>Utils::byteSize</a></b>: Convert an integer into a string which represent a  size in a computer format (ie. MB, KB, GB, etc.)</li><li class='li_class'><b><a href='#Utils_multicolumn_sort'>Utils::multicolumn_sort</a></b>: Sort a table against the n-th column</li><li class='li_class'><b><a href='#Utils_copy_rec'>Utils::copy_rec</a></b>: Copy a file or a directory (recursively)</li><li class='li_class'><b><a href='#Utils_rm_rec'>Utils::rm_rec</a></b>: Delete a file or a directory (recursively)</li><li class='li_class'><b><a href='#Utils_md5_rec'>Utils::md5_rec</a></b>: Compute the md5 of a file or a directory (recursively)</li></ul>					<table class="widefat fixed" cellspacing="0">
+							<p>This PHP class regroups a few useful method to manage directory, string, ...</p><p>Voici les méthodes de la classe:</p><ul><li class='li_class'><b><a href='#Utils_dirSize'>Utils::dirSize</a></b>: Compute the size of a directory (reccursively or not)</li><li class='li_class'><b><a href='#Utils_is_really_int'>Utils::is_really_int</a></b>: Test if the argument is really an integer (even if string)</li><li class='li_class'><b><a href='#Utils_rand_str'>Utils::rand_str</a></b>: Randomize a string</li><li class='li_class'><b><a href='#Utils_create_identifier'>Utils::create_identifier</a></b>: Create an simple identifier from a given string. It removes all non alphanumeric characters and strip spaces</li><li class='li_class'><b><a href='#Utils_byteSize'>Utils::byteSize</a></b>: Convert an integer into a string which represent a  size in a computer format (ie. MB, KB, GB, etc.)</li><li class='li_class'><b><a href='#Utils_multicolumn_sort'>Utils::multicolumn_sort</a></b>: Sort a table against the n-th column</li><li class='li_class'><b><a href='#Utils_copy_rec'>Utils::copy_rec</a></b>: Copy a file or a directory (recursively)</li><li class='li_class'><b><a href='#Utils_rm_rec'>Utils::rm_rec</a></b>: Delete a file or a directory (recursively)</li><li class='li_class'><b><a href='#Utils_md5_rec'>Utils::md5_rec</a></b>: Compute the md5 of a file or a directory (recursively)</li><li class='li_class'><b><a href='#Utils_is_writable'>Utils::is_writable</a></b>: Check if a folder or a file is writable</li><li class='li_class'><b><a href='#Utils_is_readable'>Utils::is_readable</a></b>: Check if a folder or a file is readable</li></ul>					<table class="widefat fixed" cellspacing="0">
 						<thead>
 							<tr>
 								<tr>
@@ -1163,6 +1163,22 @@
 									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>string</i>) the path to compute hash</p><p style='padding-left:30px;'><b>$exclu</b> [optionnelle] (<i>array</i>) a list of filename/folder to exclude from the hash (par défaut, sa valeur est : []) </p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>string</b> md5 hash</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>string md5_rec ($path, [$exclu]) ; </code></p></span>
 								</td>
 							</tr> 
+							<tr class="" valign="top" id="ligne1"> 
+								<td class="column-columnname">
+									<span id="cell_1_1" ><a name='Utils_is_writable'><p><b>is_writable</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Check if a folder or a file is writable</p></span>
+								</td>
+								<td class="column-columnname">
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>string</i>) the path to the folder or the file</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>boolean</b> true if the folder or the file is writable</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>boolean is_writable ($path) ; </code></p></span>
+								</td>
+							</tr> 
+							<tr class="alternate" valign="top" id="ligne1"> 
+								<td class="column-columnname">
+									<span id="cell_1_1" ><a name='Utils_is_readable'><p><b>is_readable</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Check if a folder or a file is readable</p></span>
+								</td>
+								<td class="column-columnname">
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>string</i>) the path to the folder or the file</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>boolean</b> true if the folder or the file is writable</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>boolean is_readable ($path) ; </code></p></span>
+								</td>
+							</tr> 
 						</tbody>
 					</table>
 						</div>
@@ -1222,7 +1238,7 @@
 									<span id="cell_1_1" ><a name='SL_Zip_is_inProgress'><p><b>is_inProgress</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Tells whether a zip file is being created or not</p></span>
 								</td>
 								<td class="column-columnname">
-									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>??</i>) ??</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>array</b> the 'step' could be 'in progress' (a process is still running), 'nothing' (no zip is being zipped) or 'to be completed' (and the 'name_zip' will be the name of the zip file being zipped) or 'error' (and the 'msg' will display the error messgae)</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>array is_inProgress ($path) ; </code></p></span>
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$path</b> (<i>??</i>) ??</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>array</b> the 'step' could be 'in progress' (a process is still running), 'nothing' (no zip is being zipped) or 'to be completed' (and the 'name_zip' will be the name of the zip file being zipped) or 'error' (and the 'error' will display the error messgae)</p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>array is_inProgress ($path) ; </code></p></span>
 								</td>
 							</tr> 
 							<tr class="alternate" valign="top" id="ligne1"> 

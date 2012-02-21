@@ -293,9 +293,55 @@ if (!class_exists("Utils")) {
 				$md5 = md5(file_get_contents($path)) ; 
 			}
 			return $md5 ; 
+		}	
+		
+		
+		/** ====================================================================================================================================================
+		* Check if a folder or a file is writable
+		* 
+		* @param string $path the path to the folder or the file
+		* @return boolean true if the folder or the file is writable
+		*/
+		
+		function is_writable($path) {
+			if ($path{strlen($path)-1}=='/') // recursively return a temporary file path
+				return Utils::is_writable($path.uniqid(mt_rand()).'.tmp');
+			else if (is_dir($path))
+				return Utils::is_writable($path.'/'.uniqid(mt_rand()).'.tmp');
+			
+			// check tmp file for read/write capabilities
+			$rm = file_exists($path);
+			$f = @fopen($path, 'a');
+			if ($f===false)
+				return false;
+			@fclose($f);
+			if (!$rm)
+				@unlink($path);
+			return true;
 		}
 		
-
+		/** ====================================================================================================================================================
+		* Check if a folder or a file is readable
+		* 
+		* @param string $path the path to the folder or the file
+		* @return boolean true if the folder or the file is writable
+		*/
+		
+		function is_readable($path) {
+			if (is_dir($path))  {
+				if (@scandir($path) === FALSE) {
+					return false ; 
+				}
+				return true ; 
+			}
+			if (is_file($path))  {
+				if (@fopen($path, 'r')=== FALSE) {
+					return false ; 
+				}
+				return true ; 
+			}
+			return false ; 
+		}
 	} 
 }
 

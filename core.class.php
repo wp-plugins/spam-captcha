@@ -56,8 +56,11 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_ajax_set_translation', array('translationSL','set_translation')) ; 
 			add_action('wp_ajax_update_languages_wp_init', array('translationSL','update_languages_wp_init')) ; 
 			add_action('wp_ajax_update_languages_wp_list', array('translationSL','update_languages_wp_list')) ; 
+			add_action('wp_ajax_importTranslation', array('translationSL','importTranslation')) ; 
+			add_action('wp_ajax_seeTranslation', array('translationSL','seeTranslation')) ; 
+			add_action('wp_ajax_deleteTranslation', array('translationSL','deleteTranslation')) ; 
+			add_action('wp_ajax_mergeTranslationDifferences', array('translationSL','mergeTranslationDifferences')) ; 
 			add_filter('locale', array('translationSL', 'set_locale'), 9999);
-		
 			
 			// We add an ajax call for the feedback classe
 			add_action('wp_ajax_send_feedback', array('feedbackSL','send_feedback')) ; 
@@ -114,12 +117,10 @@ if (!class_exists('pluginSedLex')) {
 		public function install () {
 			global $wpdb;
 			global $db_version;
-		
-			$table_name = $wpdb->prefix . $this->pluginID;
-			
+					
 			if (strlen(trim($this->tableSQL))>0) {
-				if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
-					$sql = "CREATE TABLE " . $table_name . " (".$this->tableSQL. ") DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+				if($wpdb->get_var("show tables like '".$this->table_name."'") != $this->table_name) {
+					$sql = "CREATE TABLE " . $this->table_name . " (".$this->tableSQL. ") DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 			
 					require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 					dbDelta($sql);
@@ -651,7 +652,7 @@ if (!class_exists('pluginSedLex')) {
 			ob_start() ; 
 			$params = new parametersSedLex ($this->frmk) ;
 			$params->add_title (__('Advanced options','SL_framework')) ; 
-			$params->add_param ("adv_param", __('Show the advanced options:','SL_framework'), "", "", array('adv_svn_login', 'adv_svn_pwd', 'adv_svn_author')) ; 
+			$params->add_param ("adv_param", __('Show the advanced options:','SL_framework'), "", "", array('adv_svn_login', 'adv_svn_pwd', 'adv_svn_author', 'adv_update_trans', 'adv_trans_login', 'adv_trans_pass', 'adv_trans_server')) ; 
 			$params->add_comment (__('Will display additionnal information on the plugin (including SVN features). Recommended for developpers which develop plugins with this framework.','SL_framework')) ; 
 			$params->add_param ("adv_doc", __('Show the developpers documentation:','SL_framework')) ; 
 			$params->add_comment (sprintf(__('You should register a new wordpress plugin first on %s.','SL_framework'),"<a href='http://wordpress.org/extend/plugins/add/'>Wordpress.org</a>")) ; 
@@ -663,7 +664,12 @@ if (!class_exists('pluginSedLex')) {
 			$params->add_comment (__('Your author name is the name that is displayed in your plugin.','SL_framework')) ; 
 			$params->add_param ("adv_update_trans", __('Do you want to udate the translations files when the plugin page is called:','SL_framework')) ; 
 			$params->add_comment (__('This is useful if you develop a plugin, thus you will see when new sentences need to be translated.','SL_framework')) ; 
-			
+			$params->add_param ("adv_trans_login", __('IMAP Login:','SL_framework')) ; 
+			$params->add_comment (__('This is useful if you want that the framework retrieve automatically the translations file into an IMAP mailbox','SL_framework')) ; 
+			$params->add_param ("adv_trans_pass", __('IMAP Password:','SL_framework')) ; 
+			$params->add_param ("adv_trans_server", __('IMAP Server:','SL_framework')) ; 
+			$params->add_comment (sprintf(__('Should be something like %s','SL_framework'), "<code>{imap.domain.fr:143}INBOX</code>")) ; 
+
 			echo $params->flush() ; 
 			$paramSave = ob_get_clean() ; 
 
@@ -1241,7 +1247,7 @@ if (!class_exists('pluginSedLex')) {
 			$plugin_name = wp_kses(trim($plugin_name[1]), $plugins_allowedtags);
 			$plugin_tag = wp_kses(trim($plugin_tag[1]), $plugins_allowedtags);
 			$plugin_uri = wp_kses(trim($plugin_uri[1]), $plugins_allowedtags);
-			$description = wp_kses(wptexturize(trim($description[1])), $plugins_allowedtags);
+			$description = wp_kses(trim($description[1]), $plugins_allowedtags);
 			$author = wp_kses(trim($author_name[1]), $plugins_allowedtags);
 			$author_uri = wp_kses(trim($author_uri[1]), $plugins_allowedtags);;
 			$author_email = wp_kses(trim($author_email[1]), $plugins_allowedtags);;
@@ -1309,41 +1315,37 @@ if (!class_exists('pluginSedLex')) {
 		/** ====================================================================================================================================================
 		* Ensure that the needed folders are writable by the webserver. 
 		* Will check usual folders and files.
-		* You may add this in your configuration page <code>$this->check_folder_rights( array(array($theFolderToCheck, "rwx")) ) ;</code>
+		* You may add this in your configuration page <code>$this->check_folder_rights( array(array($theFolderToCheck, "rw")) ) ;</code>
 		* If not a error msg is printed
 		* 
-		* @param array $folders list of array with a first element (the complete path of the folder to check) and a second element (the needed rights "r", "w" or "x" [or a combination of those])
+		* @param array $folders list of array with a first element (the complete path of the folder to check) and a second element (the needed rights "r", "w" [or a combination of those])
 		* @return void
 		*/
 		
 		public function check_folder_rights ($folders) {
-			$f = array(array(WP_CONTENT_DIR.'/sedlex/',"rwx"), 
+			$f = array(array(WP_CONTENT_DIR.'/sedlex/',"rw"), 
 					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'readme.txt',"rw"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'css/',"rx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/',"rx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'lang/',"rwx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/',"rx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/img/',"rx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/templates/',"rx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/lang/',"rwx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/js/',"rx"), 
-					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/css/',"rx")) ; 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'css/',"r"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/',"r"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'lang/',"rw"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/',"r"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/img/',"r"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/templates/',"r"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/lang/',"rw"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/js/',"r"), 
+					array(WP_PLUGIN_DIR.'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'core/css/',"r")) ; 
 			$folders = array_merge($folders, $f) ; 
 			
 			$result = "" ; 
 			foreach ($folders as $f ) {
 				if ( (is_dir($f[0])) || (is_file($f[0])) ) {
-					$readable = is_readable($f[0]) ; 
-					$writable = is_writable($f[0]) ; 
-					$executable = is_executable($f[0]) ; 
+					$readable = Utils::is_readable($f[0]) ; 
+					$writable = Utils::is_writable($f[0]) ; 
 					
 					@chmod($f[0], 0755) ; 
 					
 					$pb = false ; 
 					if ((strpos($f[1], "r")!==false) && (!$readable)) {
-						$pb = true ; 
-					}
-					if ((strpos($f[1], "x")!==false) && (!$executable)) {
 						$pb = true ; 
 					}
 					if ((strpos($f[1], "w")!==false) && (!$writable)) {
@@ -2193,6 +2195,9 @@ if (!class_exists('pluginSedLex')) {
 				case 'adv_svn_pwd' 		: return "" 		; break ; 
 				case 'adv_svn_author' 	: return "" 		; break ; 
 				case 'adv_update_trans'	: return false		; break ; 
+				case 'adv_trans_server'	: return ""			; break ; 
+				case 'adv_trans_login'	: return ""			; break ; 
+				case 'adv_trans_pass'	: return ""			; break ; 
 				case 'lang' 			: return "" 		; break ; 
 			}
 			return null ;

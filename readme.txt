@@ -24,7 +24,7 @@ You may configure (for the captcha):
 * The size of the image
 * The size of the letters
 * The slant of the letters
-* â¦
+* ...
 
 This plugin is under GPL licence
 
@@ -35,6 +35,7 @@ This plugin is under GPL licence
 * English (United States), default language
 * Spanish (Spain) translation provided by Krazz
 * French (France) translation provided by SedLex
+* Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
 * Russian (Russia) translation provided by IgorPulbere
 * Chinese (People's Republic of China) translation provided by bladin
@@ -68,6 +69,9 @@ Have fun !
 4. An error when detecting a spam
 
 == Changelog ==
+
+= 1.2.1 =
+* Update of the framework
 
 = 1.2.0 =
 * Major release of the framework
@@ -114,4 +118,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:c02d4ec18d080178d69b457a63365ce2
+InfoVersion:b226a57b93d22750c06e938205649e71
