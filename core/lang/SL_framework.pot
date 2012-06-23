@@ -1,696 +1,734 @@
 Content-Transfer-Encoding: 8bit
 
-#: core.class.php:235
-#: core.class.php:235
+#: core.class.php:327
+#: core.class.php:327
 #@ SL_framework
 msgid "About..."
 msgstr ""
 
-#: core.class.php:294
-#: core.class.php:315
-#: core.class.php:737
+#: core.class.php:385
+#: core.class.php:406
+#: core.class.php:899
 #@ SL_framework
 msgid "Settings"
 msgstr ""
 
-#: core.class.php:654
+#: core.class.php:803
+#@ SL_framework
+msgid "Log options"
+msgstr ""
+
+#: core.class.php:804
+#@ SL_framework
+msgid "What is the debug level:"
+msgstr ""
+
+#: core.class.php:805
+#@ SL_framework
+msgid "See the debug logs"
+msgstr ""
+
+#: core.class.php:806
+#@ SL_framework
+msgid "1=log only the critical errors;"
+msgstr ""
+
+#: core.class.php:807
+#@ SL_framework
+msgid "2=log only the critical errors and the standard errors;"
+msgstr ""
+
+#: core.class.php:808
+#@ SL_framework
+msgid "3=log only the critical errors, the standard errors and the warnings;"
+msgstr ""
+
+#: core.class.php:809
+#@ SL_framework
+msgid "4=log information;"
+msgstr ""
+
+#: core.class.php:810
+#@ SL_framework
+msgid "5=log verbose;"
+msgstr ""
+
+#: core.class.php:813
+#@ SL_framework
+msgid "Multisite Management"
+msgstr ""
+
+#: core.class.php:814
+#@ SL_framework
+msgid "Do you want to allow sub-blogs to modify the translations of the plugins:"
+msgstr ""
+
+#: core.class.php:815
+#@ SL_framework
+msgid "If this option is unchecked, the translation tab won't be displayed in the blog administration panel."
+msgstr ""
+
+#: core.class.php:818
 #@ SL_framework
 msgid "Advanced options"
 msgstr ""
 
-#: core.class.php:655
+#: core.class.php:819
 #@ SL_framework
 msgid "Show the advanced options:"
 msgstr ""
 
-#: core.class.php:656
+#: core.class.php:820
 #@ SL_framework
 msgid "Will display additionnal information on the plugin (including SVN features). Recommended for developpers which develop plugins with this framework."
 msgstr ""
 
-#: core.class.php:657
+#: core.class.php:821
 #@ SL_framework
 msgid "Show the developpers documentation:"
 msgstr ""
 
-#: core.class.php:658
+#: core.class.php:822
 #@ SL_framework
 msgid "You should register a new wordpress plugin first on %s."
 msgstr ""
 
-#: core.class.php:659
+#: core.class.php:823
 #@ SL_framework
 msgid "What is your SVN Login:"
 msgstr ""
 
-#: core.class.php:660
+#: core.class.php:824
 #@ SL_framework
 msgid "You should have an account on %s before. Thus, the login will be the same!"
 msgstr ""
 
-#: core.class.php:661
+#: core.class.php:825
 #@ SL_framework
 msgid "What is your SVN Password:"
 msgstr ""
 
-#: core.class.php:662
+#: core.class.php:826
 #@ SL_framework
 msgid "Same comment as above..."
 msgstr ""
 
-#: core.class.php:663
+#: core.class.php:827
 #@ SL_framework
 msgid "What is your Author Name:"
 msgstr ""
 
-#: core.class.php:664
+#: core.class.php:828
 #@ SL_framework
 msgid "Your author name is the name that is displayed in your plugin."
 msgstr ""
 
-#: core.class.php:665
+#: core.class.php:829
 #@ SL_framework
 msgid "Do you want to udate the translations files when the plugin page is called:"
 msgstr ""
 
-#: core.class.php:666
+#: core.class.php:830
 #@ SL_framework
 msgid "This is useful if you develop a plugin, thus you will see when new sentences need to be translated."
 msgstr ""
 
-#: core.class.php:667
+#: core.class.php:831
 #@ SL_framework
 msgid "IMAP Login:"
 msgstr ""
 
-#: core.class.php:668
+#: core.class.php:832
 #@ SL_framework
 msgid "This is useful if you want that the framework retrieve automatically the translations file into an IMAP mailbox"
 msgstr ""
 
-#: core.class.php:669
+#: core.class.php:833
 #@ SL_framework
 msgid "IMAP Password:"
 msgstr ""
 
-#: core.class.php:670
+#: core.class.php:834
 #@ SL_framework
 msgid "IMAP Server:"
 msgstr ""
 
-#: core.class.php:671
+#: core.class.php:835
 #@ SL_framework
 msgid "Should be something like %s"
 msgstr ""
 
-#: core.class.php:692
+#: core.class.php:855
 #@ SL_framework
 msgid "Summary page for the plugins developped with the SL framework"
 msgstr ""
 
-#: core.class.php:696
+#: core.class.php:859
 #@ SL_framework
 msgid "The core file used for the SedLex plugins is:"
 msgstr ""
 
-#: core.class.php:707
+#: core.class.php:870
 #@ SL_framework
 msgid "For now, you have installed %d  plugins including %d plugins developped with the 'SL framework':"
 msgstr ""
 
-#: core.class.php:719
-#: core.class.php:721
+#: core.class.php:882
+#: core.class.php:884
 #@ SL_framework
 msgid "Plugin name"
 msgstr ""
 
-#: core.class.php:719
-#: core.class.php:721
+#: core.class.php:882
+#: core.class.php:884
 #@ SL_framework
 msgid "Description"
 msgstr ""
 
-#: core.class.php:719
+#: core.class.php:882
 #@ SL_framework
-msgid "Status of the core"
+msgid "SVN Management"
 msgstr ""
 
-#: core.class.php:751
+#: core.class.php:902
+#@ SL_framework
+msgid "Update plugin information..."
+msgstr ""
+
+#: core.class.php:918
+#@ SL_framework
+msgid "There is a SQL database for this plugin"
+msgstr ""
+
+#: core.class.php:922
 #@ SL_framework
 msgid "Version: %s by %s"
 msgstr ""
 
-#: core.class.php:769
+#: core.class.php:935
+#: core.class.php:1450
+#: core/svn.class.php:860
+#@ SL_framework
+msgid "Getting SVN information..."
+msgstr ""
+
+#: core.class.php:950
 #@ SL_framework
 msgid "List of SL plugins"
 msgstr ""
 
-#: core.class.php:775
+#: core.class.php:959
 #@ SL_framework
 msgid "Parameters of the framework"
 msgstr ""
 
-#: core.class.php:786
+#: core.class.php:969
 #@ SL_framework
 msgid "The following description is a quick tutorial on about how to create a plugin with the SL framework. (Please note that the following description is in English for developpers, sorry for this inconvenience)"
 msgstr ""
 
-#: core.class.php:853
+#: core.class.php:1036
 #@ SL_framework
 msgid "How to develop a plugin?"
 msgstr ""
 
-#: core.class.php:877
+#: core.class.php:1060
 #@ SL_framework
 msgid "Framework documentation"
 msgstr ""
 
-#: core.class.php:887
+#: core.class.php:1075
 #@ SL_framework
 msgid "Manage translation of the framework"
 msgstr ""
 
-#: core.class.php:918
+#: core.class.php:1107
 #: core/otherplugins.class.php:165
 #@ SL_framework
 msgid "An Unexpected HTTP Error occurred during the API request."
 msgstr ""
 
-#: core.class.php:922
+#: core.class.php:1111
 #@ SL_framework
 msgid "This plugin does not seem to be hosted on the wordpress repository."
 msgstr ""
 
-#: core.class.php:924
+#: core.class.php:1113
 #: core/otherplugins.class.php:140
 #@ SL_framework
 msgid "The Wordpress page: %s"
 msgstr ""
 
-#: core.class.php:926
+#: core.class.php:1115
 #: core/otherplugins.class.php:170
 #@ SL_framework
 msgid "Last update:"
 msgstr ""
 
-#: core.class.php:927
+#: core.class.php:1116
 #: core/otherplugins.class.php:171
 #@ SL_framework
 msgid "Rating: %s"
 msgstr ""
 
-#: core.class.php:936
+#: core.class.php:1125
 #: core/otherplugins.class.php:180
 #@ SL_framework
 msgid "by %s persons"
 msgstr ""
 
-#: core.class.php:938
+#: core.class.php:1127
+#@ SL_framework
+msgid "Number of download: %s"
+msgstr ""
+
+#: core.class.php:1179
+#@ SL_framework
+msgid "An error occured when retrieving the version of the plugin on Wordpress.org. Please retry!"
+msgstr ""
+
+#: core.class.php:1198
+#@ SL_framework
+msgid "Update of the core ..."
+msgstr ""
+
+#: core.class.php:1199
+#@ SL_framework
+msgid "1) Update with the core of the %s plugin"
+msgstr ""
+
+#: core.class.php:1205
+#@ SL_framework
+msgid "1) The core of the plugin is up-to-date"
+msgstr ""
+
+#: core.class.php:1214
+#@ SL_framework
+msgid "2) Modify the version (but the files of plugin are unchanged)"
+msgstr ""
+
+#: core.class.php:1223
+#: core.class.php:1231
+#@ SL_framework
+msgid "2) Modify the version (the files of the plugin have been changed)"
+msgstr ""
+
+#: core.class.php:1238
+#@ SL_framework
+msgid "2) Modify the readme.txt (as the version has been already changed)"
+msgstr ""
+
+#: core.class.php:1251
+#@ SL_framework
+msgid "3) Update the SVN repository (without modifying the version)"
+msgstr ""
+
+#: core.class.php:1263
+#@ SL_framework
+msgid "3) Update the SVN repository (and release a new version %s)"
+msgstr ""
+
+#: core.class.php:1269
+#@ SL_framework
+msgid "Refresh"
+msgstr ""
+
+#: core.class.php:1324
+#@ SL_framework
+msgid "Change the plugin version for %s"
+msgstr ""
+
+#: core.class.php:1328
+#@ SL_framework
+msgid "Version number"
+msgstr ""
+
+#: core.class.php:1329
+#@ SL_framework
+msgid "The current version of the plugin %s is %s."
+msgstr ""
+
+#: core.class.php:1330
+#@ SL_framework
+msgid "Please modify the version:"
+msgstr ""
+
+#: core.class.php:1331
+#@ SL_framework
+msgid "Readme file"
+msgstr ""
+
+#: core.class.php:1332
+#@ SL_framework
+msgid "The current content of %s is:"
+msgstr ""
+
+#: core.class.php:1436
+#@ SL_framework
+msgid "The current text"
+msgstr ""
+
+#: core.class.php:1436
+#@ SL_framework
+msgid "The proposed text"
+msgstr ""
+
+#: core.class.php:1442
+#@ SL_framework
+msgid "Save these data"
+msgstr ""
+
+#: core.class.php:1445
+#@ SL_framework
+msgid "There is a problem with the header of %s. It appears that there is no Version header."
+msgstr ""
+
+#: core.class.php:1489
+#@ SL_framework
+msgid "The data has been saved. You may close this window."
+msgstr ""
+
+#: core.class.php:1751
+#@ SL_framework
+msgid "The folder %s is not %s !"
+msgstr ""
+
+#: core.class.php:1753
+#@ SL_framework
+msgid "The file %s is not %s !"
+msgstr ""
+
+#: core.class.php:1760
+#: core.class.php:1767
+#@ SL_framework
+msgid "The folder %s does not exists and cannot be created !"
+msgstr ""
+
+#: core.class.php:1772
+#@ SL_framework
+msgid "The file %s does not exists and cannot be created !"
+msgstr ""
+
+#: core.class.php:1779
+#@ SL_framework
+msgid "There are some issues with folders rights. Please corret them as soon as possible as they could induce bugs and instabilities."
+msgstr ""
+
+#: core.class.php:1779
+#@ SL_framework
+msgid "Please see below:"
+msgstr ""
+
+#: core/otherplugins.class.php:52
+#@ SL_framework
+msgid "Plugins that you may install"
+msgstr ""
+
+#: core/otherplugins.class.php:54
+#@ SL_framework
+msgid "The following plugins have been developed by the author and are not yet installed:"
+msgstr ""
+
+#: core/otherplugins.class.php:56
+#@ SL_framework
+msgid "Plugin not yet installed"
+msgstr ""
+
+#: core/otherplugins.class.php:56
+#: core/otherplugins.class.php:84
+#@ SL_framework
+msgid "Description and Screenshots"
+msgstr ""
+
+#: core/otherplugins.class.php:75
+#@ SL_framework
+msgid "All author's plugins have been installed. Thank you!"
+msgstr ""
+
+#: core/otherplugins.class.php:81
+#@ SL_framework
+msgid "Installed plugins"
+msgstr ""
+
+#: core/otherplugins.class.php:82
+#@ SL_framework
+msgid "You have already installed the following author's plugins:"
+msgstr ""
+
+#: core/otherplugins.class.php:84
+#@ SL_framework
+msgid "Plugin already installed"
+msgstr ""
+
 #: core/otherplugins.class.php:182
 #@ SL_framework
 msgid "Number of download:"
 msgstr ""
 
-#: core.class.php:964
+#: core/svn.class.php:689
 #@ SL_framework
-msgid "Update with the core of the %s plugin (only if you definitely know what you do)"
+msgid "Your credentials do not seem to be correct. Please check them!"
 msgstr ""
 
-#: core.class.php:974
+#: core/svn.class.php:693
 #@ SL_framework
-msgid "SVN management"
+msgid "This file have not been written in the repository due to server problem. Nevertheless, you should retry as it often works better with a second try !"
 msgstr ""
 
-#: core.class.php:975
+#: core/svn.class.php:803
 #@ SL_framework
-msgid "The SVN repository: %s"
+msgid "SVN client for %s"
 msgstr ""
 
-#: core.class.php:980
-#@ SL_framework
-msgid "An error occurs when requesting %s"
-msgstr ""
-
-#: core.class.php:983
-#@ SL_framework
-msgid "You do not seem to have a repository for Wordpress because %s returns a 404 error. Thus, ask for one here: %s"
-msgstr ""
-
-#: core.class.php:988
-#@ SL_framework
-msgid "The SVN repository is identical to your local plugin! You do not need to update..."
-msgstr ""
-
-#: core.class.php:998
-#@ SL_framework
-msgid "(Cannot check the version of the plugin due to HTTP Error occurred during the API request)"
-msgstr ""
-
-#: core.class.php:1009
-#@ SL_framework
-msgid "(If you update, a new version will be released, i.e. %s instead of %s)"
-msgstr ""
-
-#: core.class.php:1015
-#@ SL_framework
-msgid "The SVN repository is not identical to your local plugin!"
-msgstr ""
-
-#: core.class.php:1021
-#@ SL_framework
-msgid "General modifications:"
-msgstr ""
-
-#: core.class.php:1022
-#@ SL_framework
-msgid "Modify the version of the plugin and the readme.txt file"
-msgstr ""
-
-#: core.class.php:1028
-#@ SL_framework
-msgid "Overwrite the local plugin files with files stored the SVN repository"
-msgstr ""
-
-#: core.class.php:1029
-#: core.class.php:1040
-#@ SL_framework
-msgid "Quick"
-msgstr ""
-
-#: core.class.php:1030
-#: core.class.php:1041
-#@ SL_framework
-msgid "Slow"
-msgstr ""
-
-#: core.class.php:1038
-#@ SL_framework
-msgid "Update the SVN repository with your current local plugin files"
-msgstr ""
-
-#: core.class.php:1043
-#@ SL_framework
-msgid "Please modify the Version in %s in order to be allowed to commit it"
-msgstr ""
-
-#: core.class.php:1047
-#@ SL_framework
-msgid "The slow version may be useful if you have issues with the quick version."
-msgstr ""
-
-#: core.class.php:1310
-#@ SL_framework
-msgid "Last update of the core: %s at %s"
-msgstr ""
-
-#: core.class.php:1357
-#@ SL_framework
-msgid "The folder %s is not %s !"
-msgstr ""
-
-#: core.class.php:1359
-#@ SL_framework
-msgid "The file %s is not %s !"
-msgstr ""
-
-#: core.class.php:1366
-#: core.class.php:1373
-#@ SL_framework
-msgid "The folder %s does not exists and cannot be created !"
-msgstr ""
-
-#: core.class.php:1378
-#@ SL_framework
-msgid "The file %s does not exists and cannot be created !"
-msgstr ""
-
-#: core.class.php:1385
-#@ SL_framework
-msgid "There are some issues with folders rights. Please corret them as soon as possible as they could induce bugs and instabilities."
-msgstr ""
-
-#: core.class.php:1385
-#@ SL_framework
-msgid "Please see below:"
-msgstr ""
-
-#: core.class.php:1404
-#@ SL_framework
-msgid "Update the SVN repository %s with your current local plugin files (slower version)"
-msgstr ""
-
-#: core.class.php:1407
-#@ SL_framework
-msgid "Update the SVN repository %s with your current local plugin files"
-msgstr ""
-
-#: core.class.php:1410
-#@ SL_framework
-msgid "Overwrite the local plugin %s files with files stored the SVN repository"
-msgstr ""
-
-#: core.class.php:1428
-#: core.class.php:1474
+#: core/svn.class.php:822
 #@ SL_framework
 msgid "Updating the local cache"
 msgstr ""
 
-#: core.class.php:1435
-#: core.class.php:1492
+#: core/svn.class.php:829
 #@ SL_framework
 msgid "folder created"
 msgstr ""
 
-#: core.class.php:1437
-#: core.class.php:1494
+#: core/svn.class.php:831
 #@ SL_framework
 msgid "folder creation has failed !"
 msgstr ""
 
-#: core.class.php:1441
-#: core.class.php:1558
+#: core/svn.class.php:835
 #@ SL_framework
 msgid "%s bytes transfered"
 msgstr ""
 
-#: core.class.php:1462
+#: core/svn.class.php:849
 #@ SL_framework
 msgid "An error occurred during the retrieval of files on the server ! Sorry ..."
 msgstr ""
 
-#: core.class.php:1475
+#: core/svn.class.php:883
+#: core/svn.class.php:903
 #@ SL_framework
-msgid "To be sure that you compare the local plugin with the latest repoository files, it is necessary to download it locally. Please wait during the update (your are using the slow version which may be more reliable especially with big plugins)..."
+msgid "Local to SVN repository"
 msgstr ""
 
-#: core.class.php:1481
-#@ SL_framework
-msgid "Update of the files of the %s plugin in progress (%s files)"
-msgstr ""
-
-#: core.class.php:1521
-#@ SL_framework
-msgid "An error occurred when listing the files of the %s plugin ! Sorry ..."
-msgstr ""
-
-#: core.class.php:1582
-#: core.class.php:1619
-#@ SL_framework
-msgid "Browsing the modifications"
-msgstr ""
-
-#: core.class.php:1583
-#: core.class.php:1620
+#: core/svn.class.php:884
+#: core/svn.class.php:906
 #@ SL_framework
 msgid "Comparing %s with %s"
 msgstr ""
 
-#: core.class.php:1590
-#: core.class.php:1627
+#: core/svn.class.php:892
+#: core/svn.class.php:914
 #@ SL_framework
 msgid "Confirmation"
 msgstr ""
 
-#: core.class.php:1592
+#: core/svn.class.php:894
 #@ SL_framework
 msgid "Commit comment:"
 msgstr ""
 
-#: core.class.php:1594
+#: core/svn.class.php:896
 #@ SL_framework
 msgid "Yes, the SVN version will be deleted and be replaced by the local version"
 msgstr ""
 
-#: core.class.php:1629
+#: core/svn.class.php:905
+#: core/svn.class.php:923
+#@ SL_framework
+msgid "SVN repository to Local"
+msgstr ""
+
+#: core/svn.class.php:916
 #@ SL_framework
 msgid "Yes, the local version will be overwritten with the repository files"
 msgstr ""
 
-#: core.class.php:1654
+#: core/svn.class.php:947
 #@ SL_framework
 msgid "Sending to the repository in progress..."
 msgstr ""
 
-#: core.class.php:1663
+#: core/svn.class.php:1254
 #@ SL_framework
-msgid "Preparation of the sending done !"
+msgid "The commit has ended [ %s ]... You should received an email quickly ! You may close the window or wait for the automatic closing."
 msgstr ""
 
-#: core.class.php:1749
-#@ SL_framework
-msgid "Sending the file is finished ! Now merging the change in the repository ..."
-msgstr ""
-
-#: core.class.php:1763
-#@ SL_framework
-msgid "Error while preparing the sending!"
-msgstr ""
-
-#: core.class.php:1873
-#@ SL_framework
-msgid "The commit has ended [ %s ]... You should received an email quickly !"
-msgstr ""
-
-#: core.class.php:1875
+#: core/svn.class.php:1260
 #@ SL_framework
 msgid "The commit has ended but there is an error!"
 msgstr ""
 
-#: core.class.php:1894
+#: core/svn.class.php:1280
 #@ SL_framework
 msgid "Sending to the local files in progress..."
 msgstr ""
 
-#: core.class.php:1957
+#: core/svn.class.php:1343
 #@ SL_framework
 msgid "The rollback has ended ..."
 msgstr ""
 
-#: core.class.php:1980
-#@ SL_framework
-msgid "Change the plugin version for %s"
-msgstr ""
-
-#: core.class.php:1984
-#@ SL_framework
-msgid "Version number"
-msgstr ""
-
-#: core.class.php:1985
-#@ SL_framework
-msgid "The current version of the plugin %s is %s."
-msgstr ""
-
-#: core.class.php:1986
-#@ SL_framework
-msgid "Please modify the version:"
-msgstr ""
-
-#: core.class.php:1987
-#@ SL_framework
-msgid "Readme file"
-msgstr ""
-
-#: core.class.php:1988
-#@ SL_framework
-msgid "The current content of %s is:"
-msgstr ""
-
-#: core.class.php:2084
-#@ SL_framework
-msgid "Save these data"
-msgstr ""
-
-#: core.class.php:2089
-#@ SL_framework
-msgid "The current text"
-msgstr ""
-
-#: core.class.php:2089
-#@ SL_framework
-msgid "The proposed text"
-msgstr ""
-
-#: core.class.php:2095
-#@ SL_framework
-msgid "There is a problem with the header of %s. It appears that there is no Version header."
-msgstr ""
-
-#: core.class.php:2144
-#@ SL_framework
-msgid "The data has been saved. You may close this window."
-msgstr ""
-
-#: core/zip.class.php:23
-#@ SL_framework
-msgid "Error: %s function is not found"
-msgstr ""
-
-#: core/zip.class.php:111
-#: core/zip.class.php:179
-#: core/zip.class.php:218
-#: core/zip.class.php:295
-#: core/database.class.php:47
-#: core/database.class.php:96
-#: core/database.class.php:126
-#@ SL_framework
-msgid "The file %s cannot be read. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-#: core/zip.class.php:119
-#: core/zip.class.php:177
-#: core/zip.class.php:185
-#: core/zip.class.php:201
-#: core/zip.class.php:216
-#: core/zip.class.php:229
-#: core/zip.class.php:257
-#: core/zip.class.php:263
-#: core/zip.class.php:293
-#: core/zip.class.php:302
-#: core/zip.class.php:375
-#: core/zip.class.php:386
-#: core/zip.class.php:416
-#: core/zip.class.php:427
-#: core/zip.class.php:436
-#: core/zip.class.php:504
-#: core/zip.class.php:540
-#: core/zip.class.php:550
-#: core/zip.class.php:556
-#: core/zip.class.php:560
-#: core/database.class.php:55
-#: core/database.class.php:104
-#: core/database.class.php:179
-#: core/database.class.php:231
-#: core/database.class.php:234
-#@ SL_framework
-msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-#: core/zip.class.php:127
-#: core/database.class.php:63
-#@ SL_framework
-msgid "The folder %s cannot be opened. You should have a problem with folder permissions or security restrictions."
-msgstr ""
-
-#: core/zip.class.php:187
-#: core/database.class.php:101
-#@ SL_framework
-msgid "An other process is still running (it runs for %s seconds)"
-msgstr ""
-
-#: core/zip.class.php:203
-#: core/zip.class.php:259
-#: core/zip.class.php:377
-#: core/zip.class.php:388
-#: core/zip.class.php:418
-#: core/zip.class.php:429
-#: core/zip.class.php:438
-#: core/zip.class.php:506
-#: core/zip.class.php:542
-#: core/database.class.php:112
-#: core/database.class.php:175
-#: core/database.class.php:227
-#@ SL_framework
-msgid "The file %s cannot be modified/created. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-#: core/zip.class.php:231
-#: core/database.class.php:147
-#@ SL_framework
-msgid "The file %s cannot be created. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-#: core/zip.class.php:304
-#@ SL_framework
-msgid "The file %s cannot be compressed."
-msgstr ""
-
-#: core/zip.class.php:552
-#@ SL_framework
-msgid "The file %s cannot be renamed. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-#: core/parameters.class.php:83
-#: core/parameters.class.php:121
-#: core/parameters.class.php:148
-#@ SL_framework
-msgid "Parameters"
-msgstr ""
-
-#: core/parameters.class.php:86
-#@ SL_framework
-msgid "Here are the parameters of the plugin. Modify them at will to fit your needs."
-msgstr ""
-
-#: core/parameters.class.php:88
-#@ SL_framework
-msgid "Here are the parameters of the framework. Modify them at will to fit your needs."
-msgstr ""
-
-#: core/parameters.class.php:121
-#: core/parameters.class.php:148
-#@ SL_framework
-msgid "Values"
-msgstr ""
-
-#: core/parameters.class.php:194
+#: core/parameters.class.php:147
 #@ SL_framework
 msgid "Error: the submitted value is not an integer and thus, the parameter has not been updated!"
 msgstr ""
 
-#: core/parameters.class.php:207
-#@ SL_framework
-msgid "Warning: some characters have been removed because they are not allowed here"
-msgstr ""
-
-#: core/parameters.class.php:212
+#: core/parameters.class.php:160
 #@ SL_framework
 msgid "Error: the submitted string does not match the constrains"
 msgstr ""
 
-#: core/parameters.class.php:272
+#: core/parameters.class.php:209
 #@ SL_framework
 msgid "Error: the submitted file can not be uploaded!"
 msgstr ""
 
-#: core/parameters.class.php:280
+#: core/parameters.class.php:224
 #@ SL_framework
-msgid "Error: %s file already exists"
+msgid "Error: security issue!"
 msgstr ""
 
-#: core/parameters.class.php:334
+#: core/parameters.class.php:274
+#: core/parameters.class.php:312
+#: core/parameters.class.php:339
+#@ SL_framework
+msgid "Parameters"
+msgstr ""
+
+#: core/parameters.class.php:277
+#@ SL_framework
+msgid "Here are the parameters of the plugin. Modify them at will to fit your needs."
+msgstr ""
+
+#: core/parameters.class.php:279
+#@ SL_framework
+msgid "Here are the parameters of the framework. Modify them at will to fit your needs."
+msgstr ""
+
+#: core/parameters.class.php:312
+#: core/parameters.class.php:339
+#@ SL_framework
+msgid "Values"
+msgstr ""
+
+#: core/parameters.class.php:382
+#@ SL_framework
+msgid "Warning: some characters have been removed because they are not allowed here"
+msgstr ""
+
+#: core/parameters.class.php:438
 #@ SL_framework
 msgid "(integer)"
 msgstr ""
 
-#: core/parameters.class.php:491
+#: core/parameters.class.php:595
 #@ SL_framework
 msgid "(If you want to delete this file, please check this box %s)"
 msgstr ""
 
-#: core/parameters.class.php:511
+#: core/parameters.class.php:615
 #@ SL_framework
 msgid "Update"
 msgstr ""
 
-#: core/parameters.class.php:523
+#: core/parameters.class.php:627
 #@ SL_framework
 msgid "Some parameters have not been updated due to errors (see below)!"
 msgstr ""
 
-#: core/parameters.class.php:529
+#: core/parameters.class.php:633
 #@ SL_framework
 msgid "Parameters have been updated (but with some warnings)!"
 msgstr ""
 
-#: core/parameters.class.php:535
+#: core/parameters.class.php:639
 #@ SL_framework
 msgid "Parameters have been updated successfully!"
 msgstr ""
 
-#: core/popup.class.php:74
+#: core/utils.class.php:145
 #@ SL_framework
-msgid "Close popup"
+msgid "KB"
+msgstr ""
+
+#: core/utils.class.php:149
+#@ SL_framework
+msgid "MB"
+msgstr ""
+
+#: core/utils.class.php:152
+#@ SL_framework
+msgid "GB"
+msgstr ""
+
+#: core/feedback.class.php:34
+#@ SL_framework
+msgid "Feedback form"
+msgstr ""
+
+#: core/feedback.class.php:35
+#@ SL_framework
+msgid "This form is an easy way to contact the author and to discuss issues/incompatibilities/etc. with him"
+msgstr ""
+
+#: core/feedback.class.php:42
+#@ SL_framework
+msgid "Contact the author"
+msgstr ""
+
+#: core/feedback.class.php:44
+#: core/translation.class.php:220
+#: core/translation.class.php:330
+#@ SL_framework
+msgid "Your name:"
+msgstr ""
+
+#: core/feedback.class.php:48
+#@ SL_framework
+msgid "Your email:"
+msgstr ""
+
+#: core/feedback.class.php:48
+#@ SL_framework
+msgid "Useful... so that the author will be able to anwser you."
+msgstr ""
+
+#: core/feedback.class.php:52
+#@ SL_framework
+msgid "Your comments:"
+msgstr ""
+
+#: core/feedback.class.php:52
+#@ SL_framework
+msgid "Please note that additional information on your wordpress installation will be sent to the author in order to help the debugging if needed (such as : the wordpress version, the installed plugins, etc.)"
+msgstr ""
+
+#: core/feedback.class.php:58
+#@ SL_framework
+msgid "Send feedback"
+msgstr ""
+
+#: core/feedback.class.php:63
+#@ SL_framework
+msgid "No email have been provided for the author of this plugin. Therefore, the feedback is impossible"
+msgstr ""
+
+#: core/feedback.class.php:150
+#@ SL_framework
+msgid "The feedback has been sent"
+msgstr ""
+
+#: core/feedback.class.php:155
+#: core/translation.class.php:988
+#@ SL_framework
+msgid "An error occured sending the email."
+msgstr ""
+
+#: core/feedback.class.php:155
+#: core/translation.class.php:988
+#@ SL_framework
+msgid "Make sure that your wordpress is able to send email."
 msgstr ""
 
 #: core/translation.class.php:141
@@ -725,7 +763,7 @@ msgstr ""
 
 #: core/translation.class.php:201
 #: core/translation.class.php:254
-#: core/translation.class.php:741
+#: core/translation.class.php:747
 #@ SL_framework
 msgid "Sentence to translate"
 msgstr ""
@@ -734,13 +772,6 @@ msgstr ""
 #: core/translation.class.php:254
 #@ SL_framework
 msgid "Translation"
-msgstr ""
-
-#: core/translation.class.php:220
-#: core/translation.class.php:330
-#: core/feedback.class.php:44
-#@ SL_framework
-msgid "Your name:"
 msgstr ""
 
 #: core/translation.class.php:220
@@ -769,340 +800,431 @@ msgstr ""
 msgid "Modify the translation files"
 msgstr ""
 
-#: core/translation.class.php:550
+#: core/translation.class.php:553
 #@ SL_framework
 msgid "The file %s cannot be extracted from mail attachments"
 msgstr ""
 
-#: core/translation.class.php:555
+#: core/translation.class.php:558
 #@ SL_framework
 msgid "The file %s cannot be written in the %s folder"
 msgstr ""
 
-#: core/translation.class.php:558
+#: core/translation.class.php:561
 #@ SL_framework
 msgid "The file %s has been imported in the %s folder"
 msgstr ""
 
-#: core/translation.class.php:577
-#: core/translation.class.php:579
+#: core/translation.class.php:580
+#: core/translation.class.php:582
 #@ SL_framework
 msgid "Plugin"
 msgstr ""
 
-#: core/translation.class.php:577
-#: core/translation.class.php:579
-#: core/translation.class.php:1432
-#: core/translation.class.php:1770
-#: core/translation.class.php:2033
+#: core/translation.class.php:580
+#: core/translation.class.php:582
+#: core/translation.class.php:1439
+#: core/translation.class.php:1783
+#: core/translation.class.php:2046
 #@ SL_framework
 msgid "Language"
 msgstr ""
 
-#: core/translation.class.php:577
-#: core/translation.class.php:579
-#: core/translation.class.php:1432
+#: core/translation.class.php:580
+#: core/translation.class.php:582
+#: core/translation.class.php:1439
 #@ SL_framework
 msgid "Information"
 msgstr ""
 
-#: core/translation.class.php:604
-#: core/translation.class.php:945
-#: core/translation.class.php:1823
-#: core/translation.class.php:2086
+#: core/translation.class.php:608
+#: core/translation.class.php:950
+#: core/translation.class.php:1836
+#: core/translation.class.php:2099
 #@ SL_framework
 msgid "%s sentences have been translated (i.e. %s)."
 msgstr ""
 
-#: core/translation.class.php:605
-#: core/translation.class.php:620
+#: core/translation.class.php:609
+#: core/translation.class.php:624
 #@ SL_framework
 msgid "Delete"
 msgstr ""
 
-#: core/translation.class.php:606
+#: core/translation.class.php:610
 #@ SL_framework
 msgid "Import"
 msgstr ""
 
-#: core/translation.class.php:619
+#: core/translation.class.php:623
 #@ SL_framework
 msgid "%s sentences have been newly translated and %s sentences have been modified (the old file has %s translated sentences)."
 msgstr ""
 
-#: core/translation.class.php:622
+#: core/translation.class.php:626
 #@ SL_framework
 msgid "See modifications and Merge"
 msgstr ""
 
-#: core/translation.class.php:624
-#: core/translation.class.php:769
+#: core/translation.class.php:628
+#: core/translation.class.php:775
 #@ SL_framework
 msgid "Merge"
 msgstr ""
 
-#: core/translation.class.php:638
+#: core/translation.class.php:643
 #@ SL_framework
 msgid "New translations are available"
 msgstr ""
 
-#: core/translation.class.php:642
+#: core/translation.class.php:647
 #@ SL_framework
 msgid "Updates of translations are available"
 msgstr ""
 
-#: core/translation.class.php:708
+#: core/translation.class.php:714
 #@ SL_framework
 msgid "What are the differences between these two files?"
 msgstr ""
 
-#: core/translation.class.php:741
+#: core/translation.class.php:747
 #@ SL_framework
 msgid "Old sentence"
 msgstr ""
 
-#: core/translation.class.php:741
+#: core/translation.class.php:747
 #@ SL_framework
 msgid "New sentence"
 msgstr ""
 
-#: core/translation.class.php:741
+#: core/translation.class.php:747
 #@ SL_framework
 msgid "To replace?"
 msgstr ""
 
-#: core/translation.class.php:947
-#: core/translation.class.php:1825
-#: core/translation.class.php:2088
+#: core/translation.class.php:952
+#: core/translation.class.php:1838
+#: core/translation.class.php:2101
 #@ SL_framework
 msgid "%s sentences have been translated (i.e. %s) %s %s sentences have to be checked because they are close (but not identical) to those to translate.%s"
 msgstr ""
 
-#: core/translation.class.php:977
+#: core/translation.class.php:983
 #@ SL_framework
 msgid "The translation %s have been sent"
 msgstr ""
 
-#: core/translation.class.php:981
-#: core/feedback.class.php:153
-#@ SL_framework
-msgid "An error occured sending the email."
-msgstr ""
-
-#: core/translation.class.php:981
-#: core/feedback.class.php:153
-#@ SL_framework
-msgid "Make sure that your wordpress is able to send email."
-msgstr ""
-
-#: core/translation.class.php:1132
-#: core/translation.class.php:1135
+#: core/translation.class.php:1139
+#: core/translation.class.php:1142
 #@ SL_framework
 msgid "%s file has been updated for %s"
-msgstr ""
-
-#: core/translation.class.php:1133
-#: core/translation.class.php:1136
-#@ SL_framework
-msgid "%s file has been updated from this file"
 msgstr ""
 
 #: core/translation.class.php:1140
 #: core/translation.class.php:1143
 #@ SL_framework
+msgid "%s file has been updated from this file"
+msgstr ""
+
+#: core/translation.class.php:1147
+#: core/translation.class.php:1150
+#@ SL_framework
 msgid "%s file has been created with a new translation for %s"
 msgstr ""
 
-#: core/translation.class.php:1141
-#: core/translation.class.php:1144
+#: core/translation.class.php:1148
+#: core/translation.class.php:1151
 #@ SL_framework
 msgid "%s file has been created from this file"
 msgstr ""
 
-#: core/translation.class.php:1163
+#: core/translation.class.php:1170
 #@ SL_framework
 msgid "If you do not want to loose your translations on the next upgrading of this plugin, it is recommended to send the translation files to the author by clicking %s here %s !"
 msgstr ""
 
-#: core/translation.class.php:1165
+#: core/translation.class.php:1172
 #@ SL_framework
 msgid "If you do not want to loose your translations on the next upgrading of this plugin, please save them on your hard disk before upgrading and then restore them after the upgrade !"
 msgstr ""
 
-#: core/translation.class.php:1430
+#: core/translation.class.php:1437
 #@ SL_framework
 msgid "The following languages may be used by your Wordpress installation."
 msgstr ""
 
-#: core/translation.class.php:1442
+#: core/translation.class.php:1449
 #@ SL_framework
 msgid "There is a need to update the list of available translation at the Wordpress repository because no information are available for the version of Wordpress (i.e. %s)."
 msgstr ""
 
-#: core/translation.class.php:1443
+#: core/translation.class.php:1450
 #@ SL_framework
 msgid "Update the list of translations"
 msgstr ""
 
-#: core/translation.class.php:1485
-#: core/translation.class.php:1800
+#: core/translation.class.php:1492
+#: core/translation.class.php:1813
 #@ SL_framework
 msgid "This is the default language of the plugin. It cannot be modified."
 msgstr ""
 
-#: core/translation.class.php:1487
+#: core/translation.class.php:1494
 #@ SL_framework
 msgid "Re-download"
 msgstr ""
 
-#: core/translation.class.php:1493
+#: core/translation.class.php:1500
 #@ SL_framework
 msgid "Last update: %s"
 msgstr ""
 
-#: core/translation.class.php:1502
+#: core/translation.class.php:1509
 #@ SL_framework
 msgid "Download a new translation"
 msgstr ""
 
-#: core/translation.class.php:1503
+#: core/translation.class.php:1510
 #@ SL_framework
 msgid "You may download a new translation from Wordpress.org"
 msgstr ""
 
-#: core/translation.class.php:1526
+#: core/translation.class.php:1533
 #@ SL_framework
 msgid "Download"
 msgstr ""
 
-#: core/translation.class.php:1532
+#: core/translation.class.php:1539
 #@ SL_framework
 msgid "Change the default language used"
 msgstr ""
 
-#: core/translation.class.php:1533
+#: core/translation.class.php:1540
 #@ SL_framework
 msgid "If you want to modify the default language of the dashboad, and thus of the plugin, please select your language here:"
 msgstr ""
 
-#: core/translation.class.php:1565
+#: core/translation.class.php:1572
 #@ SL_framework
 msgid "Set the language"
 msgstr ""
 
-#: core/translation.class.php:1627
 #: core/translation.class.php:1636
+#: core/translation.class.php:1647
 #@ SL_framework
 msgid "The file %s has been downloaded (version %s)"
 msgstr ""
 
-#: core/translation.class.php:1629
-#: core/translation.class.php:1638
+#: core/translation.class.php:1639
+#: core/translation.class.php:1650
 #@ SL_framework
 msgid "The file %s cannot be stored in %s. Check permissions."
 msgstr ""
 
-#: core/translation.class.php:1651
+#: core/translation.class.php:1663
 #@ SL_framework
 msgid "The translations files do not exists ... it is strange!"
 msgstr ""
 
-#: core/translation.class.php:1754
+#: core/translation.class.php:1767
 #@ SL_framework
 msgid "The sentences used in this plugin are in English. Help the others users using the same language as you by translating this plugin."
 msgstr ""
 
-#: core/translation.class.php:1755
+#: core/translation.class.php:1768
 #@ SL_framework
 msgid "This plugin is available in %d languages."
 msgstr ""
 
-#: core/translation.class.php:1765
+#: core/translation.class.php:1778
 #@ SL_framework
 msgid "There are %d sentences to be translated in this plugin."
 msgstr ""
 
-#: core/translation.class.php:1770
-#: core/translation.class.php:2033
+#: core/translation.class.php:1783
+#: core/translation.class.php:2046
 #@ SL_framework
 msgid "Ratio %"
 msgstr ""
 
-#: core/translation.class.php:1770
-#: core/translation.class.php:2033
+#: core/translation.class.php:1783
+#: core/translation.class.php:2046
 #@ SL_framework
 msgid "Translators"
 msgstr ""
 
-#: core/translation.class.php:1816
-#: core/translation.class.php:2079
+#: core/translation.class.php:1829
+#: core/translation.class.php:2092
 #@ SL_framework
 msgid "Modify"
 msgstr ""
 
-#: core/translation.class.php:1818
+#: core/translation.class.php:1831
 #@ SL_framework
 msgid "Send to the author of the plugin"
 msgstr ""
 
-#: core/translation.class.php:1839
-#: core/translation.class.php:2102
+#: core/translation.class.php:1852
+#: core/translation.class.php:2115
 #@ SL_framework
 msgid "Add a new translation"
-msgstr ""
-
-#: core/translation.class.php:1840
-#: core/translation.class.php:2103
-#@ SL_framework
-msgid "You may add a new translation hereafter (Please note that it is recommended to send your translation to the author so that he would be able to add your translation to the future release of the plugin !)"
 msgstr ""
 
 #: core/translation.class.php:1853
 #: core/translation.class.php:2116
 #@ SL_framework
+msgid "You may add a new translation hereafter (Please note that it is recommended to send your translation to the author so that he would be able to add your translation to the future release of the plugin !)"
+msgstr ""
+
+#: core/translation.class.php:1866
+#: core/translation.class.php:2129
+#@ SL_framework
 msgid "Add"
 msgstr ""
 
-#: core/translation.class.php:2017
+#: core/translation.class.php:2030
 #@ SL_framework
 msgid "The 'SL framework' is a framework used for developping many plugins like this one. Thus, if you participate translating the framework, it will be very helpful for a bunch of plugins."
 msgstr ""
 
-#: core/translation.class.php:2018
+#: core/translation.class.php:2031
 #@ SL_framework
 msgid "There is %d languages supported for the 'SL framework'."
 msgstr ""
 
-#: core/translation.class.php:2028
+#: core/translation.class.php:2041
 #@ SL_framework
 msgid "There is %d sentence to be translated in the framework."
 msgstr ""
 
-#: core/translation.class.php:2063
+#: core/translation.class.php:2076
 #@ SL_framework
 msgid "This is the default language of the plugin framework. It cannot be modified."
 msgstr ""
 
-#: core/translation.class.php:2081
+#: core/translation.class.php:2094
 #@ SL_framework
 msgid "Send to the author of the framework"
 msgstr ""
 
-#: core/folder_diff.class.php:139
-#: core/folder_diff.class.php:247
+#: core/folder_diff.class.php:150
+#: core/folder_diff.class.php:192
 #@ SL_framework
 msgid "Select all"
 msgstr ""
 
-#: core/folder_diff.class.php:140
-#: core/folder_diff.class.php:248
+#: core/folder_diff.class.php:151
+#: core/folder_diff.class.php:193
 #@ SL_framework
 msgid "Un-select all"
 msgstr ""
 
-#: core/database.class.php:171
+#: core/zip.class.php:24
+#@ SL_framework
+msgid "Error: %s function is not found"
+msgstr ""
+
+#: core/zip.class.php:114
+#: core/zip.class.php:186
+#: core/zip.class.php:232
+#: core/zip.class.php:433
+#: core/database.class.php:54
+#: core/database.class.php:103
+#: core/database.class.php:133
+#@ SL_framework
+msgid "The file %s cannot be read. You should have a problem with file permissions or security restrictions."
+msgstr ""
+
+#: core/zip.class.php:123
+#: core/zip.class.php:183
+#: core/zip.class.php:193
+#: core/zip.class.php:211
+#: core/zip.class.php:230
+#: core/zip.class.php:252
+#: core/zip.class.php:316
+#: core/zip.class.php:352
+#: core/zip.class.php:386
+#: core/zip.class.php:395
+#: core/zip.class.php:431
+#: core/zip.class.php:444
+#: core/zip.class.php:527
+#: core/zip.class.php:545
+#: core/zip.class.php:570
+#: core/zip.class.php:587
+#: core/zip.class.php:600
+#: core/zip.class.php:665
+#: core/zip.class.php:706
+#: core/zip.class.php:722
+#: core/zip.class.php:735
+#: core/zip.class.php:757
+#: core/zip.class.php:768
+#: core/zip.class.php:770
+#: core/zip.class.php:777
+#: core/database.class.php:62
+#: core/database.class.php:111
+#: core/database.class.php:186
+#: core/database.class.php:238
+#: core/database.class.php:241
+#@ SL_framework
+msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
+msgstr ""
+
+#: core/zip.class.php:132
+#: core/database.class.php:70
+#@ SL_framework
+msgid "The folder %s cannot be opened. You should have a problem with folder permissions or security restrictions."
+msgstr ""
+
+#: core/zip.class.php:196
+#: core/database.class.php:108
+#@ SL_framework
+msgid "An other process is still running (it runs for %s seconds)"
+msgstr ""
+
+#: core/zip.class.php:213
+#: core/zip.class.php:318
+#: core/zip.class.php:354
+#: core/zip.class.php:388
+#: core/zip.class.php:529
+#: core/zip.class.php:547
+#: core/zip.class.php:572
+#: core/zip.class.php:589
+#: core/zip.class.php:602
+#: core/zip.class.php:667
+#: core/zip.class.php:708
+#: core/zip.class.php:724
+#: core/database.class.php:119
+#: core/database.class.php:182
+#: core/database.class.php:234
+#@ SL_framework
+msgid "The file %s cannot be modified/created. You should have a problem with file permissions or security restrictions."
+msgstr ""
+
+#: core/zip.class.php:254
+#: core/database.class.php:154
+#@ SL_framework
+msgid "The file %s cannot be created. You should have a problem with file permissions or security restrictions."
+msgstr ""
+
+#: core/zip.class.php:446
+#@ SL_framework
+msgid "The file %s cannot be compressed."
+msgstr ""
+
+#: core/zip.class.php:737
+#: core/zip.class.php:759
+#@ SL_framework
+msgid "The file %s cannot be renamed. You should have a problem with file permissions or security restrictions."
+msgstr ""
+
+#: core/database.class.php:178
 #@ SL_framework
 msgid "The file %s cannot be modified. You should have a problem with file permissions or security restrictions."
+msgstr ""
+
+#: core/popup.class.php:74
+#@ SL_framework
+msgid "Close popup"
 msgstr ""
 
 #: core/phpdoc.class.php:238
@@ -1184,121 +1306,5 @@ msgstr ""
 #: core/phpdoc.class.php:373
 #@ SL_framework
 msgid "[CLASS]"
-msgstr ""
-
-#: core/utils.class.php:123
-#@ SL_framework
-msgid "KB"
-msgstr ""
-
-#: core/utils.class.php:127
-#@ SL_framework
-msgid "MB"
-msgstr ""
-
-#: core/utils.class.php:130
-#@ SL_framework
-msgid "GB"
-msgstr ""
-
-#: core/feedback.class.php:34
-#@ SL_framework
-msgid "Feedback form"
-msgstr ""
-
-#: core/feedback.class.php:35
-#@ SL_framework
-msgid "This form is an easy way to contact the author and to discuss issues/incompatibilities/etc. with him"
-msgstr ""
-
-#: core/feedback.class.php:42
-#@ SL_framework
-msgid "Contact the author"
-msgstr ""
-
-#: core/feedback.class.php:48
-#@ SL_framework
-msgid "Your email:"
-msgstr ""
-
-#: core/feedback.class.php:48
-#@ SL_framework
-msgid "Useful... so that the author will be able to anwser you."
-msgstr ""
-
-#: core/feedback.class.php:52
-#@ SL_framework
-msgid "Your comments:"
-msgstr ""
-
-#: core/feedback.class.php:52
-#@ SL_framework
-msgid "Please note that additional information on your wordpress installation will be sent to the author in order to help the debugging if needed (such as : the wordpress version, the installed plugins, etc.)"
-msgstr ""
-
-#: core/feedback.class.php:58
-#@ SL_framework
-msgid "Send feedback"
-msgstr ""
-
-#: core/feedback.class.php:63
-#@ SL_framework
-msgid "No email have been provided for the author of this plugin. Therefore, the feedback is impossible"
-msgstr ""
-
-#: core/feedback.class.php:149
-#@ SL_framework
-msgid "The feedback has been sent"
-msgstr ""
-
-#: core/otherplugins.class.php:52
-#@ SL_framework
-msgid "Plugins that you may install"
-msgstr ""
-
-#: core/otherplugins.class.php:54
-#@ SL_framework
-msgid "The following plugins have been developed by the author and are not yet installed:"
-msgstr ""
-
-#: core/otherplugins.class.php:56
-#@ SL_framework
-msgid "Plugin not yet installed"
-msgstr ""
-
-#: core/otherplugins.class.php:56
-#: core/otherplugins.class.php:84
-#@ SL_framework
-msgid "Description and Screenshots"
-msgstr ""
-
-#: core/otherplugins.class.php:75
-#@ SL_framework
-msgid "All author's plugins have been installed. Thank you!"
-msgstr ""
-
-#: core/otherplugins.class.php:81
-#@ SL_framework
-msgid "Installed plugins"
-msgstr ""
-
-#: core/otherplugins.class.php:82
-#@ SL_framework
-msgid "You have already installed the following author's plugins:"
-msgstr ""
-
-#: core/otherplugins.class.php:84
-#@ SL_framework
-msgid "Plugin already installed"
-msgstr ""
-
-#: core/svn.class.php:688
-#@ SL_framework
-msgid "Your credentials do not seem to be correct. Please check them!"
-msgstr ""
-
-#: core/svn.class.php:692
-#@ SL_framework
-msgid "This file have not been written in the repository due to server problem. Nevertheless, you should retry as it often works better with a second try !"
 msgstr ""
 

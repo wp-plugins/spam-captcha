@@ -10,14 +10,21 @@ VersionInclude : 3.0
 if (!class_exists("SL_Database")) {
 	class SL_Database {
 		
-		function SL_Database() {
+		/** ====================================================================================================================================================
+		* Constructor
+		* 
+		* @param string $filter the beginning of the table name for instance "wp3_" for the tables of the blog n°3. If not provided, it will take all tables
+		*/
+
+		function SL_Database($filter="") {
 			$this->starttime = microtime(true) ; 
+			$this->filter = $filter ; 
 		}
 		
 		/** ====================================================================================================================================================
 		* Return the progression ratio
 		* 
-		* @param $file the sql file that is being created
+		* @param string $file the sql file that is being created
 		* @return string the progress nb_table_extracted/nb_table
 		*/
 		
@@ -131,7 +138,7 @@ if (!class_exists("SL_Database")) {
 				$entete .= "-- ".DB_NAME." - ".date("d-M-Y")."\n";
 				$entete .= "-- -----------------------------------------------\n";
 				
-				$list_table = $wpdb->get_results("show tables", ARRAY_N);
+				$list_table = $wpdb->get_results("show tables LIKE '".$this->filter."%'", ARRAY_N);
 				$nb_entry_total = 0 ; 
 				$nb_entry_current = 0 ; 
 				foreach ($list_table as $table) {

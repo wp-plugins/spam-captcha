@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr
 Plugin URI: http://wordpress.org/extend/plugins/spam-captcha/
 Tags: spam, captcha, comments, comment, akismet, block
 Requires at least: 3.0
-Tested up to: 3.3.1
+Tested up to: 3.4
 Stable tag: trunk
 
 This plugins avoids spam actions on your website (comments and contact form).
@@ -28,15 +28,21 @@ You may configure (for the captcha):
 
 This plugin is under GPL licence
 
+= Multisite - Wordpress MU =
+
+This plugin works with multisite installation of Wordpress.
+
 = Localization =
 
+* Azeri (Latin) (Azerbaijan) translation provided by BayBakVoiceofaNation
 * Czech (Czech Republic) translation provided by SedLex, Kumerson
 * German (Germany) translation provided by Diego
 * English (United States), default language
-* Spanish (Spain) translation provided by Krazz
+* Spanish (Spain) translation provided by Krazz, admin
 * French (France) translation provided by SedLex
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
+* Portuguese (Brazil) translation provided by MarcosAndrade, AdrianaVandoni
 * Russian (Russia) translation provided by IgorPulbere
 * Chinese (People's Republic of China) translation provided by bladin
 
@@ -67,8 +73,13 @@ Have fun !
 2. The configuration page of the plugin
 3. An error when mistyping a captcha
 4. An error when detecting a spam
+5. Spam Report
 
 == Changelog ==
+
+= 1.2.2 =
+* Add a preview of the CAPCTHA
+* Add a chart to summarize the action
 
 = 1.2.1 =
 * Update of the framework
@@ -76,39 +87,23 @@ Have fun !
 = 1.2.0 =
 * Major release of the framework
 
-= 1.1.5 =
+= 1.1.0 -&gt; 1.1.5 =
 * Path issue
-
-= 1.1.4 =
 * Improve English text thanks to Rene
-
-= 1.1.3 =
 * Spanish translation (by Krazz)
-
-= 1.1.2 =
 * Russian translation (by IgorPulbere)
-
-= 1.1.1 =
 * Japanese translation (by Hasegawa)
 * Update of the core
-
-= 1.1.0 =
 * SVN support
 * Chinese translation added by Bladin
 
-= 1.0.4 =
+= 1.0.0 -&gt; 1.0.4 =
 * Core update
 * German translation added by Diego
-
-= 1.0.3 =
 * Correction of a bug when submitting a comment from the admin panel
-
-= 1.0.2 =
 * Captcha may be enable with logged users
 * Add Czech translation (thanks to Kumerson)
 * Add French translation
-
-= 1.0.1 =
 * First release (thank you for your feedback)
 
 == Frequently Asked Questions ==
@@ -118,4 +113,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:b226a57b93d22750c06e938205649e71
+InfoVersion:6840b23775e7a5825be1aaae10c2fd79

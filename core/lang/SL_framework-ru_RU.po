@@ -4,11 +4,13 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-02-03T09:27:47+00:00\n"
+"PO-Revision-Date: 2012-04-21T19:22:40+00:00\n"
 "Last-Translator: Limych <http://khrolenok.ru/>\n"
 "Last-Translator: Pacifik <http://www.androiddeveloper.ru>\n"
 "Last-Translator: Slawka <http://eth0.org.ru>\n"
 "Last-Translator: alexmv <>\n"
+"Last-Translator: rad96 <rad@kontur.tk>\n"
+"Last-Translator: vyachek <vyachek@op.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,12 +64,6 @@ msgstr "Ваше имя автора:"
 msgid "Your author name is the name that is displayed in your plugin."
 msgstr "Имя автора будет отображается в информации о Вашем плагине."
 
-msgid "Do you want to udate the translations files when the plugin page is called:"
-msgstr ""
-
-msgid "This is useful if you develop a plugin, thus you will see when new sentences need to be translated."
-msgstr ""
-
 msgid "Summary page for the plugins developped with the SL framework"
 msgstr "Страница сводной информации для плагинов разработанных на основе фреймфорка SL"
 
@@ -85,9 +81,6 @@ msgstr "Описание"
 
 msgid "Status of the core"
 msgstr "Состояние ядра"
-
-msgid "Version: %s by %s"
-msgstr ""
 
 msgid "List of SL plugins"
 msgstr "Список плагинов SL"
@@ -140,9 +133,6 @@ msgstr "SVN-репозиторий: %s"
 msgid "An error occurs when requesting %s"
 msgstr "Ошибка при запросе %s"
 
-msgid "You do not seem to have a repository for Wordpress because %s returns a 404 error. Thus, ask for one here: %s"
-msgstr ""
-
 msgid "The SVN repository is identical to your local plugin! You do not need to update..."
 msgstr "Ваш локальный файл идентичен файлу в репозитории SVN. Нет необходимости в обновлении…"
 
@@ -173,36 +163,6 @@ msgstr "Медленно"
 msgid "Update the SVN repository with your current local plugin files"
 msgstr "Обновить SVN-репозиторий вашими текущими файлами плагина"
 
-msgid "Please modify the Version in %s in order to be allowed to commit it"
-msgstr ""
-
-msgid "The slow version may be useful if you have issues with the quick version."
-msgstr ""
-
-msgid "Last update of the core: %s at %s"
-msgstr ""
-
-msgid "The folder %s is not %s !"
-msgstr ""
-
-msgid "The file %s is not %s !"
-msgstr ""
-
-msgid "The folder %s does not exists and cannot be created !"
-msgstr ""
-
-msgid "The file %s does not exists and cannot be created !"
-msgstr ""
-
-msgid "There are some issues with folders rights. Please corret them as soon as possible as they could induce bugs and instabilities."
-msgstr ""
-
-msgid "Please see below:"
-msgstr ""
-
-msgid "Update the SVN repository %s with your current local plugin files (slower version)"
-msgstr ""
-
 msgid "Update the SVN repository %s with your current local plugin files"
 msgstr "Обновить SVN-репозиторий %s вашими текущими файлами плагина"
 
@@ -221,23 +181,8 @@ msgstr "не удалось создать каталог !"
 msgid "%s bytes transfered"
 msgstr "%s байт отправлено"
 
-msgid "An error occurred during the retrieval of files on the server ! Sorry ..."
-msgstr ""
-
-msgid "To be sure that you compare the local plugin with the latest repoository files, it is necessary to download it locally. Please wait during the update (your are using the slow version which may be more reliable especially with big plugins)..."
-msgstr ""
-
-msgid "Update of the files of the %s plugin in progress (%s files)"
-msgstr ""
-
-msgid "An error occurred when listing the files of the %s plugin ! Sorry ..."
-msgstr ""
-
 msgid "Browsing the modifications"
 msgstr "Просмотр изменений"
-
-msgid "Comparing %s with %s"
-msgstr ""
 
 msgid "Confirmation"
 msgstr "Подтверждение"
@@ -245,53 +190,8 @@ msgstr "Подтверждение"
 msgid "Commit comment:"
 msgstr "Отправить комментарий:"
 
-msgid "Yes, the SVN version will be deleted and be replaced by the local version"
-msgstr ""
-
-msgid "Yes, the local version will be overwritten with the repository files"
-msgstr ""
-
-msgid "Sending to the repository in progress..."
-msgstr ""
-
-msgid "Preparation of the sending done !"
-msgstr ""
-
-msgid "Sending the file is finished ! Now merging the change in the repository ..."
-msgstr ""
-
-msgid "Error while preparing the sending!"
-msgstr ""
-
-msgid "The commit has ended [ %s ]... You should received an email quickly !"
-msgstr ""
-
-msgid "The commit has ended but there is an error!"
-msgstr ""
-
-msgid "Sending to the local files in progress..."
-msgstr ""
-
-msgid "The rollback has ended ..."
-msgstr ""
-
-msgid "Change the plugin version for %s"
-msgstr ""
-
 msgid "Version number"
 msgstr "Номер версии"
-
-msgid "The current version of the plugin %s is %s."
-msgstr ""
-
-msgid "Please modify the version:"
-msgstr ""
-
-msgid "Readme file"
-msgstr ""
-
-msgid "The current content of %s is:"
-msgstr ""
 
 msgid "Save these data"
 msgstr "Сохранить эти данные"
@@ -302,29 +202,11 @@ msgstr "Текущий текст"
 msgid "The proposed text"
 msgstr "Предлагаемый текст"
 
-msgid "There is a problem with the header of %s. It appears that there is no Version header."
-msgstr ""
-
 msgid "The data has been saved. You may close this window."
 msgstr "Данные сохранены. Вы можете закрыть окно."
 
 msgid "Error: %s function is not found"
 msgstr "Ошибка: %s функция не найдена"
-
-msgid "The file %s cannot be read. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
-msgstr ""
-
-msgid "The folder %s cannot be opened. You should have a problem with folder permissions or security restrictions."
-msgstr ""
-
-msgid "An other process is still running (it runs for %s seconds)"
-msgstr ""
-
-msgid "The file %s cannot be modified/created. You should have a problem with file permissions or security restrictions."
-msgstr ""
 
 msgid "The file %s cannot be created. You should have a problem with file permissions or security restrictions."
 msgstr "Файл %s нельзя переименовать. У вас не достаточно прав для этого."
@@ -371,26 +253,8 @@ msgstr "(Если вы хотите удалить этот файл, пожал
 msgid "Update"
 msgstr "Обновить"
 
-msgid "Some parameters have not been updated due to errors (see below)!"
-msgstr ""
-
-msgid "Parameters have been updated (but with some warnings)!"
-msgstr ""
-
-msgid "Parameters have been updated successfully!"
-msgstr ""
-
 msgid "Close popup"
 msgstr "Закрыть всплывающее окно"
-
-msgid "Here, you may configure three levels of translations: at the plugin level, at the framework level, and at the dashboard level."
-msgstr ""
-
-msgid "Please be informed that your current language is %s. Text will be translated if a translation is available."
-msgstr ""
-
-msgid "Translations available for this plugin (i.e. %s)"
-msgstr ""
 
 msgid "Translations available for the SL framework (stored in %s)"
 msgstr "Доступные переводы для SL framework (хранится в %s )"
@@ -410,26 +274,17 @@ msgstr "Перевод"
 msgid "Your name:"
 msgstr "Ваше имя:"
 
-msgid "(if your name/pseudo is already in the list, there is no need to fill this input)"
-msgstr ""
-
 msgid "Your email or your website:"
 msgstr "Ваш email или адрес сайта:"
 
 msgid "Create the translation files"
 msgstr "Создать файлы перевода"
 
-msgid "Modifying the translation for this language: %s"
-msgstr ""
-
 msgid "Modify the translation files"
 msgstr "Изменить файлы перевода"
 
 msgid "%s sentences have been translated (i.e. %s)."
 msgstr "%s слов/словосочетаний было переведено (это %s.)"
-
-msgid "%s sentences have been translated (i.e. %s) %s %s sentences have to be checked because they are close (but not identical) to those to translate.%s"
-msgstr ""
 
 msgid "The translation %s have been sent"
 msgstr "перевод %s был отправлен"
@@ -499,24 +354,6 @@ msgstr "Если вы хотите изменить язык по умолчан
 
 msgid "Set the language"
 msgstr "Установить язык"
-
-msgid "The file %s has been downloaded (version %s)"
-msgstr ""
-
-msgid "The file %s cannot be stored in %s. Check permissions."
-msgstr ""
-
-msgid "The translations files do not exists ... it is strange!"
-msgstr ""
-
-msgid "The sentences used in this plugin are in English. Help the others users using the same language as you by translating this plugin."
-msgstr ""
-
-msgid "This plugin is available in %d languages."
-msgstr ""
-
-msgid "There are %d sentences to be translated in this plugin."
-msgstr ""
 
 msgid "Ratio %"
 msgstr "Соотношение %"
@@ -602,9 +439,6 @@ msgstr "Нет параметров"
 msgid "Return value:"
 msgstr "Возвращаемое значение:"
 
-msgid "Typical call:"
-msgstr ""
-
 msgid "See also:"
 msgstr "См. также:"
 
@@ -631,9 +465,6 @@ msgstr "Связаться с автором"
 
 msgid "Your email:"
 msgstr "Ваш e-mail:"
-
-msgid "Useful... so that the author will be able to anwser you."
-msgstr ""
 
 msgid "Your comments:"
 msgstr "Ваши комментарии:"
@@ -679,4 +510,100 @@ msgstr "Не верные учетные данные. Проверьте кор
 
 msgid "This file have not been written in the repository due to server problem. Nevertheless, you should retry as it often works better with a second try !"
 msgstr "Файл не был записан в хранилище из-за проблем сервера. Со второй попытки все получиться, главное верить..."
+
+msgid "Do you want to udate the translations files when the plugin page is called:"
+msgstr "Вы хотите обновить переводы файлов, когда страница плагина вызывается:"
+
+msgid "This is useful if you develop a plugin, thus you will see when new sentences need to be translated."
+msgstr "Это полезно, если вы разрабатываете плагин, таким образом, вы будете видеть, когда новые предложения должны быть переведены."
+
+msgid "IMAP Login:"
+msgstr "IMAP Логин"
+
+msgid "This is useful if you want that the framework retrieve automatically the translations file into an IMAP mailbox"
+msgstr "Используйте это, если хотите получать файлы перевода на почту автоматически"
+
+msgid "IMAP Password:"
+msgstr "IMAP Пароль"
+
+msgid "IMAP Server:"
+msgstr "IMAP Сервер"
+
+msgid "Should be something like %s"
+msgstr "Должно быть что-то вроде %s"
+
+msgid "Version: %s by %s"
+msgstr "Версия: %s от %s"
+
+msgid "Please modify the Version in %s in order to be allowed to commit it"
+msgstr "Пожалуйста, обновите версию, чтобы иметь возможность сделать это"
+
+msgid "The slow version may be useful if you have issues with the quick version."
+msgstr "Медленный вариант может оказаться полезным, если у вас есть проблемы с быстрой версии."
+
+msgid "Last update of the core: %s at %s"
+msgstr "Последнее обновление ядра: %s в %s"
+
+msgid "The folder %s is not %s !"
+msgstr "Эта папка %s не %s !"
+
+msgid "The file %s is not %s !"
+msgstr "этот файл %s не %s !"
+
+msgid "The folder %s does not exists and cannot be created !"
+msgstr "Папки %s не существует и она не может быть создана!"
+
+msgid "The file %s does not exists and cannot be created !"
+msgstr "Файла %s не существует и он не может быть создан!"
+
+msgid "There are some issues with folders rights. Please corret them as soon as possible as they could induce bugs and instabilities."
+msgstr "Есть некоторые проблемы с папками человека. Пожалуйста, исправьте их как можно скорее, поскольку они могут вызывать ошибки и нестабильности."
+
+msgid "Please see below:"
+msgstr "Пожалуйста, см. ниже:"
+
+msgid "Update the SVN repository %s with your current local plugin files (slower version)"
+msgstr "Обновление SVN репозитория %s с текущих локальных файлов плагина (медленный вариант)"
+
+msgid "The file %s cannot be read. You should have a problem with file permissions or security restrictions."
+msgstr "Файл %s нельзя прочитать. У вас не достаточно прав для этого."
+
+msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
+msgstr "Файл %s нельзя удалить. У вас не достаточно прав для этого."
+
+msgid "The folder %s cannot be opened. You should have a problem with folder permissions or security restrictions."
+msgstr "Папка %s не может быть открыта. У вас не достаточно прав для этого."
+
+msgid "Some parameters have not been updated due to errors (see below)!"
+msgstr "Некоторые параметры не были изменены по причине ошибки (смотри дальше)!"
+
+msgid "Parameters have been updated (but with some warnings)!"
+msgstr "Параметры изменены (но с замечаниями)!"
+
+msgid "Parameters have been updated successfully!"
+msgstr "Параметры удачно изменены!"
+
+msgid "Translations available for this plugin (i.e. %s)"
+msgstr "Для этого плагина доступен перевод (в.т.ч. %)"
+
+msgid "Plugin"
+msgstr "Плагин"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Import"
+msgstr "Импорт"
+
+msgid "New translations are available"
+msgstr "Доступен новый перевод"
+
+msgid "To replace?"
+msgstr "Заменить?"
+
+msgid "The translations files do not exists ... it is strange!"
+msgstr "Файлы перевода не найдены... и это странно!"
+
+msgid "This plugin is available in %d languages."
+msgstr "Этот плагин доступен в % переводах"
 

@@ -128,6 +128,9 @@ if (!class_exists("textDiff")) {
 			$del_continue = false ; 
 			$ins_continue = false ; 
 			
+			$first_trois_points = true ; 
+			$next_points = "" ; 
+			
 			$buffer = array() ; 
 			
 			foreach ($lignes as $l) {
@@ -179,19 +182,32 @@ if (!class_exists("textDiff")) {
 				$n7 = min(count($buffer)-1, $i+3) ; 
 				
 				if (($buffer[$n1][0])||($buffer[$n2][0])||($buffer[$n3][0])||($buffer[$n4][0])||($buffer[$n5][0])||($buffer[$n6][0])||($buffer[$n7][0])) {
-					$return .= "<li value='".($i+1)."'><pre> ".$buffer[$i][1]."</pre></li>\n" ; 
+					$return .= $next_points ; 
+					$next_points = "" ; 
+					$return .= "<li class='numbering_li' value='".($i+1)."'><pre> ".$buffer[$i][1]."</pre></li>\n" ; 
 					$troispoint = false ; 
 				} else {
 					if (!$troispoint) {
-						$return .= "</ol><p><pre> ...</pre></p>\n" ; 
-						$return .= "<hr class='diff_hr'/>\n" ; 
-						$return .= "<p><pre> ...</pre></p><ol class='numbering'>\n" ; 
-						$troispoint = true ; 
+						if ($first_trois_points) {
+							$return .= "</ol><pre> ...</pre>\n" ; 
+							$next_points .="<ol class='numbering'>\n" ; 
+							$troispoint = true ; 
+							$first_trois_points = false ; 
+						} else {
+							$return .= "</ol><pre> ...</pre>\n" ; 
+							
+							$next_points .= "<hr class='diff_hr'/>\n" ; 
+							$next_points .= "<pre> ...</pre>" ;
+							$next_points .="<ol class='numbering'>\n" ; 
+							$troispoint = true ; 
+						}
 					} 
 				}
 			}
-			
-			$return .= "</ol></div>\n"  ;
+			if ($next_points=="")
+				$return .= "</ol></div>\n"  ;
+			else 
+				$return .="</div>\n" ; 
 			
 			return $return ; 
 		}	

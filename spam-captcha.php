@@ -3,7 +3,7 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.2.1
+Version: 1.2.2
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -37,7 +37,7 @@ class spam_captcha extends pluginSedLex {
 		
 		// The structure of the SQL table
 		$this->table_name = $wpdb->prefix . "pluginSL_" . get_class() ; 
-		$this->table_sql = "id int NOT NULL AUTO_INCREMENT, id_comment mediumint(9) NOT NULL, status VARCHAR(10) DEFAULT 'ok', new_status VARCHAR(10) DEFAULT 'ok', author TEXT DEFAULT '', content TEXT DEFAULT '', date TIMESTAMP, UNIQUE KEY id_post (id)" ; 
+		$this->tableSQL = "id int NOT NULL AUTO_INCREMENT, id_comment mediumint(9) NOT NULL, status VARCHAR(10) DEFAULT 'ok', new_status VARCHAR(10) DEFAULT 'ok', author TEXT DEFAULT '', content TEXT DEFAULT '', date TIMESTAMP, UNIQUE KEY id_post (id)" ; 
 		
 		//Configuration of callbacks, shortcode, ... (Please modify)
 		// For instance, see 
@@ -73,7 +73,8 @@ class spam_captcha extends pluginSedLex {
 		
 		// activation and deactivation functions (Do not modify)
 		register_activation_hook(__FILE__, array($this,'install'));
-		register_deactivation_hook(__FILE__, array($this,'uninstall'));
+		register_deactivation_hook(__FILE__, array($this,'deactivate'));
+		register_uninstall_hook(__FILE__, array($this,'uninstall_removedata'));
 	}
 
 	/**====================================================================================================================================================
@@ -101,7 +102,21 @@ class spam_captcha extends pluginSedLex {
 		}
 		return self::$instance;
 	}
+
+	/** ====================================================================================================================================================
+	* Init javascript for the admin side
+	* If you want to load a script, please type :
+	* 	<code>wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');</code> or 
+	*	<code>wp_enqueue_script('my_plugin_script', plugins_url('/script.js', __FILE__));</code>
+	*
+	* @return void
+	*/
 	
+	function _admin_js_load() {	
+		wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');
+		return ; 
+	}
+		
 	/** ====================================================================================================================================================
 	* Define the default option values of the plugin
 	* This function is called when the $this->get_param function do not find any value fo the given option
@@ -166,18 +181,51 @@ class spam_captcha extends pluginSedLex {
 			
 			ob_start() ; 
 				echo "<p>".__("The following table summarizes the number of rejected comments", $this->pluginID)."</p>" ; 
-				$table = new adminTable() ; 
-				$table->title(array(__("Type of protection", $this->pluginID), __("Summary", $this->pluginID))) ; 
-				$cel1 = new adminCell("<p>".__("CAPTCHA protection:", $this->pluginID)."</p>") ;	
+				
+				// We set the javascript 
 				$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha'") ; 
-				$cel2 = new adminCell("<p>".sprintf(__("%s messages have been blocked as the CAPTCHA test failed", $this->pluginID), "<b>".$nb_captcha."</b>")."</p>") ; 		
-				$table->add_line(array($cel1, $cel2), '1') ; 
-				$cel1 = new adminCell("<p>".__("AKISMET protection:", $this->pluginID)."</p>") ; 	
 				$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='spam'") ; 
 				$nb_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='ok'") ; 
 				$nb_false_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='ok'") ; 
 				$nb_false_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='spam'") ; 
-				
+				?>
+						<div style="margin: 0px auto; width:600px; height:500px;">
+							<div id="spam_report" style="float: left; margin: 0; width:500px; height:500px;"></div>
+							<script type="text/javascript">
+								google.setOnLoadCallback(CountSpam);
+								google.load('visualization', '1', {'packages':['corechart']});
+
+								function CountSpam() {
+									var data = new google.visualization.DataTable();
+									data.addColumn('string', '<?php echo __('Type', $this->pluginID)?>');
+									data.addColumn('number', '<?php echo __('Number of hits', $this->pluginID)?>');
+									data.addRows([
+										<?php
+										echo "['".__('Blocked by CAPTCHA', $this->pluginID)."', ".$nb_captcha."]," ; 
+										echo "['".__('Blocked by AKISMET', $this->pluginID)."', ".$nb_spam."]," ; 
+										echo "['".__('Not Blocked by AKISMET but spam', $this->pluginID)."', ".$nb_false_ham."]," ; 
+										echo "['".__('Normal comment', $this->pluginID)."', ".$nb_ham."]," ; 
+										echo "['".__('Blocked by AKISMET but normal', $this->pluginID)."', ".$nb_false_spam."]" ; 
+										?>
+									]);
+									var options = {
+										title: '<?php echo __("Spam Report", $this->pluginID); ?>',
+										colors:['#FF6060', '#FF9D26', '#FF4F4F', '#14FF56', '#9DFF1E'],
+										width: 500, 
+										height: 500
+									};
+									var chart = new google.visualization.PieChart(document.getElementById('spam_report'));
+									chart.draw(data, options);
+								}
+							</script>
+							</div>
+				<?php
+				$table = new adminTable() ; 
+				$table->title(array(__("Type of protection", $this->pluginID), __("Summary", $this->pluginID))) ; 
+				$cel1 = new adminCell("<p>".__("CAPTCHA protection:", $this->pluginID)."</p>") ;	
+				$cel2 = new adminCell("<p>".sprintf(__("%s messages have been blocked as the CAPTCHA test failed", $this->pluginID), "<b>".$nb_captcha."</b>")."</p>") ; 		
+				$table->add_line(array($cel1, $cel2), '1') ; 
+				$cel1 = new adminCell("<p>".__("AKISMET protection:", $this->pluginID)."</p>") ; 	
 				$cel2 = new adminCell("<p>".sprintf(__('This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)', $this->pluginID), "<b>".$nb_spam."</b>", "<b>".$nb_false_ham."</b>")."</p><p>".sprintf(__('Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)', $this->pluginID), "<b>".$nb_ham."</b>", "<b>".$nb_false_spam."</b>")."</p>") ; 		
 				$table->add_line(array($cel1, $cel2), '2') ; 
 				echo $table->flush() ; 
@@ -192,6 +240,12 @@ class spam_captcha extends pluginSedLex {
 					$params->add_comment(__("Thus, it is not possible to activate this option... sorry !", $this->pluginID)) ; 
 				} else {
 					$params->add_param('captcha_enable', __('Yes/No (for commenting only):', $this->pluginID)) ; 
+					if (is_multisite()) {
+						$blogurl = home_url()  ; 
+					} else {
+						$blogurl = network_home_url()  ; 
+					}
+					$params->add_comment(sprintf(__("The captcha will be like that : %s", $this->pluginID), "<img src='".$blogurl."/?display_captcha=true'>")) ; 
 					$params->add_param('captcha_logged', __('Use Capctha even if user is logged:', $this->pluginID)) ; 					
 					$params->add_comment(sprintf(__("WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s", $this->pluginID)." <br/>".__("Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s", $this->pluginID), "<em>Subscriber</em>, <em>Contributor</em>, <em>Author</em>", "<em>Editor</em>, <em>Administrator</em>")) ; 
 					$params->add_param('captcha_number', __('Number of letters:', $this->pluginID)) ; 

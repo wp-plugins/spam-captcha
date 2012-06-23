@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-02-05T10:01:11+00:00\n"
+"PO-Revision-Date: 2012-06-23T08:00:56+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,30 @@ msgstr ""
 
 msgid "The following table summarizes the number of rejected comments"
 msgstr "Le tableau suivant synthétise le nombre de commentaires rejetés"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Number of hits"
+msgstr "Nombre d&#039;occurrences"
+
+msgid "Blocked by CAPTCHA"
+msgstr "Bloqué par CAPTCHA"
+
+msgid "Blocked by AKISMET"
+msgstr "Bloqué par AKISMET"
+
+msgid "Not Blocked by AKISMET but spam"
+msgstr "Non bloqué par AKISMET mais est du spam"
+
+msgid "Normal comment"
+msgstr "Commentaire normal"
+
+msgid "Blocked by AKISMET but normal"
+msgstr "Bloqué par AKISMET mais normal"
+
+msgid "Spam Report"
+msgstr "Rapport de Spam"
 
 msgid "Type of protection"
 msgstr "Type de protection"
@@ -58,6 +82,9 @@ msgstr "Ainsi, il n&#039;est pas possible d&#039;activer cette option... désol�
 
 msgid "Yes/No (for commenting only):"
 msgstr "Oui/Non (seulement pour les commentaires soumis) :"
+
+msgid "The captcha will be like that : %s"
+msgstr "Le Captcha sera comme suit : "
 
 msgid "Use Capctha even if user is logged:"
 msgstr "Si l&#039;utililisateur est enregistré, aucun Captcha ne sera affiché"
@@ -148,7 +175,4 @@ msgstr "Vous avez soumis un commentaire qui est considéré comme un spam... Si 
 
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "Vous n&#039;avez pas taper correctement le Captcha : pour prouver que vous n&#039;êtes pas une machine, merci de retenter !"
-
-msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
-msgstr "Le fichier %s ne peut pas être supprimé. Vous devez avoir des problèmes avec les permissions du fichier ou avec les restrictions de sécurité. "
 
