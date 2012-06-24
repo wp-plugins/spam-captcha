@@ -1107,16 +1107,21 @@ msgstr ""
 msgid "Send to the author of the framework"
 msgstr ""
 
-#: core/folder_diff.class.php:150
-#: core/folder_diff.class.php:192
+#: core/folder_diff.class.php:152
+#: core/folder_diff.class.php:194
 #@ SL_framework
 msgid "Select all"
 msgstr ""
 
-#: core/folder_diff.class.php:151
-#: core/folder_diff.class.php:193
+#: core/folder_diff.class.php:153
+#: core/folder_diff.class.php:195
 #@ SL_framework
 msgid "Un-select all"
+msgstr ""
+
+#: core/folder_diff.class.php:272
+#@ SL_framework
+msgid "Sorry, but only %s files can be diff at once, in order to avoid any memory saturation"
 msgstr ""
 
 #: core/zip.class.php:24
