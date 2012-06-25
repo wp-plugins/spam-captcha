@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-02-19T18:15:11+00:00\n"
+"PO-Revision-Date: 2012-06-25T14:43:54+00:00\n"
 "Last-Translator: Diego <www.diegos.de>\n"
+"Last-Translator: ThorstenKallnischkies <http://desastre.eu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgid "CAPTCHA protection:"
 msgstr "CAPTCHA Schutz:"
 
 msgid "%s messages have been blocked as the CAPTCHA test failed"
-msgstr "%s Nachrichten wurden wegen fehlerhaftem CAPTCHA Tests blockiert"
+msgstr "%s Nachrichten wurden wegen fehlerhaftem CAPTCHA-Test blockiert"
 
 msgid "AKISMET protection:"
 msgstr "AKISMET Schutz:"
@@ -42,7 +43,7 @@ msgid "This plugin have stopped %s spam-comments (and missed %s that you have ma
 msgstr "Das Plugin hat %s Spam-Kommentare blockiert (%s wurden nicht erkannt und von Ihnen manuell als Spam gekennzeichnet)"
 
 msgid "Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)"
-msgstr "Desweiteren hat das Plugin %s reguläre Kommentare verarbeitet (und %s als Spam markiert, die Sie manuell als regulär gekennzeichnet haben)"
+msgstr "Desweiteren hat das Plugin %s reguläre Kommentare verarbeitet (und %s als Spam markiert, die Sie manuell als normalen Kommentar gekennzeichnet haben)"
 
 msgid "Summary of Protection"
 msgstr "Zusammenfassung des Schutzes"
@@ -72,7 +73,7 @@ msgid "Number of letters:"
 msgstr "Anzahl der Buchstaben:"
 
 msgid "Default value %s"
-msgstr "Standard Wert %s"
+msgstr "Standardwert %s"
 
 msgid "Width of image:"
 msgstr "Breite des Bildes:"
@@ -87,22 +88,22 @@ msgid "Size of letters:"
 msgstr "Größe der Buchstaben:"
 
 msgid "Color of the background:"
-msgstr "Farbe des Hintergrundes:"
+msgstr "Hintergrundfarbe:"
 
 msgid "Color of the font:"
-msgstr "Farbe des Textes:"
+msgstr "Textfarbe:"
 
 msgid "Variation of the color of the letters:"
-msgstr "Variation der Farbe der Buchstaben:"
+msgstr "Variation der Buchstabenfarbe:"
 
 msgid "The color of the letters are not the identical"
 msgstr "Die Farbe der Buchstaben ist nicht identisch"
 
 msgid "Variation of the color of the background:"
-msgstr "Variation der Farbe des Hintergrundes:"
+msgstr "Variation der Hintergrundfarbe:"
 
 msgid "The color of the background are not the homogenous"
-msgstr "Der Hintergrund ist nicht einfarbig"
+msgstr "Hintergrundfarbe ist ungleichmäßig"
 
 msgid "The HTML that will be inserted in your page to display captcha image:"
 msgstr "Das HTML das in Ihre Seite eingefügt wird um das CAPTCHA Bild zu zeigen:"
@@ -157,4 +158,40 @@ msgstr "Du hast einen Kommentar eingegeben, welcher als Spam erkannt wurde... Fa
 
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "Du hast das captcha falsch eingegeben: Um zu beweisen, dass du kein Spambot bist, versuche es bitte noch einmal!"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Number of hits"
+msgstr "Anzahl der Treffer"
+
+msgid "Blocked by CAPTCHA"
+msgstr "Von CAPTCHA blockiert"
+
+msgid "Blocked by AKISMET"
+msgstr "Von AKISMET blockiert"
+
+msgid "Not Blocked by AKISMET but spam"
+msgstr "Spam, nicht von AKISMET blockiert,"
+
+msgid "Normal comment"
+msgstr "Normaler Kommentar"
+
+msgid "Blocked by AKISMET but normal"
+msgstr "Normaler Kommentar, von AKISMET blockiert"
+
+msgid "Spam Report"
+msgstr "Spam-Bericht"
+
+msgid "Do you want to enable CAPTCHA for posting comments?"
+msgstr "Möchten Sie den CAPTCHA-Schutz für Kommentare aktivieren?"
+
+msgid "Yes/No (for commenting only):"
+msgstr "Ja/Nein (Nur für Kommentare)"
+
+msgid "The captcha will be like that : %s"
+msgstr "Das CAPTCHA wird so aussehen: %s"
+
+msgid "Other plugins"
+msgstr "Andere P:ugins"
 
