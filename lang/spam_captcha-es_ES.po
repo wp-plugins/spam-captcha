@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-04-03T05:50:14+00:00\n"
+"PO-Revision-Date: 2012-06-26T05:55:43+00:00\n"
 "Last-Translator: Krazz <krazzk@ymail.com>\n"
 "Last-Translator: admin <webmaster@cocobongos.es>\n"
+"Last-Translator: ThorstenKallnischkies <http://desastre.eu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -164,4 +165,10 @@ msgstr "Si/NO (solo para comentarios)"
 
 msgid "Other plugins"
 msgstr "Otros plugins"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Normal comment"
+msgstr "Comentario normal"
 
