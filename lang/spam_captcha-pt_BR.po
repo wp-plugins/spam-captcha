@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-11T10:42:08+00:00\n"
+"PO-Revision-Date: 2012-08-03T13:33:04+00:00\n"
 "Last-Translator: MarcosAndrade <http://blog.winco.com.br>\n"
 "Last-Translator: AdrianaVandoni <cacurvo@gmail.com>\n"
+"Last-Translator: IuriJacob <http://www.bytecodex.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -149,4 +150,31 @@ msgstr "Dar feedback"
 
 msgid "Other plugins"
 msgstr "Outros plugins"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Number of hits"
+msgstr "Número de hits"
+
+msgid "Blocked by CAPTCHA"
+msgstr "Bloqueados pelo CAPTCHA"
+
+msgid "Blocked by AKISMET"
+msgstr "Bloqueados pelo AKISMET"
+
+msgid "Not Blocked by AKISMET but spam"
+msgstr "Não bloqueados pelo AKISMET mas considerados spam"
+
+msgid "Normal comment"
+msgstr "Comentários normais"
+
+msgid "Blocked by AKISMET but normal"
+msgstr "Bloqueados pelo AKISMET mas considerados normais"
+
+msgid "Spam Report"
+msgstr "Relatos de spam"
+
+msgid "The captcha will be like that : %s"
+msgstr "O captcha aparecerá assim: %s"
 
