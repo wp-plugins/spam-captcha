@@ -3,7 +3,7 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.2.2
+Version: 1.3.0
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -54,9 +54,8 @@ class spam_captcha extends pluginSedLex {
 		add_action('parse_request', array($this,'check_if_captcha_image') , 1);
 
 		add_action('preprocess_comment', array($this,'check_comment_captcha'), 1, 1);
-		add_action('comment_form', array($this,'add_captcha_image'), 1, 1);
-		
 		add_action('wp_insert_comment', array($this,'check_comment_akismet'), 100, 2);
+
 		// Quand on change le status vers approve
 		add_action('comment_spam_to_approved', array($this,'change_to_ham'), 1, 1);
 		add_action('comment_spam_to_unapproved', array($this,'change_to_ham'), 1, 1);
@@ -65,8 +64,10 @@ class spam_captcha extends pluginSedLex {
 		add_action('comment_approved_to_spam', array($this,'change_to_spam'), 1, 1);
 		add_action('comment_unapproved_to_spam', array($this,'change_to_spam'), 1, 1);
 
-		add_action( 'comment_form', array($this,'add_error_to_comment_form'), 2, 1);
-		
+		add_filter('comments_template', array(&$this, 'detect_start'), 1);
+		add_action('comment_form', array(&$this, 'detect_end'), 1000);
+		add_action('wp_footer', array(&$this, 'detect_end'), 1000);
+
 		// Important variables initialisation (Do not modify)
 		$this->path = __FILE__ ; 
 		$this->pluginID = get_class() ; 
@@ -74,7 +75,40 @@ class spam_captcha extends pluginSedLex {
 		// activation and deactivation functions (Do not modify)
 		register_activation_hook(__FILE__, array($this,'install'));
 		register_deactivation_hook(__FILE__, array($this,'deactivate'));
-		register_uninstall_hook(__FILE__, array($this,'uninstall_removedata'));
+		register_uninstall_hook(__FILE__, array('spam_captcha','uninstall_removedata'));
+	}
+	
+
+	
+	/** ====================================================================================================================================================
+	* In order to uninstall the plugin, few things are to be done ... 
+	* (do not modify this function)
+	* 
+	* @return void
+	*/
+	
+	public function uninstall_removedata () {
+		global $wpdb ;
+		// DELETE OPTIONS
+		delete_option('spam_captcha'.'_options') ;
+		if (is_multisite()) {
+			delete_site_option('spam_captcha'.'_options') ;
+		}
+		
+		// DELETE SQL
+		if (function_exists('is_multisite') && is_multisite()){
+			$old_blog = $wpdb->blogid;
+			$old_prefix = $wpdb->prefix ; 
+			// Get all blog ids
+			$blogids = $wpdb->get_col($wpdb->prepare("SELECT blog_id FROM ".$wpdb->blogs));
+			foreach ($blogids as $blog_id) {
+				switch_to_blog($blog_id);
+				$wpdb->query("DROP TABLE ".str_replace($old_prefix, $wpdb->prefix, $wpdb->prefix . "pluginSL_" . 'spam_captcha')) ; 
+			}
+			switch_to_blog($old_blog);
+		} else {
+			$wpdb->query("DROP TABLE ".$wpdb->prefix . "pluginSL_" . 'spam_captcha' ) ; 
+		}
 	}
 
 	/**====================================================================================================================================================
@@ -102,7 +136,7 @@ class spam_captcha extends pluginSedLex {
 		}
 		return self::$instance;
 	}
-
+	
 	/** ====================================================================================================================================================
 	* Init javascript for the admin side
 	* If you want to load a script, please type :
@@ -136,14 +170,17 @@ class spam_captcha extends pluginSedLex {
 			case 'akismet_enable' 		: return false 	; break ; 
 			
 			case 'captcha_enable' 		: return false 	; break ; 
+			case 'captcha_text' 		: return true 	; break ; 
+			case 'captcha_addition' 	: return false 	; break ; 
 			case 'captcha_logged' 		: return false 	; break ; 
 			case 'captcha_number' 		: return 4 	; break ; 
 			case 'captcha_height' 		: return 32 	; break ; 
 			case 'captcha_width' 		: return 80 	; break ; 
 			case 'captcha_angle' 		: return 35 	; break ; 
 			case 'captcha_size' 		: return 12 	; break ; 
-			case 'captcha_background' 		: return "CCCCCC" 	; break ; 
-			case 'captcha_font_color' 		: return "FFFFFF" 	; break ; 
+			case 'captcha_background' 		: return "555555" 	; break ; 
+			case 'captcha_font_color' 		: return "CCCCCC" 	; break ; 
+			case 'captcha_color_variation_percentage' 		: return 40	; break ; 
 			case 'captcha_noise' 		: return true 	; break ; 
 			case 'captcha_color_variation' 		: return true 	; break ; 
 			
@@ -239,7 +276,7 @@ class spam_captcha extends pluginSedLex {
 					$params->add_comment(sprintf(__("Your server does not seems to have GD installed with the following functions: %s", $this->pluginID), "<code>imagecreate</code>, <code>imagefill</code>, <code>imagecolorallocate</code>, <code>imagettftext</code>, <code>imageline</code>, <code>imagepng</code>")) ; 
 					$params->add_comment(__("Thus, it is not possible to activate this option... sorry !", $this->pluginID)) ; 
 				} else {
-					$params->add_param('captcha_enable', __('Yes/No (for commenting only):', $this->pluginID)) ; 
+					$params->add_param('captcha_enable', __('Yes/No (for commenting only):', $this->pluginID), "", "", array('captcha_logged', 'captcha_number', 'captcha_width', 'captcha_height', 'captcha_angle', 'captcha_size', 'captcha_background', 'captcha_font_color', 'captcha_color_variation', 'captcha_noise', 'captcha_html', 'captcha_text', 'captcha_addition')) ; 
 					if (is_multisite()) {
 						$blogurl = home_url()  ; 
 					} else {
@@ -248,6 +285,8 @@ class spam_captcha extends pluginSedLex {
 					$params->add_comment(sprintf(__("The captcha will be like that : %s", $this->pluginID), "<img src='".$blogurl."/?display_captcha=true'>")) ; 
 					$params->add_param('captcha_logged', __('Use Capctha even if user is logged:', $this->pluginID)) ; 					
 					$params->add_comment(sprintf(__("WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s", $this->pluginID)." <br/>".__("Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s", $this->pluginID), "<em>Subscriber</em>, <em>Contributor</em>, <em>Author</em>", "<em>Editor</em>, <em>Administrator</em>")) ; 
+					$params->add_param('captcha_text', __('The captcha proposes a sequence of lower-case letters:', $this->pluginID)) ; 
+					$params->add_param('captcha_addition', __('The captcha proposes an addition operation to solve:', $this->pluginID)) ; 
 					$params->add_param('captcha_number', __('Number of letters:', $this->pluginID)) ; 
 					$params->add_comment(sprintf(__("Default value %s", $this->pluginID),$this->get_default_option('captcha_number'))) ; 
 					$params->add_param('captcha_width', __('Width of image:', $this->pluginID)) ; 
@@ -263,17 +302,19 @@ class spam_captcha extends pluginSedLex {
 					$params->add_param('captcha_font_color', __('Color of the font:', $this->pluginID)) ; 
 					$params->add_comment(sprintf(__("Default value %s", $this->pluginID),$this->get_default_option('captcha_font_color'))) ; 
 					$params->add_param('captcha_color_variation', __('Variation of the color of the letters:', $this->pluginID)) ; 
-					$params->add_comment(__("The color of the letters are not the identical", $this->pluginID)) ; 
+					$params->add_comment(__("The color of the letters and of the background are not the identical", $this->pluginID)) ; 
+					
 					$params->add_param('captcha_noise', __('Variation of the color of the background:', $this->pluginID)) ; 
 					$params->add_comment(__("The color of the background are not the homogenous", $this->pluginID)) ; 
+					$params->add_param('captcha_color_variation_percentage', __('Percentage of variation (alea) of the colors (background and letters):', $this->pluginID)) ; 
 					$params->add_param('captcha_html', __('The HTML that will be inserted in your page to display captcha image:', $this->pluginID)) ; 
-					$params->add_comment(sprintf(__("The default html is: %s (please note that %s will be replace with the captcha image)", $this->pluginID),"<br><code>&lt;div class='captcha_image'&gt; <br>%image%<br>&lt;input type='text' id='captcha_comment' name='captcha_comment' /&gt;<br/>&lt;p&gt;Please type the characters of this captcha image in the input box&lt;/p&gt;&lt;/div&gt;</code><br>", "%image%")) ; 
-
-					
+					$params->add_comment(sprintf(__("The default html is: %s ", $this->pluginID),"<br><code>&lt;div class='captcha_image'&gt; <br>%image%<br>&lt;input type='text' id='captcha_comment' name='captcha_comment' /&gt;<br/>&lt;p&gt;Please type the characters of this captcha image in the input box&lt;/p&gt;&lt;/div&gt;</code><br>", "%image%")) ; 
+					$params->add_comment(__("Please note that %s will be replace with the captcha image.", $this->pluginID)) ; 
+					$params->add_comment(__("You may add some comment, for instance to make clear that the addition should be responded with the result of the operation.", $this->pluginID)) ; 
 				}
 				
 				$params->add_title(__("Do you want to use Akismet API to check spam against posted comments?", $this->pluginID)) ; 
-				$params->add_param('akismet_enable', __('Yes/No:', $this->pluginID)) ; 
+				$params->add_param('akismet_enable', __('Yes/No:', $this->pluginID), "", "", array('akismet_id')) ; 
 				$params->add_param('akismet_id', __('The Akismet ID:', $this->pluginID)) ; 
 				if ($this->get_param('akismet_id')!="") {
 					if ($this->verify_akismet_key($this->get_param('akismet_id'))) {
@@ -284,6 +325,8 @@ class spam_captcha extends pluginSedLex {
 				} else {
 					$params->add_comment(sprintf(__("To get an Akismet ID, see %s here %s.", $this->pluginID),"<a href='http://akismet.com/get/'>", "</a>")) ; 
 				}
+
+
 				$params->flush() ; 
 			$tabs->add_tab(__('Parameters',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
 
@@ -343,13 +386,15 @@ class spam_captcha extends pluginSedLex {
 			}
 			
 			// If not we check the captcha
-			if (($_POST['captcha_comment']=="")||($_SESSION['keyCaptcha']!=md5($_POST['captcha_comment']))) {
-				// we save it...
-				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW())") ; 
-					
-				$permalink = get_permalink( $comment['comment_post_ID'] );
-				wp_redirect(add_query_arg(array("error_checker"=>"captcha"),$permalink."#error", 302)) ; 
-				die();
+			if (isset($_POST['captcha_comment'])) {
+				if (($_POST['captcha_comment']=="")||(!isset($_SESSION['keyCaptcha']))||($_SESSION['keyCaptcha']!=md5($_POST['captcha_comment']))) {
+					// we save it...
+					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW())") ; 
+						
+					$permalink = get_permalink( $comment['comment_post_ID'] );
+					wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>($comment['comment_author']), "email_spam"=>($comment['comment_author_email']), "url_spam"=>($comment['comment_author_url']), "comment_spam"=>($comment['comment_content'])),$permalink."#error", 302)) ; 
+					die();
+				}
 			}
 		}
 		return $comment ; 
@@ -359,11 +404,90 @@ class spam_captcha extends pluginSedLex {
 	* Called when the comment form is displayed in order to add the captcha
 	*
 	*/
-	function add_captcha_image($id_post) {
+	
+	/**
+	 * Start of the comment form
+	 */
+	 
+	function detect_start($file = null) {
+		ob_start(array(&$this, '_modify_form'));
+		$this->ended = false;		
+		return $file;
+	}
+
+	/**
+	 * End the comment form
+	 */
+	 
+	function detect_end() {
+		if ((isset($this->ended))&&(!$this->ended)) {
+			$this->ended = true;
+			ob_end_flush();
+		}
+	}
+	
+	/**
+	 * Modify the comment form
+	 */
+	function _modify_form($content) {
+	
+		$error = "" ; 
+		if (isset($_GET['error_checker'])) {
+			if ($_GET['error_checker']=="spam") {
+				$error .= "<a name='error'><div class='error_spam_captcha'><p>" ; 
+				$error .=  __('You have submitted a comment which is considered as a spam... If not, please modify it and retry', $this->pluginID) ; 
+				$error .=  "</p></div>" ; 
+			}
+			if ($_GET['error_checker']=="captcha") {
+				$error .=  "<a name='error'><div class='error_spam_captcha'><p>" ; 
+				$error .=  __('You have mistyped the captcha : to prove that your are not a spam machine, please retry!', $this->pluginID) ; 
+				$error .=  "</p></div>" ; 
+			}
+		}
+		
+		$comment="" ; 
+		if (isset($_GET['comment_spam'])) {
+			$comment = htmlentities(stripslashes($_GET['comment_spam'])) ; 
+		}
+		
+		$author="" ; 
+		if (isset($_GET['author_spam'])) {
+			$author = addslashes(htmlentities($_GET['author_spam'])) ; 
+		}
+
+		$url="" ; 
+		if (isset($_GET['url_spam'])) {
+			$url = addslashes(htmlentities($_GET['url_spam'])) ; 
+		}
+
+		$email="" ; 
+		if (isset($_GET['email_spam'])) {
+			$email = addslashes(htmlentities($_GET['email_spam'])) ; 
+		}
+		
+		$captcha = "" ; 
 		if (($this->get_param('captcha_enable')==true)&&((!is_user_logged_in())||($this->get_param('captcha_logged')))) {
 			$html = $this->get_param('captcha_html') ; 
-			echo str_replace("%image%", "<img src='".add_query_arg(array("display_captcha"=>"true"))."' alt='".__("Please type the characters of this captcha image in the input box", $this->pluginID)."'>", $html) ; 
+			$captcha = str_replace("%image%", "<img src='".add_query_arg(array("display_captcha"=>"true"))."' alt='".__("Please type the characters of this captcha image in the input box", $this->pluginID)."'>", $html) ; 
 		}
+
+		$content = preg_replace('%</[^>]*?textarea[^>]*?>%Ui', $comment.'</textarea>'.$error.$captcha, $content);
+		// Author
+		$content = preg_replace('%<input([^>]*?)name="author"([^>]*?)value=""([^>]*?)>%Ui', '<input\1name="author"\2value="'.$author.'"\3>', $content);
+		$content = preg_replace('%<input([^>]*?)value=""([^>]*?)name="author"([^>]*?)>%Ui', '<input\1name="author"\2value="'.$author.'"\3>', $content);
+		$content = preg_replace("%<input([^>]*?)name='author'([^>]*?)value=''([^>]*?)>%Ui", "<input\1name='author'\2value='".$author."'\3>", $content);
+		$content = preg_replace("%<input([^>]*?)value=''([^>]*?)name='author'([^>]*?)>%Ui", "<input\1name='author'\2value='".$author."'\3>", $content);
+		// Email
+		$content = preg_replace('%<input([^>]*?)name="email"([^>]*?)value=""([^>]*?)>%Ui', '<input\1name="email"\2value="'.$email.'"\3>', $content);
+		$content = preg_replace('%<input([^>]*?)value=""([^>]*?)name="email"([^>]*?)>%Ui', '<input\1name="email"\2value="'.$email.'"\3>', $content);
+		$content = preg_replace("%<input([^>]*?)name='email'([^>]*?)value=''([^>]*?)>%Ui", "<input\1name='email'\2value='".$email."'\3>", $content);
+		$content = preg_replace("%<input([^>]*?)value=''([^>]*?)name='email'([^>]*?)>%Ui", "<input\1name='email'\2value='".$email."'\3>", $content);
+		// Url
+		$content = preg_replace('%<input([^>]*?)name="url"([^>]*?)value=""([^>]*?)>%Ui', '<input\1name="url"\2value="'.$url.'"\3>', $content);
+		$content = preg_replace('%<input([^>]*?)value=""([^>]*?)name="url"([^>]*?)>%Ui', '<input\1name="url"\2value="'.$url.'"\3>', $content);
+		$content = preg_replace("%<input([^>]*?)name='url'([^>]*?)value=''([^>]*?)>%Ui", "<input\1name='url'\2value='".$url."'\3>", $content);
+		$content = preg_replace("%<input([^>]*?)value=''([^>]*?)name='url'([^>]*?)>%Ui", "<input\1name='url'\2value='".$url."'\3>", $content);
+		return $content;
 	}
 	
 	/** ====================================================================================================================================================
@@ -380,7 +504,38 @@ class spam_captcha extends pluginSedLex {
 			$angle = $this->get_param('captcha_angle') ; 
 			$sizeLetter = $this->get_param('captcha_size') ; 
 			
-			$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+			if (($this->get_param('captcha_text'))&&(!$this->get_param('captcha_addition'))) {
+				$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+				$text_to_type = $text ; 
+			} else if ((!$this->get_param('captcha_text'))&&($this->get_param('captcha_addition'))) {
+				if ($nbLetter>=3) {
+					$nb1 = rand(1, pow(10,($nbLetter-2))-1) ; 
+					$nb2 = rand(pow(10,($nbLetter-strlen("".$nb1)-2)), pow(10,($nbLetter-strlen("".$nb1)-1))-1) ; 
+					$text = $nb1."+".$nb2 ; 
+					$text_to_type = $nb1+$nb2 ; 
+				} else {
+					$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+					$text_to_type = $text ; 
+				}
+			} else if (($this->get_param('captcha_text'))&&($this->get_param('captcha_addition'))) {
+				if (rand(0,1)==0) {
+					$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+					$text_to_type = $text ; 
+				} else {
+					if ($nbLetter>=3) {
+						$nb1 = rand(1, pow(10,($nbLetter-2))-1) ; 
+						$nb2 = rand(pow(10,($nbLetter-strlen("".$nb1)-2)), pow(10,($nbLetter-strlen("".$nb1)-1))-1) ; 
+						$text = $nb1."+".$nb2 ; 
+						$text_to_type = $nb1+$nb2 ; 
+					} else {
+						$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+						$text_to_type = $text ; 
+					}
+				}
+			} else {
+				$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 	
+				$text_to_type = $text ; 		
+			} 
 			
 			$captcha = imagecreate($maxX, $maxY);
   			$r1 = hexdec(substr($this->get_param('captcha_background'), 0, 2)) ; 
@@ -391,42 +546,38 @@ class spam_captcha extends pluginSedLex {
   			$g2 = hexdec(substr($this->get_param('captcha_font_color'), 2, 2)) ; 
   			$b2 = hexdec(substr($this->get_param('captcha_font_color'), 4, 2)) ; 
 			
-			
-			imagefill ($captcha, 0 , 0, $grey) ;  
-			
 			//
 			// We generate colors in array to avoid memory overload
 			//
 			$color_back = array(imagecolorallocate($captcha, $r1, $g1, $b1)) ; 
 			$color_font = array(imagecolorallocate($captcha, $r2, $g2, $b2)) ;
-			$balance = rand(20,80) ; 
+			
+			$max_ratio = $this->get_param('captcha_color_variation_percentage') ; 
 			
 			if ( ($this->get_param('captcha_noise')) ) {
 				// 50 for the background
-				for ($i=0 ; $i<50 ; $i++) {
-					$ratio_color = rand(10,100) ; 
-					$r3 = floor(($balance*$r1+(100-$balance)*$r2)/100 + $ratio_color/100 * ($r1-$r2)*$balance/100 ) ; 
-					$g3 = floor(($balance*$g1+(100-$balance)*$g2)/100 + $ratio_color/100 * ($g1-$g2)*$balance/100 ) ; 
-					$b3 = floor(($balance*$b1+(100-$balance)*$b2)/100 + $ratio_color/100 * ($b1-$b2)*$balance/100 ) ; 
+				for ($i=0 ; $i<10 ; $i++) {
+					$ratio_color = rand(0,$max_ratio) ; 
+					$r3 = min(255, max(0, floor($r1+($ratio_color-$max_ratio/2)/100*255))) ; 
+					$g3 = min(255, max(0, floor($g1+($ratio_color-$max_ratio/2)/100*255))) ; 
+					$b3 = min(255, max(0, floor($b1+($ratio_color-$max_ratio/2)/100*255))) ; 
 					$color_back[] = imagecolorallocate($captcha, $r3 , $g3, $b3 );
 				}
 			}
 			
 			if ( ($this->get_param('captcha_color_variation')) ) {
 				// 50 for the font
-				for ($i=0 ; $i<50 ; $i++) {
-					$ratio_color = rand(10,100) ; 
-					$r3 = floor(($balance*$r1+(100-$balance)*$r2)/100 - $ratio_color/100 * ($r1-$r2)*$balance/100 ) ; 
-					$g3 = floor(($balance*$g1+(100-$balance)*$g2)/100 - $ratio_color/100 * ($g1-$g2)*$balance/100 ) ; 
-					$b3 = floor(($balance*$b1+(100-$balance)*$b2)/100 - $ratio_color/100 * ($b1-$b2)*$balance/100 ) ; 
+				for ($i=0 ; $i<10 ; $i++) {
+					$ratio_color = rand(0,$max_ratio) ; 
+					$r3 = min(255, max(0, floor($r2+($ratio_color-$max_ratio/2)/100*255))) ; 
+					$g3 = min(255, max(0, floor($g2+($ratio_color-$max_ratio/2)/100*255))) ; 
+					$b3 = min(255, max(0, floor($b2+($ratio_color-$max_ratio/2)/100*255))) ; 
 					$color_font[] = imagecolorallocate($captcha, $r3 , $g3, $b3 );
 				}
 			} 
 			
-			
 			if ( ($this->get_param('captcha_noise')) ) {
-				$percentage_of_noise = 30 ;  
-				for ($i=0 ; $i<($maxX/10*$maxY/10)*$percentage_of_noise ; $i++) {
+				for ($i=0 ; $i<($maxX/10*$maxY/10)*$max_ratio  ; $i++) {
 					$x = rand(0,$maxX) ; 
 					$y = rand(0,$maxY) ; 
 					$size = rand(3, floor($maxY/2)) ; 
@@ -437,26 +588,34 @@ class spam_captcha extends pluginSedLex {
 			}
 			
 			for ($i=0 ; $i<$nbLetter ; $i++) {
-				$police = rand(1,2) ; 
+				
+				$polices = array() ; 
+				$files = scandir(WP_PLUGIN_DIR."/".str_replace(basename( __FILE__),"",plugin_basename(__FILE__)));
+				foreach($files as $f) {
+					if (preg_match("/ttf$/i", $f)) {
+						$polices[] = $f ; 
+					}
+				}
+				
 				// ANGLE
 				$slant = rand(-$angle, $angle) ; 
 				// X
 				$x = floor( $maxX/(2*$nbLetter) - $sizeLetter/2 + $i*$maxX/($nbLetter)) ; 
-				$delta_x = rand(-floor( $maxX/(4*$nbLetter) - $sizeLetter/4 ), floor( $maxX/(4*$nbLetter) - $sizeLetter/4 )) ;
+				$delta_x = rand(-floor( $maxX/(6*$nbLetter) - $sizeLetter/4 ), floor( $maxX/(6*$nbLetter) - $sizeLetter/4 )) ;
 				// Y
 				$y = floor( $maxY/2 + $sizeLetter/2 ); 
-				$delta_y = rand(-floor( $maxY/4 - $sizeLetter/4 ), floor( $maxY/4 - $sizeLetter/4 )) ; 
+				$delta_y = rand(-floor( $maxY/6 - $sizeLetter/4 ), floor( $maxY/6 - $sizeLetter/4 )) ; 
 				// SIZE
-				$delta_size = rand(0, floor( $maxY/4 - $sizeLetter/4 )) ;
+				$delta_size = rand(0, floor( $maxY/6 - $sizeLetter/4 )) ;
 				
 				$color = rand(0, count($color_font)-1) ; 
 				
-				$return = imagettftext($captcha, $sizeLetter+$delta_size, $slant, $x+$delta_x, $y+$delta_y, $color_font[$color], WP_PLUGIN_DIR."/".str_replace(basename( __FILE__),"",plugin_basename(__FILE__))."spam-captcha-".$police.".ttf", substr($text, $i, 1));
+				$return = imagettftext($captcha, $sizeLetter+$delta_size, $slant, $x+$delta_x, $y+$delta_y, $color_font[$color], WP_PLUGIN_DIR."/".str_replace(basename( __FILE__),"",plugin_basename(__FILE__)).$polices[rand(0, count($polices)-1)], substr($text, $i, 1));
 			}
 			
 			
 			
-			$_SESSION['keyCaptcha'] = md5($text);
+			$_SESSION['keyCaptcha'] = md5($text_to_type);
 			header("Content-type: image/png");
 			// Do not cache this image
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -498,7 +657,7 @@ class spam_captcha extends pluginSedLex {
 					// we save it...
 					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (".$id.", 'spam', 'spam', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW())") ; 
 					// we redirect the page to inform the user
-					wp_redirect(add_query_arg(array("error_checker"=>"spam"),get_permalink($comment->comment_post_ID)."#error"),302);
+					wp_redirect(add_query_arg(array("error_checker"=>"spam", "author_spam"=>($comment->comment_author), "email_spam"=>($comment->comment_author_email), "url_spam"=>($comment->comment_author_url), "comment_spam"=>($comment->comment_content) ),get_permalink($comment->comment_post_ID)."#error"),302);
 					die() ; 
 				} else {
 					// we save it...
@@ -525,24 +684,7 @@ class spam_captcha extends pluginSedLex {
 		global $wpdb;
 		$wpdb->query("UPDATE ".$this->table_name." SET new_status='spam' WHERE id_comment='".$comment->comment_ID."'") ; 
 	}
-	
-	/** ====================================================================================================================================================
-	* Called when the comment form is called
-	*
-	*/
-	function add_error_to_comment_form($id_post) {
-		if ($_GET['error_checker']=="spam") {
-			echo "<a name='error'><div class='error_spam_captcha'><p>" ; 
-			echo __('You have submitted a comment which is considered as a spam... If not, please modify it and retry', $this->pluginID) ; 
-			echo "</p></div>" ; 
-		}
-		if ($_GET['error_checker']=="captcha") {
-			echo "<a name='error'><div class='error_spam_captcha'><p>" ; 
-			echo __('You have mistyped the captcha : to prove that your are not a spam machine, please retry!', $this->pluginID) ; 
-			echo "</p></div>" ; 
-		}
-	}
-	
+		
 	/** ====================================================================================================================================================
 	* To check comment against akismet
 	*
@@ -560,6 +702,7 @@ class spam_captcha extends pluginSedLex {
 	* @param string request the request to check
 	* @return boolean true if it is a spam 
 	*/
+	
 	function check_spam_akismet($request) {
 		global $wp_version;
 
@@ -596,6 +739,7 @@ class spam_captcha extends pluginSedLex {
 	*/
 	
 	function verify_akismet_key($key) {
+		global $wp_version ; 
 		$request = 'key='. $key .'&blog='. get_option('home');
 		
 		$http_args = array(

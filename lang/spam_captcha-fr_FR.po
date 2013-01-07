@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-08-29T07:26:03+00:00\n"
+"PO-Revision-Date: 2013-01-02T18:36:33+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Last-Translator: Geraldine <http://www.ministeredesincorrections.com>\n"
 "Language-Team: \n"
@@ -85,10 +85,10 @@ msgid "Yes/No (for commenting only):"
 msgstr "Oui/Non (seulement pour les commentaires soumis) :"
 
 msgid "The captcha will be like that : %s"
-msgstr "Le Captcha sera comme suit :"
+msgstr "Le Captcha sera comme suit : %s"
 
 msgid "Use Capctha even if user is logged:"
-msgstr "Si l&#039;utililisateur est enregistré, aucun Captcha ne sera affiché"
+msgstr "Utiliser le Captcha même si l&#039;utilisateur est enregistré"
 
 msgid "WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s"
 msgstr "ATTENTION : Si vous activez cette option, le captcha ne fonctionnera que pour les utilisateurs avec un rôle parmi : %s"
@@ -168,12 +168,12 @@ msgstr "Donner un feedback"
 msgid "Other plugins"
 msgstr "Autres plugins"
 
-msgid "Please type the characters of this captcha image in the input box"
-msgstr "Merci de taper les caractères de l&#039;image Captcha dans le champ"
-
 msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
 msgstr "Vous avez soumis un commentaire qui est considéré comme un spam... Si ce n&#039;est pas le cas, merci de le modifier et d&#039;essayer à nouveau."
 
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "Vous n&#039;avez pas saisi correctement le Captcha : pour prouver que vous n&#039;êtes pas une machine, merci d&#039;essayer à nouveau !"
+
+msgid "Please type the characters of this captcha image in the input box"
+msgstr "Merci de taper les caractères de l&#039;image Captcha dans le champ"
 

@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr
 Plugin URI: http://wordpress.org/extend/plugins/spam-captcha/
 Tags: spam, captcha, comments, comment, akismet, block
 Requires at least: 3.0
-Tested up to: 3.4
+Tested up to: 3.5
 Stable tag: trunk
 
 This plugins avoids spam actions on your website (comments and contact form).
@@ -36,14 +36,17 @@ This plugin works with multisite installation of Wordpress.
 
 * Azeri (Latin) (Azerbaijan) translation provided by BayBakVoiceofaNation
 * Czech (Czech Republic) translation provided by SedLex, Kumerson
-* German (Germany) translation provided by Diego
+* German (Germany) translation provided by Diego, ThorstenKallnischkies
 * English (United States), default language
-* Spanish (Spain) translation provided by Krazz, admin
-* French (France) translation provided by SedLex
+* Spanish (Spain) translation provided by Krazz, admin, ThorstenKallnischkies
+* Farsi (Iran) translation provided by BahmanMohadeci
+* French (France) translation provided by SedLex, Geraldine
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
-* Portuguese (Brazil) translation provided by MarcosAndrade, AdrianaVandoni
+* Lithuanian (Lithuania) translation provided by marko.estas
+* Portuguese (Brazil) translation provided by MarcosAndrade, AdrianaVandoni, IuriJacob
 * Russian (Russia) translation provided by IgorPulbere
+* Vietnamese (Viet Nam) translation provided by SilverLight
 * Chinese (People's Republic of China) translation provided by bladin
 
 = Features of the framework =
@@ -77,14 +80,15 @@ Have fun !
 
 == Changelog ==
 
-= 1.2.2 =
+= 1.3.0 =
+* Improve the captcha
+* Addition is now possible (and not only a sequence of letters)
+* If the captcha fails, the comment is kept
+
+= 1.2.0 -&gt; 1.2.4 =
 * Add a preview of the CAPCTHA
 * Add a chart to summarize the action
-
-= 1.2.1 =
 * Update of the framework
-
-= 1.2.0 =
 * Major release of the framework
 
 = 1.1.0 -&gt; 1.1.5 =
@@ -113,4 +117,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:34a9eddac2ca7067c704b822847c83f2
+InfoVersion:d77e5eddb8ca7d6660dcaf4775a5da2f
