@@ -64,7 +64,7 @@ Have fun !
 
 == Installation ==
 
-1. Upload this folder to your plugin directory (for instance '/wp-content/plugins/')
+1. Upload this folder spam-captcha to your plugin directory (for instance '/wp-content/plugins/')
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Navigate to the 'SL plugins' box
 4. All plugins developed with the SL core will be listed in this box
@@ -79,6 +79,9 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.3.1 =
+* CSS issue and 500 error
 
 = 1.3.0 =
 * Improve the captcha
@@ -117,4 +120,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:d77e5eddb8ca7d6660dcaf4775a5da2f
+InfoVersion:37b49cd5d92490b3113aa4b674f772ec
