@@ -61,16 +61,16 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_enqueue_scripts', array( $this, 'flush_css'), 10000000);
 
 			// Admin Script
-			add_action('admin_enqueue_scripts', array( $this, 'javascript_admin'), 5);
-			add_action('admin_enqueue_scripts', array( $this, 'css_admin'), 5);
+			add_action('admin_enqueue_scripts', array( $this, 'javascript_admin'), 5); // Only for SL page
+			add_action('admin_enqueue_scripts', array( $this, 'css_admin'), 5);// Only for SL page
 			if (method_exists($this,'_admin_js_load')) {
 				add_action('admin_enqueue_scripts', array($this,'_admin_js_load'));
 			}
 			if (method_exists($this,'_admin_css_load')) {
 				add_action('admin_enqueue_scripts', array($this,'_admin_css_load'));
 			}
-			add_action('admin_enqueue_scripts', array( $this, 'flush_js'), 10000000);
-			add_action('admin_enqueue_scripts', array( $this, 'flush_css'), 10000000);
+			add_action('admin_enqueue_scripts', array( $this, 'flush_js'), 10000000);// Only for SL page
+			add_action('admin_enqueue_scripts', array( $this, 'flush_css'), 10000000);// Only for SL page
 			
 			// We add an ajax call for the translation class
 			add_action('wp_ajax_translate_add', array('translationSL','translate_add')) ; 
@@ -78,10 +78,6 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_ajax_translate_create', array('translationSL','translate_create')) ; 
 			add_action('wp_ajax_send_translation', array('translationSL','send_translation')) ; 
 			add_action('wp_ajax_update_summary', array('translationSL','update_summary')) ; 
-			add_action('wp_ajax_download_translation', array('translationSL','download_translation')) ; 
-			add_action('wp_ajax_seeTranslation', array('translationSL','seeTranslation')) ; 
-			add_action('wp_ajax_deleteTranslation', array('translationSL','deleteTranslation')) ; 
-			add_action('wp_ajax_mergeTranslationDifferences', array('translationSL','mergeTranslationDifferences')) ; 
 			
 			// We add an ajax call for the feedback class
 			add_action('wp_ajax_send_feedback', array('feedbackSL','send_feedback')) ; 
@@ -92,17 +88,15 @@ if (!class_exists('pluginSedLex')) {
 			add_filter('get_the_excerpt', array( $this, 'the_excerpt_ante_SL'),2);
 			
 			// We remove some functionalities
-			remove_action('wp_head', 'feed_links_extra', 3); // Displays the links to the extra feeds such as category feeds
-			remove_action('wp_head', 'feed_links', 2); // Displays the links to the general feeds: Post and Comment Feed
-			remove_action('wp_head', 'rsd_link'); // Displays the link to the Really Simple Discovery service endpoint, EditURI link
-			remove_action('wp_head', 'wlwmanifest_link'); // Displays the link to the Windows Live Writer manifest file.
-			remove_action('wp_head', 'index_rel_link'); // index link
-			remove_action('wp_head', 'parent_post_rel_link'); // prev link
-			remove_action('wp_head', 'start_post_rel_link'); // start link
-			remove_action('wp_head', 'adjacent_posts_rel_link_wp_head'); // Displays relational links for the posts adjacent to the current post.
-			remove_action('wp_head', 'wp_generator'); // Displays the XHTML generator that is generated on the wp_head hook, WP version
-			//remove_action( 'wp_head', 'wp_shortlink_wp_head');
-						
+			//remove_action('wp_head', 'feed_links_extra', 3); // Displays the links to the extra feeds such as category feeds
+			//remove_action('wp_head', 'feed_links', 2); // Displays the links to the general feeds: Post and Comment Feed
+			//remove_action('wp_head', 'rsd_link'); // Displays the link to the Really Simple Discovery service endpoint, EditURI link
+			//remove_action('wp_head', 'wlwmanifest_link'); // Displays the link to the Windows Live Writer manifest file.
+			//remove_action('wp_head', 'index_rel_link'); // index link
+			//remove_action('wp_head', 'parent_post_rel_link'); // prev link
+			//remove_action('wp_head', 'start_post_rel_link'); // start link
+			//remove_action('wp_head', 'adjacent_posts_rel_link_wp_head'); // Displays relational links for the posts adjacent to the current post.
+			//remove_action('wp_head', 'wp_generator'); // Displays the XHTML generator that is generated on the wp_head hook, WP version
 			
 			$this->signature = '<p style="text-align:right;font-size:75%;">&copy; SedLex - <a href="http://www.sedlex.fr/">http://www.sedlex.fr/</a></p>' ; 
 			
@@ -589,9 +583,10 @@ if (!class_exists('pluginSedLex')) {
 			// On cree le machin
 			if ($path_ok) {
 				$css_f = $path."/".$id.'.js' ; 
-				if (!is_file($css_f)) {
+				if (!@is_file($css_f)) {
 					@file_put_contents($css_f, $text) ; 
 				}
+				@chmod($css_f, 0755);
 				$sedlex_list_scripts[] = $css_f ; 
 			} else {
 				echo "\n<script type='text/javascript'>\n" ; 
@@ -610,8 +605,23 @@ if (!class_exists('pluginSedLex')) {
 		* @return void
 		*/
 		
-		public  function flush_js() {
+		public  function flush_js($hook) {
 			global $sedlex_list_scripts ; 
+			
+			// If it not a plugin page SL page
+			if (is_admin()) {
+				$plugin = explode("_", $hook) ; 
+				if (!isset($plugin[count($plugin)-1])) {
+					return ; 
+				}
+				if ($plugin[count($plugin)-1]!="sedlex") {
+					$plugin = explode("/", $plugin[count($plugin)-1]) ; 
+					if ((!isset($plugin[0]))||(!@is_file(WP_PLUGIN_DIR."/".$plugin[0]."/core.class.php")))
+						return;
+				}
+			}
+
+			
 			// Repertoire de stockage des css inlines
 			$path =  WP_CONTENT_DIR."/sedlex/inline_scripts";
 			if (!is_dir($path)) {
@@ -624,7 +634,7 @@ if (!class_exists('pluginSedLex')) {
 				// We create the file if it does not exist
 				$out = "" ; 
 				foreach( $sedlex_list_scripts as $file ) {
-					if (is_file($file)) {
+					if (@is_file($file)) {
 						$out .=  "\n/*====================================================*/\n";
 						$out .=  "/* FILE ".str_replace(WP_CONTENT_DIR,"",$file)  ."*/\n";
 						$out .=  "/*====================================================*/\n";
@@ -636,9 +646,12 @@ if (!class_exists('pluginSedLex')) {
 					}
 				}
 				$md5 = md5($out) ; 
-				if (!is_file(WP_CONTENT_DIR."/sedlex/inline_scripts/".$md5.".js")) {
+				if (!@is_file(WP_CONTENT_DIR."/sedlex/inline_scripts/".$md5.".js")) {
 					@file_put_contents(WP_CONTENT_DIR."/sedlex/inline_scripts/".$md5.".js", $out) ; 
 				}
+				
+				@chmod(WP_CONTENT_DIR."/sedlex/inline_scripts/".$md5.".js", 0755);
+				
 				$url = WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__)).'core/load-scripts.php?c=0&load='.$md5 ; 
 				wp_enqueue_script('sedlex_scripts', $url, array() ,date('Ymd'));
 				$sedlex_list_scripts = array(); 
@@ -653,7 +666,18 @@ if (!class_exists('pluginSedLex')) {
 		* @return void
 		*/
 		
-		public function javascript_admin() {
+		public function javascript_admin($hook) {
+			// If it not a plugin page SL page
+			$plugin = explode("_", $hook) ; 
+			if (!isset($plugin[count($plugin)-1])) {
+				return ; 
+			}
+			if ($plugin[count($plugin)-1]!="sedlex") {
+				$plugin = explode("/", $plugin[count($plugin)-1]) ; 
+				if ((!isset($plugin[0]))||(!@is_file(WP_PLUGIN_DIR."/".$plugin[0]."/core.class.php")))
+					return;
+			}	
+			
 			if (str_replace(basename( __FILE__),"",plugin_basename( __FILE__))==str_replace(basename( $this->path),"",plugin_basename($this->path))) {
 				// For the tabs of the admin page
 				wp_enqueue_script('jquery');   
@@ -760,9 +784,10 @@ if (!class_exists('pluginSedLex')) {
 			// On cree le machin
 			if ($path_ok) {
 				$css_f = $path."/".$id.'.css' ; 
-				if (!is_file($css_f)) {
+				if (!@is_file($css_f)) {
 					@file_put_contents($css_f , $text); 
 				} 
+				@chmod($css_f, 0755);
 				$sedlex_list_styles[] = $css_f ; 
 			} else {
 				echo "\n<style type='text/css'>\n" ; 
@@ -781,8 +806,22 @@ if (!class_exists('pluginSedLex')) {
 		* @return void
 		*/
 		
-		public function flush_css() {
+		public function flush_css($hook) {
 			global $sedlex_list_styles ; 
+						
+			// If it not a plugin page SL page
+			if (is_admin()) {
+				$plugin = explode("_", $hook) ; 
+				if (!isset($plugin[count($plugin)-1])) {
+					return ; 
+				}
+				if ($plugin[count($plugin)-1]!="sedlex") {
+					$plugin = explode("/", $plugin[count($plugin)-1]) ; 
+					if ((!isset($plugin[0]))||(!@is_file(WP_PLUGIN_DIR."/".$plugin[0]."/core.class.php")))
+						return;
+				}
+			}
+		
 			// Repertoire de stockage des css inlines
 
 			$path =  WP_CONTENT_DIR."/sedlex/inline_styles";
@@ -797,7 +836,7 @@ if (!class_exists('pluginSedLex')) {
 				// We create the file if it does not exist
 				$out = "" ; 
 				foreach( $sedlex_list_styles as $file ) {
-					if (is_file($file)) {
+					if (@is_file($file)) {
 						$out .=  "\n/*====================================================*/\n";
 						$out .=  "/* FILE ".str_replace(WP_CONTENT_DIR,"",$file)  ."*/\n";
 						$out .=  "/*====================================================*/\n";
@@ -819,9 +858,12 @@ if (!class_exists('pluginSedLex')) {
 					}
 				}
 				$md5 = md5($out) ; 
-				if (!is_file(WP_CONTENT_DIR."/sedlex/inline_styles/".$md5.".css")) {
+				if (!@is_file(WP_CONTENT_DIR."/sedlex/inline_styles/".$md5.".css")) {
 					@file_put_contents(WP_CONTENT_DIR."/sedlex/inline_styles/".$md5.".css", $out) ; 
 				}
+				
+				@chmod(WP_CONTENT_DIR."/sedlex/inline_styles/".$md5.".css", 0755);
+				
 				$url = WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename( __FILE__)).'core/load-styles.php?c=0&load='.$md5 ; 
 				wp_enqueue_style('sedlex_styles', $url, array() ,date('Ymd'));
 
@@ -838,7 +880,19 @@ if (!class_exists('pluginSedLex')) {
 		* @return void
 		*/
 		
-		public function css_admin() {
+		public function css_admin($hook) {
+
+			// If it not a plugin page SL page
+			$plugin = explode("_", $hook) ; 
+			if (!isset($plugin[count($plugin)-1])) {
+				return ; 
+			}
+			if ($plugin[count($plugin)-1]!="sedlex") {
+				$plugin = explode("/", $plugin[count($plugin)-1]) ; 
+				if ((!isset($plugin[0]))||(!@is_file(WP_PLUGIN_DIR."/".$plugin[0]."/core.class.php")))
+					return;
+			}
+			
 			if (str_replace(basename( __FILE__),"",plugin_basename( __FILE__))==str_replace(basename( $this->path),"",plugin_basename($this->path))) {
 				wp_enqueue_style('wp-admin');
 				wp_enqueue_style('dashboard');
@@ -937,12 +991,19 @@ if (!class_exists('pluginSedLex')) {
 				<?php
 				
 				$plugins = get_plugins() ; 
+				$all_nb = 0 ; 
+				foreach($plugins as $url => $data) {
+					if (is_plugin_active($url)) {
+						$all_nb++ ; 
+					}
+				}
 				$sl_count = 0 ; 
 				foreach ($submenu['sedlex.php'] as $ov) {
 					$sl_count ++ ; 
 				}
 ?>
-				<p><?php printf(__("For now, you have installed %d  plugins including %d plugins developped with the 'SL framework':",'SL_framework'), count($plugins), $sl_count-1)?><p/>
+				<p><?php printf(__("For now, you have installed %d  plugins including %d plugins developped with the SedLex's framework",'SL_framework'), $all_nb, $sl_count-1)?><p/>
+				<p><?php printf(__("The core plugin is located at %s",'SL_framework'), "<code>".str_replace(ABSPATH, "", SL_FRAMEWORK_DIR)."</code>")?><p/>
 <?php
 				
 				//======================================================================================
@@ -1134,7 +1195,7 @@ if (!class_exists('pluginSedLex')) {
 			
 			$result = "" ; 
 			foreach ($folders as $f ) {
-				if ( (is_dir($f[0])) || (is_file($f[0])) ) {
+				if ( (is_dir($f[0])) || (@is_file($f[0])) ) {
 					$readable = Utils::is_readable($f[0]) ; 
 					$writable = Utils::is_writable($f[0]) ; 
 					
@@ -1151,7 +1212,7 @@ if (!class_exists('pluginSedLex')) {
 					if ($pb) {
 						if  (is_dir($f[0])) 
 							$result .= "<p>".sprintf(__('The folder %s is not %s !','SL_framework'), "<code>".$f[0]."</code>", "<code>".$f[1]."</code>")."</p>" ; 
-						if  (is_file($f[0])) 
+						if  (@is_file($f[0])) 
 							$result .= "<p>".sprintf(__('The file %s is not %s !','SL_framework'), "<code>".$f[0]."</code>", "<code>".$f[1]."</code>")."</p>" ; 
 					}
 				} else {
@@ -1269,7 +1330,6 @@ if (!class_exists('pluginSedLex')) {
 		public function get_default_option($option) {
 			switch ($option) {
 				// Alternative default return values (Please modify)
-				case 'deprecated' 		: return false 		; break ; 
 				case 'debug_level' 			: return 3 		; break ; 
 				case 'global_allow_translation_by_blogs' : return true ; break ; 
 			}

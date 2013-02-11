@@ -19,11 +19,12 @@ Captcha image and Akismet API are available for this plugin.
 
 You may configure (for the captcha): 
 
-* The color of the background
-* The color of the letters
-* The size of the image
-* The size of the letters
-* The slant of the letters
+* the color of the background
+* the color of the letters
+* the size of the image
+* the size of the letters
+* the slant of the letters
+* the deformation of the letters
 * ...
 
 This plugin is under GPL licence
@@ -80,6 +81,10 @@ Have fun !
 
 == Changelog ==
 
+= 1.3.2 =
+* Problem with too the verification of the captcha
+* the letters may be distorded
+
 = 1.3.1 =
 * CSS issue and 500 error
 
@@ -120,4 +125,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:d1f850e8890e04d01f01fe9e79af8379
+InfoVersion:f3ebe9a5adf78003d671125de01271ad

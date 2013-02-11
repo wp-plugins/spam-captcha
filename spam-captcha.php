@@ -3,7 +3,8 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.1
+Version: 1.3.2
+
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -37,7 +38,7 @@ class spam_captcha extends pluginSedLex {
 		
 		// The structure of the SQL table
 		$this->table_name = $wpdb->prefix . "pluginSL_" . get_class() ; 
-		$this->tableSQL = "id int NOT NULL AUTO_INCREMENT, id_comment mediumint(9) NOT NULL, status VARCHAR(10) DEFAULT 'ok', new_status VARCHAR(10) DEFAULT 'ok', author TEXT DEFAULT '', content TEXT DEFAULT '', date TIMESTAMP, UNIQUE KEY id_post (id)" ; 
+		$this->tableSQL = "id int NOT NULL AUTO_INCREMENT, id_comment mediumint(9) NOT NULL, status VARCHAR(10) DEFAULT 'ok', new_status VARCHAR(10) DEFAULT 'ok', author TEXT DEFAULT '', content TEXT DEFAULT '', captcha_info TEXT DEFAULT '', date TIMESTAMP, UNIQUE KEY id_post (id)" ; 
 		
 		//Configuration of callbacks, shortcode, ... (Please modify)
 		// For instance, see 
@@ -120,6 +121,19 @@ class spam_captcha extends pluginSedLex {
 	*/
 	
 	public function _update() {
+		global $wpdb;
+		$table_name = $this->table_name;
+		$old_table_name = $wpdb->prefix . $this->pluginID ; 
+		
+		// This update aims at upgrading older version of shorten-link to enable to create custom shorturl (i.e. with external URL)
+		//  For information previous table are :
+		// 	id_post mediumint(9) NOT NULL, short_url TEXT DEFAULT '', UNIQUE KEY id_post (id_post)
+		// and now it is 
+		//	id_post mediumint(9) NOT NULL, short_url TEXT DEFAULT '', url_externe VARCHAR( 255 ) NOT NULL DEFAULT '' ,UNIQUE KEY id_post (id_post, url_externe)
+	
+		if ( !$wpdb->get_var("SHOW COLUMNS FROM ".$table_name." LIKE 'captcha_info'")  ) {
+			$wpdb->query("ALTER TABLE ".$this->table_name." ADD captcha_info  TEXT DEFAULT '';");
+		}
 		
 	}
 	
@@ -183,6 +197,10 @@ class spam_captcha extends pluginSedLex {
 			case 'captcha_color_variation_percentage' 		: return 40	; break ; 
 			case 'captcha_noise' 		: return true 	; break ; 
 			case 'captcha_color_variation' 		: return true 	; break ; 
+			case 'captcha_wave' 		: return false 	; break ; 
+			case 'captcha_wave_period' 		: return 10 	; break ; 
+			case 'captcha_wave_amplitude' 		: return 10 	; break ; 
+			
 			
 			case 'captcha_html' 		: return "*<div class='captcha_image'> 
 %image% 
@@ -276,7 +294,7 @@ class spam_captcha extends pluginSedLex {
 					$params->add_comment(sprintf(__("Your server does not seems to have GD installed with the following functions: %s", $this->pluginID), "<code>imagecreate</code>, <code>imagefill</code>, <code>imagecolorallocate</code>, <code>imagettftext</code>, <code>imageline</code>, <code>imagepng</code>")) ; 
 					$params->add_comment(__("Thus, it is not possible to activate this option... sorry !", $this->pluginID)) ; 
 				} else {
-					$params->add_param('captcha_enable', __('Yes/No (for commenting only):', $this->pluginID), "", "", array('captcha_logged', 'captcha_number', 'captcha_width', 'captcha_height', 'captcha_angle', 'captcha_size', 'captcha_background', 'captcha_font_color', 'captcha_color_variation', 'captcha_noise', 'captcha_html', 'captcha_text', 'captcha_addition')) ; 
+					$params->add_param('captcha_enable', __('Yes/No (for commenting only):', $this->pluginID), "", "", array('captcha_logged', 'captcha_number', 'captcha_width', 'captcha_height', 'captcha_angle', 'captcha_size', 'captcha_background', 'captcha_font_color', 'captcha_color_variation', 'captcha_noise', 'captcha_html', 'captcha_text', 'captcha_addition', 'captcha_wave', 'captcha_wave_period', 'captcha_wave_amplitude')) ; 
 					if (is_multisite()) {
 						$blogurl = home_url()  ; 
 					} else {
@@ -311,6 +329,9 @@ class spam_captcha extends pluginSedLex {
 					$params->add_comment(sprintf(__("The default html is: %s ", $this->pluginID),"<br><code>&lt;div class='captcha_image'&gt; <br>%image%<br>&lt;input type='text' id='captcha_comment' name='captcha_comment' /&gt;<br/>&lt;p&gt;Please type the characters of this captcha image in the input box&lt;/p&gt;&lt;/div&gt;</code><br>", "%image%")) ; 
 					$params->add_comment(__("Please note that %s will be replace with the captcha image.", $this->pluginID)) ; 
 					$params->add_comment(__("You may add some comment, for instance to make clear that the addition should be responded with the result of the operation.", $this->pluginID)) ; 
+					$params->add_param('captcha_wave', __('The image will be slightly distorded:', $this->pluginID), "", "", array('captcha_wave_period','captcha_wave_amplitude')) ; 
+					$params->add_param('captcha_wave_period', __('The period of the wave:', $this->pluginID)) ; 
+					$params->add_param('captcha_wave_amplitude', __('The amplitude of the wave:', $this->pluginID)) ; 
 				}
 				
 				$params->add_title(__("Do you want to use Akismet API to check spam against posted comments?", $this->pluginID)) ; 
@@ -386,15 +407,13 @@ class spam_captcha extends pluginSedLex {
 			}
 			
 			// If not we check the captcha
-			if (isset($_POST['captcha_comment'])) {
-				if (($_POST['captcha_comment']=="")||(!isset($_SESSION['keyCaptcha']))||($_SESSION['keyCaptcha']!=md5($_POST['captcha_comment']))) {
-					// we save it...
-					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW())") ; 
-						
-					$permalink = get_permalink( $comment['comment_post_ID'] );
-					wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>($comment['comment_author']), "email_spam"=>($comment['comment_author_email']), "url_spam"=>($comment['comment_author_url']), "comment_spam"=>($comment['comment_content'])),$permalink."#error", 302)) ; 
-					die();
-				}
+			if ((!isset($_POST['captcha_comment']))||($_POST['captcha_comment']=="")||(!isset($_SESSION['keyCaptcha']))||($_SESSION['keyCaptcha']=="")||($_SESSION['keyCaptcha']!=$_POST['captcha_comment'])) {
+				// we save it...
+				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" but should be ".$_SESSION['keyCaptcha']."')") ; 
+					
+				$permalink = get_permalink( $comment['comment_post_ID'] );
+				wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>($comment['comment_author']), "email_spam"=>($comment['comment_author_email']), "url_spam"=>($comment['comment_author_url']), "comment_spam"=>($comment['comment_content'])),$permalink."#error", 302)) ; 
+				die();
 			}
 		}
 		return $comment ; 
@@ -614,8 +633,28 @@ class spam_captcha extends pluginSedLex {
 			}
 			
 			
+			if ( ($this->get_param('captcha_wave')) ) {
+				// Make a copy of the image twice the size
+				$height2 = $maxY * 2;
+				$width2 = $maxX * 2;
+				$img2 = imagecreatetruecolor($width2, $height2);
+				imagecopyresampled($img2, $captcha, 0, 0, 0, 0, $width2, $height2, $maxX, $maxY);
+				$period = $this->get_param('captcha_wave_period') ; 
+				$amplitude = $this->get_param('captcha_wave_amplitude') ; 
+				
+				if($period == 0) 
+					$period = 1;
+				// Wave it
+				for($i = 0; $i < ($width2); $i += 2)
+					imagecopy($img2, $img2, $i - 2, sin($i / $period) * $amplitude, $i, 0, 2, $height2);
+				// Resample it down again
+				imagecopyresampled($captcha, $img2, 0, 0, 0, 0, $maxX, $maxY, $width2, $height2);
+				imagedestroy($img2);
+			}  
 			
-			$_SESSION['keyCaptcha'] = md5($text_to_type);
+			
+			
+			$_SESSION['keyCaptcha'] = $text_to_type;
 			header("Content-type: image/png");
 			// Do not cache this image
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -655,13 +694,13 @@ class spam_captcha extends pluginSedLex {
 					// we mark as spam
 					wp_set_comment_status( $id, "spam" ) ; 
 					// we save it...
-					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (".$id.", 'spam', 'spam', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW())") ; 
+					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'spam', 'spam', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
 					// we redirect the page to inform the user
 					wp_redirect(add_query_arg(array("error_checker"=>"spam", "author_spam"=>($comment->comment_author), "email_spam"=>($comment->comment_author_email), "url_spam"=>($comment->comment_author_url), "comment_spam"=>($comment->comment_content) ),get_permalink($comment->comment_post_ID)."#error"),302);
 					die() ; 
 				} else {
 					// we save it...
-					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date) VALUES (".$id.", 'ok', 'ok', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW())") ; 
+					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'ok', 'ok', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
 				}
 			}
 		}
