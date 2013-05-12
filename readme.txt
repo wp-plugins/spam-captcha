@@ -19,12 +19,11 @@ Captcha image and Akismet API are available for this plugin.
 
 You may configure (for the captcha): 
 
-* the color of the background
-* the color of the letters
-* the size of the image
-* the size of the letters
-* the slant of the letters
-* the deformation of the letters
+* The color of the background
+* The color of the letters
+* The size of the image
+* The size of the letters
+* The slant of the letters
 * ...
 
 This plugin is under GPL licence
@@ -37,11 +36,11 @@ This plugin works with multisite installation of Wordpress.
 
 * Azeri (Latin) (Azerbaijan) translation provided by BayBakVoiceofaNation
 * Czech (Czech Republic) translation provided by SedLex, Kumerson
-* German (Germany) translation provided by Diego, ThorstenKallnischkies
+* German (Germany) translation provided by Diego, ThorstenKallnischkies, PatrickEhrler
 * English (United States), default language
 * Spanish (Spain) translation provided by Krazz, admin, ThorstenKallnischkies
-* Farsi (Iran) translation provided by BahmanMohadeci
-* French (France) translation provided by SedLex, Geraldine
+* Farsi (Iran) translation provided by BahmanMohadeci, mortezapourmirzai
+* French (France) translation provided by SedLex, Geraldine, fabien
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
 * Lithuanian (Lithuania) translation provided by marko.estas
@@ -80,6 +79,10 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.3.3 =
+* Flush mecanism
+* add urlencode to not remove the space
 
 = 1.3.2 =
 * Problem with too the verification of the captcha
@@ -125,4 +128,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:74e943e512d5e25489e58d19a0dd01fe
+InfoVersion:087b3d2b126ddc53cf6fa629c9c23802

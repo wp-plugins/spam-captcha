@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-11-09T14:32:03+00:00\n"
+"PO-Revision-Date: 2013-04-07T16:09:15+00:00\n"
 "Last-Translator: IgorPulbere <m.isus.tv>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,30 @@ msgstr ""
 msgid "The following table summarizes the number of rejected comments"
 msgstr "Следующая таблица обобщает количество отклоненных комментариев"
 
+msgid "Type"
+msgstr ""
+
+msgid "Number of hits"
+msgstr ""
+
+msgid "Blocked by CAPTCHA"
+msgstr ""
+
+msgid "Blocked by AKISMET"
+msgstr ""
+
+msgid "Not Blocked by AKISMET but spam"
+msgstr ""
+
+msgid "Normal comment"
+msgstr ""
+
+msgid "Blocked by AKISMET but normal"
+msgstr ""
+
+msgid "Spam Report"
+msgstr ""
+
 msgid "Type of protection"
 msgstr "Тип защиты"
 
@@ -39,16 +63,16 @@ msgid "AKISMET protection:"
 msgstr "АКСИМЕТ защита"
 
 msgid "This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)"
-msgstr "Этот плагин заблокировал %s спам-комментов"
+msgstr "Этот плагин заблокировал %s спам-комментов (and missed %s that you have manually indicated as being spam)"
 
 msgid "Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)"
-msgstr "Этот плагин обработал %s нормальных сообщений"
+msgstr "Этот плагин обработал %s нормальных сообщений and marked as spam %s that you have manually indicated as being normal)"
 
 msgid "Summary of Protection"
 msgstr "Итог защиты"
 
-msgid "Do you want to enable CAPTCHA for posted comments?"
-msgstr "Вы желаете включить CAPTCHA для комментариев?"
+msgid "Do you want to enable CAPTCHA for posting comments?"
+msgstr ""
 
 msgid "Your server does not seems to have GD installed with the following functions: %s"
 msgstr "Похоже на вашем сервере не установлен ГД со следующими функциями: %s"
@@ -56,8 +80,11 @@ msgstr "Похоже на вашем сервере не установлен Г
 msgid "Thus, it is not possible to activate this option... sorry !"
 msgstr "Эту оппцию невозможно активировать"
 
-msgid "Yes/No (for the comment):"
-msgstr "Да/Нет"
+msgid "Yes/No (for commenting only):"
+msgstr ""
+
+msgid "The captcha will be like that : %s"
+msgstr ""
 
 msgid "Use Capctha even if user is logged:"
 msgstr "Использовать CAPTCHA даже если пользователь залогирован"
@@ -66,6 +93,12 @@ msgid "WARNING: If you enable this option, the Captcha will be only effective wi
 msgstr "ВНИМАНИЕ: Если вы включите данную функцию CAPTCHA будет эффективна для пользователей со следующей ролью: %s"
 
 msgid "Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s"
+msgstr ""
+
+msgid "The captcha proposes a sequence of lower-case letters:"
+msgstr ""
+
+msgid "The captcha proposes an addition operation to solve:"
 msgstr ""
 
 msgid "Number of letters:"
@@ -95,8 +128,8 @@ msgstr "Цвет шрифта"
 msgid "Variation of the color of the letters:"
 msgstr "Вариация цвета букв"
 
-msgid "The color of the letters are not the identical"
-msgstr "Цвет букв отличается"
+msgid "The color of the letters and of the background are not the identical"
+msgstr ""
 
 msgid "Variation of the color of the background:"
 msgstr "Разнообразие цвета фона"
@@ -104,11 +137,29 @@ msgstr "Разнообразие цвета фона"
 msgid "The color of the background are not the homogenous"
 msgstr "Разноцветный фон"
 
+msgid "Percentage of variation (alea) of the colors (background and letters):"
+msgstr ""
+
 msgid "The HTML that will be inserted in your page to display captcha image:"
 msgstr "Код вставляемый в вашу страницу"
 
-msgid "The default html is: %s (please note that %s will be replace with the captcha image)"
-msgstr "Исходный HTML: %s"
+msgid "The default html is: %s"
+msgstr ""
+
+msgid "Please note that %s will be replace with the captcha image."
+msgstr ""
+
+msgid "You may add some comment, for instance to make clear that the addition should be responded with the result of the operation."
+msgstr ""
+
+msgid "The image will be slightly distorded:"
+msgstr ""
+
+msgid "The period of the wave:"
+msgstr ""
+
+msgid "The amplitude of the wave:"
+msgstr ""
 
 msgid "Do you want to use Akismet API to check spam against posted comments?"
 msgstr "Желаете ли использовать Аксимет для защиты от спама?"
@@ -134,14 +185,11 @@ msgstr "Параметры"
 msgid "Manage translations"
 msgstr "Управление переводами"
 
-msgid "This form is an easy way to contact the author and to discuss issues / incompatibilities / etc."
-msgstr ""
-
 msgid "Give feedback"
 msgstr "Ваши отзывы"
 
-msgid "Please type the characters of this captcha image in the input box"
-msgstr "Пожалуйста напечатайте буквы/цифры изображенные на картинке"
+msgid "Other plugins"
+msgstr ""
 
 msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
 msgstr "Введенный вами текст определен как спам... если нет, попытайтесь его изменит и попробовать еще раз"
@@ -149,9 +197,6 @@ msgstr "Введенный вами текст определен как спа�
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "Введенный вами код неверен, попробуйте еще раз!"
 
-msgid "Here is the plugins developped by the author:"
-msgstr "Плагин разработан:"
-
-msgid "Other possible plugins"
-msgstr "Другие плагины"
+msgid "Please type the characters of this captcha image in the input box"
+msgstr "Пожалуйста напечатайте буквы/цифры изображенные на картинке"
 

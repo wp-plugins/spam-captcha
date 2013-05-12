@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-08-01T05:11:31+00:00\n"
+"PO-Revision-Date: 2013-04-07T16:10:58+00:00\n"
 "Last-Translator: SilverLight <silverlightness@ymail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,9 @@ msgstr "Bảng thống kê số tin nhắn bị loại bỏ"
 
 msgid "Type"
 msgstr "Loại"
+
+msgid "Number of hits"
+msgstr ""
 
 msgid "Blocked by CAPTCHA"
 msgstr "Bị chặn bởi CAPTCHA"
@@ -59,11 +62,44 @@ msgstr "%s tin nhắn không bị chặn khi CAPTCHA thử nghiệm thất bại
 msgid "AKISMET protection:"
 msgstr "Máy bảo vệ AKISMET:"
 
+msgid "This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)"
+msgstr ""
+
+msgid "Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)"
+msgstr ""
+
+msgid "Summary of Protection"
+msgstr ""
+
+msgid "Do you want to enable CAPTCHA for posting comments?"
+msgstr "Bạn có muốn kích hoạt CAPTCHA khi đăng bình luận"
+
+msgid "Your server does not seems to have GD installed with the following functions: %s"
+msgstr ""
+
+msgid "Thus, it is not possible to activate this option... sorry !"
+msgstr ""
+
+msgid "Yes/No (for commenting only):"
+msgstr "Đồng ý / Không đồng ý (Chỉ cho bình luận)"
+
 msgid "The captcha will be like that : %s"
 msgstr "Captcha sẽ trông giống như vậy: %s"
 
+msgid "Use Capctha even if user is logged:"
+msgstr "Vẫn dùng Captcha khi người dùng đăng nhập:"
+
 msgid "WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s"
 msgstr "CẢNH BÁO: Nếu bạn kích hoạt tùy chọn này, Captcha sẽ chỉ có hiệu quả lên những người dùng theo vai trò: %s"
+
+msgid "Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s"
+msgstr ""
+
+msgid "The captcha proposes a sequence of lower-case letters:"
+msgstr ""
+
+msgid "The captcha proposes an addition operation to solve:"
+msgstr ""
 
 msgid "Number of letters:"
 msgstr "Số ký tự:"
@@ -92,8 +128,8 @@ msgstr "Màu phông chữ:"
 msgid "Variation of the color of the letters:"
 msgstr "Thay đổi màu ký tự"
 
-msgid "The color of the letters are not the identical"
-msgstr "Màu của các ký tự không đồng nhất"
+msgid "The color of the letters and of the background are not the identical"
+msgstr ""
 
 msgid "Variation of the color of the background:"
 msgstr "Thay đổi màu nền"
@@ -101,11 +137,29 @@ msgstr "Thay đổi màu nền"
 msgid "The color of the background are not the homogenous"
 msgstr "Màu nền không đồng nhất"
 
+msgid "Percentage of variation (alea) of the colors (background and letters):"
+msgstr ""
+
 msgid "The HTML that will be inserted in your page to display captcha image:"
 msgstr "HTML sẽ được chèn vào trang web của bạn để hiện thị ảnh Captcha:"
 
-msgid "The default html is: %s (please note that %s will be replace with the captcha image)"
-msgstr "Mặc định HTML là: %s"
+msgid "The default html is: %s"
+msgstr ""
+
+msgid "Please note that %s will be replace with the captcha image."
+msgstr ""
+
+msgid "You may add some comment, for instance to make clear that the addition should be responded with the result of the operation."
+msgstr ""
+
+msgid "The image will be slightly distorded:"
+msgstr ""
+
+msgid "The period of the wave:"
+msgstr ""
+
+msgid "The amplitude of the wave:"
+msgstr ""
 
 msgid "Do you want to use Akismet API to check spam against posted comments?"
 msgstr "Bạn có muốn dùng Akismet API để kiểm tra spam trước khi đăng bình luận?"
@@ -137,12 +191,12 @@ msgstr "Gửi phản hồi"
 msgid "Other plugins"
 msgstr "Các plugin khác"
 
-msgid "Do you want to enable CAPTCHA for posting comments?"
-msgstr "Bạn có muốn kích hoạt CAPTCHA khi đăng bình luận"
+msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
+msgstr ""
 
-msgid "Yes/No (for commenting only):"
-msgstr "Đồng ý / Không đồng ý (Chỉ cho bình luận)"
+msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
+msgstr ""
 
-msgid "Use Capctha even if user is logged:"
-msgstr "Vẫn dùng Captcha khi người dùng đăng nhập:"
+msgid "Please type the characters of this captcha image in the input box"
+msgstr ""
 

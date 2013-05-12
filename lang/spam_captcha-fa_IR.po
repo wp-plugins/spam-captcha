@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-07-21T06:43:40+00:00\n"
+"PO-Revision-Date: 2013-05-04T18:05:42+00:00\n"
 "Last-Translator: BahmanMohadeci <http://ensahr.com/>\n"
+"Last-Translator: mortezapourmirzai <www.seshanbeh.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,26 +57,14 @@ msgstr "مجموع"
 msgid "CAPTCHA protection:"
 msgstr "حفاظت توسط کپچا:"
 
-msgid "%s messages have been blocked as the CAPTCHA test failed"
-msgstr ""
-
 msgid "AKISMET protection:"
 msgstr "حفاظت توسط Akismet"
-
-msgid "This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)"
-msgstr ""
-
-msgid "Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)"
-msgstr ""
 
 msgid "Summary of Protection"
 msgstr "مجموع حفاظت ها"
 
 msgid "Do you want to enable CAPTCHA for posting comments?"
 msgstr "آیا مایل به فعال کردن کپچا برای قسمت نظرات هستید؟"
-
-msgid "Your server does not seems to have GD installed with the following functions: %s"
-msgstr ""
 
 msgid "Thus, it is not possible to activate this option... sorry !"
 msgstr "متاسفیم. اما امکان فعال کردن این گزینه وجود ندارد"
@@ -89,17 +78,8 @@ msgstr "کپچا چیزی شبیه این خواهد بود: %s"
 msgid "Use Capctha even if user is logged:"
 msgstr "از کپچا استفاده شود. حتی اگر کاربر لاگین کرده باشد:"
 
-msgid "WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s"
-msgstr ""
-
-msgid "Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s"
-msgstr ""
-
 msgid "Number of letters:"
 msgstr "تعداد حروف:"
-
-msgid "Default value %s"
-msgstr ""
 
 msgid "Width of image:"
 msgstr "عرض تصویر"
@@ -128,23 +108,14 @@ msgstr "رنگ حروف یکسان نیست"
 msgid "Variation of the color of the background:"
 msgstr "پراکندگی رنگ پس زمینه:"
 
-msgid "The color of the background are not the homogenous"
-msgstr ""
-
 msgid "The HTML that will be inserted in your page to display captcha image:"
 msgstr "کد HTML که برای نشان دادن کپچا در صفحه شما جای داده می شود"
-
-msgid "The default html is: %s (please note that %s will be replace with the captcha image)"
-msgstr ""
 
 msgid "Do you want to use Akismet API to check spam against posted comments?"
 msgstr "آیا مایلید از Akismet برای مقابله با اسپم ها استفاده کنید؟"
 
 msgid "Yes/No:"
 msgstr "بله / خیر"
-
-msgid "The Akismet ID:"
-msgstr ""
 
 msgid "Your Akismet ID is correct."
 msgstr "Akismet ID شما صحیح است."
@@ -161,9 +132,6 @@ msgstr "پارامتر ها"
 msgid "Manage translations"
 msgstr "مدیریت ترجمه ها"
 
-msgid "Give feedback"
-msgstr ""
-
 msgid "Other plugins"
 msgstr "سایر افزونه ها"
 
@@ -175,4 +143,19 @@ msgstr "نظری که شما گذاشته اید به نظر اسپم می آی�
 
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr "شما کد کپچا را وارد نکرده اید. لطفا برای کارکرد صحیح قسمت نظرات این کد را وارد نمایید"
+
+msgid "Default value %s"
+msgstr "مقدار پیشفرض: %s"
+
+msgid "The default html is: %s"
+msgstr "کد html پیشفرض: %s"
+
+msgid "Please note that %s will be replace with the captcha image."
+msgstr "لطفا توجه کنید که %s با عکس کپتچا جایگزین خواهد شد."
+
+msgid "The Akismet ID:"
+msgstr "آی دی Akismet"
+
+msgid "Give feedback"
+msgstr "بازخورد"
 

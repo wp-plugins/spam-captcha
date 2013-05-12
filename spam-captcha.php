@@ -3,7 +3,8 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.2
+Version: 1.3.3
+
 
 Framework: SL_Framework
 Author: SedLex
@@ -201,6 +202,7 @@ class spam_captcha extends pluginSedLex {
 			case 'captcha_wave_period' 		: return 10 	; break ; 
 			case 'captcha_wave_amplitude' 		: return 10 	; break ; 
 			
+			case 'flush_nb_jours' 		: return 0 	; break ; 
 			
 			case 'captcha_html' 		: return "*<div class='captcha_image'> 
 %image% 
@@ -346,7 +348,11 @@ class spam_captcha extends pluginSedLex {
 				} else {
 					$params->add_comment(sprintf(__("To get an Akismet ID, see %s here %s.", $this->pluginID),"<a href='http://akismet.com/get/'>", "</a>")) ; 
 				}
-
+				
+				$params->add_title(__("Advanced parameters", $this->pluginID)) ; 
+				$params->add_param('flush_nb_jours', __('Remove stats older than (in days):', $this->pluginID)) ; 
+				$params->add_comment(__("Stats older than the predetermined number of days will be deleted to save database space.", $this->pluginID)) ; 
+				$params->add_comment(__("0 means that no entry is deleted.", $this->pluginID)) ; 
 
 				$params->flush() ; 
 			$tabs->add_tab(__('Parameters',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
@@ -391,7 +397,12 @@ class spam_captcha extends pluginSedLex {
 		if ($comment['comment_type'] == 'pingback' || $comment['comment_type'] == 'trackback') {
 			return $comment ; 
 		}
-
+		
+		// on efface les entrées trop vieilles
+		if ((is_int($this->get_param('flush_nb_jours')))&&($this->get_param('flush_nb_jours')>0)) {
+			$wpdb->query("DELETE FROM ".$this->table_name." WHERE date<DATE_SUB(NOW(), INTERVAL ".$this->get_param('flush_nb_jours')." DAY)") ; 
+		}
+		
 		if (($this->get_param('captcha_enable')==true)&&((!is_user_logged_in())||($this->get_param('captcha_logged')))) {
 			
 			// First we check if the user may edit comment... if so we return the comment 
@@ -412,7 +423,7 @@ class spam_captcha extends pluginSedLex {
 				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" but should be ".$_SESSION['keyCaptcha']."')") ; 
 					
 				$permalink = get_permalink( $comment['comment_post_ID'] );
-				wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>($comment['comment_author']), "email_spam"=>($comment['comment_author_email']), "url_spam"=>($comment['comment_author_url']), "comment_spam"=>($comment['comment_content'])),$permalink."#error", 302)) ; 
+				wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>urlencode($comment['comment_author']), "email_spam"=>urlencode($comment['comment_author_email']), "url_spam"=>urlencode($comment['comment_author_url']), "comment_spam"=>urlencode($comment['comment_content'])),$permalink."#error", 302)) ; 
 				die();
 			}
 		}
@@ -696,7 +707,7 @@ class spam_captcha extends pluginSedLex {
 					// we save it...
 					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'spam', 'spam', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
 					// we redirect the page to inform the user
-					wp_redirect(add_query_arg(array("error_checker"=>"spam", "author_spam"=>($comment->comment_author), "email_spam"=>($comment->comment_author_email), "url_spam"=>($comment->comment_author_url), "comment_spam"=>($comment->comment_content) ),get_permalink($comment->comment_post_ID)."#error"),302);
+					wp_redirect(add_query_arg(array("error_checker"=>"spam", "author_spam"=>urlencode($comment->comment_author), "email_spam"=>urlencode($comment->comment_author_email), "url_spam"=>urlencode($comment->comment_author_url), "comment_spam"=>urlencode($comment->comment_content) ),get_permalink($comment->comment_post_ID)."#error"),302);
 					die() ; 
 				} else {
 					// we save it...
