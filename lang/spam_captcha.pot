@@ -1,328 +1,328 @@
 Content-Transfer-Encoding: 8bit
 
-#: spam-captcha.php:240
+#: spam-captcha.php:238
 #@ spam_captcha
 msgid "The following table summarizes the number of rejected comments"
 msgstr ""
 
-#: spam-captcha.php:257
+#: spam-captcha.php:255
 #@ spam_captcha
 msgid "Type"
 msgstr ""
 
-#: spam-captcha.php:258
+#: spam-captcha.php:256
 #@ spam_captcha
 msgid "Number of hits"
 msgstr ""
 
-#: spam-captcha.php:261
+#: spam-captcha.php:259
 #@ spam_captcha
 msgid "Blocked by CAPTCHA"
 msgstr ""
 
-#: spam-captcha.php:262
+#: spam-captcha.php:260
 #@ spam_captcha
 msgid "Blocked by AKISMET"
 msgstr ""
 
-#: spam-captcha.php:263
+#: spam-captcha.php:261
 #@ spam_captcha
 msgid "Not Blocked by AKISMET but spam"
 msgstr ""
 
-#: spam-captcha.php:264
+#: spam-captcha.php:262
 #@ spam_captcha
 msgid "Normal comment"
 msgstr ""
 
-#: spam-captcha.php:265
+#: spam-captcha.php:263
 #@ spam_captcha
 msgid "Blocked by AKISMET but normal"
 msgstr ""
 
-#: spam-captcha.php:269
+#: spam-captcha.php:267
 #@ spam_captcha
 msgid "Spam Report"
 msgstr ""
 
-#: spam-captcha.php:281
+#: spam-captcha.php:279
 #@ spam_captcha
 msgid "Type of protection"
 msgstr ""
 
-#: spam-captcha.php:281
+#: spam-captcha.php:279
 #@ spam_captcha
 msgid "Summary"
 msgstr ""
 
-#: spam-captcha.php:282
+#: spam-captcha.php:280
 #@ spam_captcha
 msgid "CAPTCHA protection:"
 msgstr ""
 
-#: spam-captcha.php:283
+#: spam-captcha.php:281
 #@ spam_captcha
 msgid "%s messages have been blocked as the CAPTCHA test failed"
 msgstr ""
 
-#: spam-captcha.php:285
+#: spam-captcha.php:283
 #@ spam_captcha
 msgid "AKISMET protection:"
 msgstr ""
 
-#: spam-captcha.php:286
+#: spam-captcha.php:284
 #@ spam_captcha
 msgid "This plugin have stopped %s spam-comments (and missed %s that you have manually indicated as being spam)"
 msgstr ""
 
-#: spam-captcha.php:286
+#: spam-captcha.php:284
 #@ spam_captcha
 msgid "Moreover, this plugin processes %s normal comments (and marked as spam %s that you have manually indicated as being normal)"
 msgstr ""
 
-#: spam-captcha.php:289
+#: spam-captcha.php:287
 #@ spam_captcha
 msgid "Summary of Protection"
 msgstr ""
 
-#: spam-captcha.php:294
+#: spam-captcha.php:292
 #@ spam_captcha
 msgid "Do you want to enable CAPTCHA for posting comments?"
 msgstr ""
 
-#: spam-captcha.php:296
+#: spam-captcha.php:294
 #@ spam_captcha
 msgid "Your server does not seems to have GD installed with the following functions: %s"
 msgstr ""
 
-#: spam-captcha.php:297
+#: spam-captcha.php:295
 #@ spam_captcha
 msgid "Thus, it is not possible to activate this option... sorry !"
 msgstr ""
 
-#: spam-captcha.php:299
+#: spam-captcha.php:297
 #@ spam_captcha
 msgid "Yes/No (for commenting only):"
 msgstr ""
 
-#: spam-captcha.php:305
+#: spam-captcha.php:303
 #@ spam_captcha
 msgid "The captcha will be like that : %s"
 msgstr ""
 
-#: spam-captcha.php:306
+#: spam-captcha.php:304
 #@ spam_captcha
 msgid "Use Capctha even if user is logged:"
 msgstr ""
 
-#: spam-captcha.php:307
+#: spam-captcha.php:305
 #@ spam_captcha
 msgid "WARNING: If you enable this option, the Captcha will be only effective with users with the following role: %s"
 msgstr ""
 
-#: spam-captcha.php:307
+#: spam-captcha.php:305
 #@ spam_captcha
 msgid "Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s"
 msgstr ""
 
-#: spam-captcha.php:308
+#: spam-captcha.php:306
 #@ spam_captcha
 msgid "The captcha proposes a sequence of lower-case letters:"
 msgstr ""
 
-#: spam-captcha.php:309
+#: spam-captcha.php:307
 #@ spam_captcha
 msgid "The captcha proposes an addition operation to solve:"
 msgstr ""
 
-#: spam-captcha.php:310
+#: spam-captcha.php:308
 #@ spam_captcha
 msgid "Number of letters:"
 msgstr ""
 
+#: spam-captcha.php:309
 #: spam-captcha.php:311
 #: spam-captcha.php:313
 #: spam-captcha.php:315
 #: spam-captcha.php:317
 #: spam-captcha.php:319
 #: spam-captcha.php:321
-#: spam-captcha.php:323
 #@ spam_captcha
 msgid "Default value %s"
 msgstr ""
 
-#: spam-captcha.php:312
+#: spam-captcha.php:310
 #@ spam_captcha
 msgid "Width of image:"
 msgstr ""
 
-#: spam-captcha.php:314
+#: spam-captcha.php:312
 #@ spam_captcha
 msgid "Height of image:"
 msgstr ""
 
-#: spam-captcha.php:316
+#: spam-captcha.php:314
 #@ spam_captcha
 msgid "Maximum +/- angle of letters:"
 msgstr ""
 
-#: spam-captcha.php:318
+#: spam-captcha.php:316
 #@ spam_captcha
 msgid "Size of letters:"
 msgstr ""
 
-#: spam-captcha.php:320
+#: spam-captcha.php:318
 #@ spam_captcha
 msgid "Color of the background:"
 msgstr ""
 
-#: spam-captcha.php:322
+#: spam-captcha.php:320
 #@ spam_captcha
 msgid "Color of the font:"
 msgstr ""
 
-#: spam-captcha.php:324
+#: spam-captcha.php:322
 #@ spam_captcha
 msgid "Variation of the color of the letters:"
 msgstr ""
 
-#: spam-captcha.php:325
+#: spam-captcha.php:323
 #@ spam_captcha
 msgid "The color of the letters and of the background are not the identical"
 msgstr ""
 
-#: spam-captcha.php:327
+#: spam-captcha.php:325
 #@ spam_captcha
 msgid "Variation of the color of the background:"
 msgstr ""
 
-#: spam-captcha.php:328
+#: spam-captcha.php:326
 #@ spam_captcha
 msgid "The color of the background are not the homogenous"
 msgstr ""
 
-#: spam-captcha.php:329
+#: spam-captcha.php:327
 #@ spam_captcha
 msgid "Percentage of variation (alea) of the colors (background and letters):"
 msgstr ""
 
-#: spam-captcha.php:330
+#: spam-captcha.php:328
 #@ spam_captcha
 msgid "The HTML that will be inserted in your page to display captcha image:"
 msgstr ""
 
-#: spam-captcha.php:331
+#: spam-captcha.php:329
 #@ spam_captcha
 msgid "The default html is: %s"
 msgstr ""
 
-#: spam-captcha.php:332
+#: spam-captcha.php:330
 #@ spam_captcha
 msgid "Please note that %s will be replace with the captcha image."
 msgstr ""
 
-#: spam-captcha.php:333
+#: spam-captcha.php:331
 #@ spam_captcha
 msgid "You may add some comment, for instance to make clear that the addition should be responded with the result of the operation."
 msgstr ""
 
-#: spam-captcha.php:334
+#: spam-captcha.php:332
 #@ spam_captcha
 msgid "The image will be slightly distorded:"
 msgstr ""
 
-#: spam-captcha.php:335
+#: spam-captcha.php:333
 #@ spam_captcha
 msgid "The period of the wave:"
 msgstr ""
 
-#: spam-captcha.php:336
+#: spam-captcha.php:334
 #@ spam_captcha
 msgid "The amplitude of the wave:"
 msgstr ""
 
-#: spam-captcha.php:339
+#: spam-captcha.php:337
 #@ spam_captcha
 msgid "Do you want to use Akismet API to check spam against posted comments?"
 msgstr ""
 
-#: spam-captcha.php:340
+#: spam-captcha.php:338
 #@ spam_captcha
 msgid "Yes/No:"
 msgstr ""
 
-#: spam-captcha.php:341
+#: spam-captcha.php:339
 #@ spam_captcha
 msgid "The Akismet ID:"
 msgstr ""
 
-#: spam-captcha.php:344
+#: spam-captcha.php:342
 #@ spam_captcha
 msgid "Your Akismet ID is correct."
 msgstr ""
 
-#: spam-captcha.php:346
+#: spam-captcha.php:344
 #@ spam_captcha
 msgid "Your Akismet ID does not seem to be correct."
 msgstr ""
 
-#: spam-captcha.php:346
-#: spam-captcha.php:349
+#: spam-captcha.php:344
+#: spam-captcha.php:347
 #@ spam_captcha
 msgid "To get an Akismet ID, see %s here %s."
 msgstr ""
 
-#: spam-captcha.php:352
+#: spam-captcha.php:350
 #@ spam_captcha
 msgid "Advanced parameters"
 msgstr ""
 
-#: spam-captcha.php:353
+#: spam-captcha.php:351
 #@ spam_captcha
 msgid "Remove stats older than (in days):"
 msgstr ""
 
-#: spam-captcha.php:354
+#: spam-captcha.php:352
 #@ spam_captcha
 msgid "Stats older than the predetermined number of days will be deleted to save database space."
 msgstr ""
 
-#: spam-captcha.php:355
+#: spam-captcha.php:353
 #@ spam_captcha
 msgid "0 means that no entry is deleted."
 msgstr ""
 
-#: spam-captcha.php:358
+#: spam-captcha.php:356
 #@ spam_captcha
 msgid "Parameters"
 msgstr ""
 
-#: spam-captcha.php:364
+#: spam-captcha.php:362
 #@ spam_captcha
 msgid "Manage translations"
 msgstr ""
 
-#: spam-captcha.php:370
+#: spam-captcha.php:368
 #@ spam_captcha
 msgid "Give feedback"
 msgstr ""
 
-#: spam-captcha.php:375
+#: spam-captcha.php:373
 #@ spam_captcha
 msgid "Other plugins"
 msgstr ""
 
-#: spam-captcha.php:468
+#: spam-captcha.php:466
 #@ spam_captcha
 msgid "You have submitted a comment which is considered as a spam... If not, please modify it and retry"
 msgstr ""
 
-#: spam-captcha.php:473
+#: spam-captcha.php:471
 #@ spam_captcha
 msgid "You have mistyped the captcha : to prove that your are not a spam machine, please retry!"
 msgstr ""
 
-#: spam-captcha.php:501
+#: spam-captcha.php:499
 #@ spam_captcha
 msgid "Please type the characters of this captcha image in the input box"
 msgstr ""

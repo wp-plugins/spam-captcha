@@ -724,7 +724,7 @@ if (!class_exists('pluginSedLex')) {
 			$path =  WP_CONTENT_DIR."/sedlex/inline_scripts";
 			$path_ok = false ; 
 			if (!is_dir($path)) {
-				if (mkdir("$path", 0755, true)) {
+				if (@mkdir("$path", 0755, true)) {
 					$path_ok = true ; 				
 				} else {
 					SL_Debug::log(get_class(), "The folder ". WP_CONTENT_DIR."/sedlex/inline_scripts"." cannot be created", 2) ; 
@@ -925,7 +925,7 @@ if (!class_exists('pluginSedLex')) {
 			$path =  WP_CONTENT_DIR."/sedlex/inline_styles";
 			$path_ok = false ; 
 			if (!is_dir($path)) {
-				if (mkdir("$path", 0755, true)) {
+				if (@mkdir("$path", 0755, true)) {
 					$path_ok = true ; 				
 				} else {
 					SL_Debug::log(get_class(), "The folder ". WP_CONTENT_DIR."/sedlex/inline_styles"." cannot be created", 2) ; 

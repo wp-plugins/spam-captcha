@@ -3,7 +3,7 @@
 Author: SedLex
 Contributors: SedLex
 Author URI: http://www.sedlex.fr
-Plugin URI: http://wordpress.org/extend/plugins/spam-captcha/
+Plugin URI: http://wordpress.org/plugins/spam-captcha/
 Tags: spam, captcha, comments, comment, akismet, block
 Requires at least: 3.0
 Tested up to: 3.5
@@ -44,8 +44,10 @@ This plugin works with multisite installation of Wordpress.
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
 * Lithuanian (Lithuania) translation provided by marko.estas
+* Dutch (Netherlands) translation provided by Marksremarks
 * Portuguese (Brazil) translation provided by MarcosAndrade, AdrianaVandoni, IuriJacob
 * Russian (Russia) translation provided by IgorPulbere
+* Turkish (Turkey) translation provided by AdLX
 * Vietnamese (Viet Nam) translation provided by SilverLight
 * Chinese (People's Republic of China) translation provided by bladin
 
@@ -79,6 +81,9 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.3.4 =
+* Update the core
 
 = 1.3.3 =
 * Flush mecanism
@@ -128,4 +133,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:087b3d2b126ddc53cf6fa629c9c23802
+InfoVersion:e10802f55fc4d072efc3baae98e42318

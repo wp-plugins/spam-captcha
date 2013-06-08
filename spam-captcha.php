@@ -3,15 +3,13 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.3
-
-
+Version: 1.3.4
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
 Author Email: sedlex@sedlex.fr
 Framework Email: sedlex@sedlex.fr
-Plugin URI: http://wordpress.org/extend/plugins/spam-captcha/
+Plugin URI: http://wordpress.org/plugins/spam-captcha/
 License: GPL3
 */
 

@@ -1024,15 +1024,17 @@ if (!class_exists("translationSL")) {
 			
 			// We delete all cache file
 			$dir = @opendir(WP_CONTENT_DIR."/sedlex/translations/"); 
-			while(false !== ($item = readdir($dir))) {
-				if ('.' == $item || '..' == $item)
-					continue;
-				if (preg_match("/".$domain.".*\.html$/", $item, $h)) {
-					unlink (WP_CONTENT_DIR."/sedlex/translations/".$item);
+			if ($dir !== false) {
+				while(false !== ($item = readdir($dir))) {
+					if ('.' == $item || '..' == $item)
+						continue;
+					if (preg_match("/".$domain.".*\.html$/", $item, $h)) {
+						unlink (WP_CONTENT_DIR."/sedlex/translations/".$item);
+					}
 				}
+				closedir($dir);
 			}
-			closedir($dir);
-			
+				
 			// we reconstruct the cache file
 			$signature_files = get_locale() ; 
 			ob_start() ; 
