@@ -4,10 +4,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-04-07T16:07:37+00:00\n"
+"PO-Revision-Date: 2013-07-23T07:53:58+00:00\n"
 "Last-Translator: Krazz <krazzk@ymail.com>\n"
 "Last-Translator: admin <webmaster@cocobongos.es>\n"
 "Last-Translator: ThorstenKallnischkies <http://desastre.eu>\n"
+"Last-Translator: SecurityNull <www.securitynull.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,26 +29,8 @@ msgstr "El siguiente cuadro resume el número de comentarios rechazados"
 msgid "Type"
 msgstr "Tipo"
 
-msgid "Number of hits"
-msgstr ""
-
-msgid "Blocked by CAPTCHA"
-msgstr ""
-
-msgid "Blocked by AKISMET"
-msgstr ""
-
-msgid "Not Blocked by AKISMET but spam"
-msgstr ""
-
 msgid "Normal comment"
 msgstr "Comentario normal"
-
-msgid "Blocked by AKISMET but normal"
-msgstr ""
-
-msgid "Spam Report"
-msgstr ""
 
 msgid "Type of protection"
 msgstr "Tipo de protección"
@@ -85,9 +68,6 @@ msgstr "Por lo tanto, no es posible activar esta opción ... lo siento!"
 msgid "Yes/No (for commenting only):"
 msgstr "Si/NO (solo para comentarios)"
 
-msgid "The captcha will be like that : %s"
-msgstr ""
-
 msgid "Use Capctha even if user is logged:"
 msgstr "Use Capctha incluso si el usuario se registra:"
 
@@ -96,12 +76,6 @@ msgstr "ADVERTENCIA: Si se habilita esta opción, el Captcha sólo será efectiv
 
 msgid "Then the Captcha will be displayed (for instance, to make sure that the display/CSS/etc. is correct) but ineffective with users with the following role: %s"
 msgstr "Entonces, el Captcha se mostrará (por ejemplo, para asegurarse de que la pantalla / CSS / etc es correcta.), pero ineficaz con los usuarios con las siguientes funciones: %s"
-
-msgid "The captcha proposes a sequence of lower-case letters:"
-msgstr ""
-
-msgid "The captcha proposes an addition operation to solve:"
-msgstr ""
 
 msgid "Number of letters:"
 msgstr "Número de letras:"
@@ -130,38 +104,14 @@ msgstr "Color de la fuente:"
 msgid "Variation of the color of the letters:"
 msgstr "Variación del color de las letras:"
 
-msgid "The color of the letters and of the background are not the identical"
-msgstr ""
-
 msgid "Variation of the color of the background:"
 msgstr "Variación del color del fondo:"
 
 msgid "The color of the background are not the homogenous"
 msgstr "El color del fondo no son homogéneos"
 
-msgid "Percentage of variation (alea) of the colors (background and letters):"
-msgstr ""
-
 msgid "The HTML that will be inserted in your page to display captcha image:"
 msgstr "El código HTML que se insertará en la página de visualización de la imagen del captcha:"
-
-msgid "The default html is: %s"
-msgstr ""
-
-msgid "Please note that %s will be replace with the captcha image."
-msgstr ""
-
-msgid "You may add some comment, for instance to make clear that the addition should be responded with the result of the operation."
-msgstr ""
-
-msgid "The image will be slightly distorded:"
-msgstr ""
-
-msgid "The period of the wave:"
-msgstr ""
-
-msgid "The amplitude of the wave:"
-msgstr ""
 
 msgid "Do you want to use Akismet API to check spam against posted comments?"
 msgstr "¿Quieres usar Akismet API para comprobar el spam contra los comentarios publicados?"
@@ -201,4 +151,67 @@ msgstr "Usted ha escrito mal el código de la imagen: para demostrar que su no e
 
 msgid "Please type the characters of this captcha image in the input box"
 msgstr "Por favor escriba los caracteres de la imagen captcha en el cuadro de entrada"
+
+msgid "Number of hits"
+msgstr "Numero de Hits"
+
+msgid "Blocked by CAPTCHA"
+msgstr "Bloqueado por CAPTACHA"
+
+msgid "Blocked by AKISMET"
+msgstr "Bloqueado por AKISMET"
+
+msgid "Not Blocked by AKISMET but spam"
+msgstr "No bloqueados por AKISMET - spam"
+
+msgid "Blocked by AKISMET but normal"
+msgstr "Bloqueado por AKISMET - normal"
+
+msgid "Spam Report"
+msgstr "Informe de Spam"
+
+msgid "The captcha will be like that : %s"
+msgstr "El captcha sera como esto:%s"
+
+msgid "The captcha proposes a sequence of lower-case letters:"
+msgstr "El captcha propone una secuencia de letras en minúscula:"
+
+msgid "The captcha proposes an addition operation to solve:"
+msgstr "El captcha propone una operación de suma para resolver:"
+
+msgid "The color of the letters and of the background are not the identical"
+msgstr "El color de las letras y del fondo no son idénticos"
+
+msgid "Percentage of variation (alea) of the colors (background and letters):"
+msgstr "Porcentaje de variación (alea) de los colores (de fondo y letras):"
+
+msgid "The default html is: %s"
+msgstr "El HTML por defecto es: %s"
+
+msgid "Please note that %s will be replace with the captcha image."
+msgstr "Tenga en cuenta que %s se reemplaza con la Imagen Captcha."
+
+msgid "You may add some comment, for instance to make clear that the addition should be responded with the result of the operation."
+msgstr "Puede agregar algunos comentarios, por ejemplo, para dejar claro que la adición se debe responder con el resultado de la operación."
+
+msgid "The image will be slightly distorded:"
+msgstr "La imagen será ligeramente distorsionada:"
+
+msgid "The period of the wave:"
+msgstr "El periodo de la onda:"
+
+msgid "The amplitude of the wave:"
+msgstr "La amplitud de la onda:"
+
+msgid "Advanced parameters"
+msgstr "Parámetros avanzados"
+
+msgid "Remove stats older than (in days):"
+msgstr "Eliminar las estadísticas de más de (en días):"
+
+msgid "Stats older than the predetermined number of days will be deleted to save database space."
+msgstr "Estadísticas anteriores al número predeterminado de días se eliminarán para ahorrar espacio en la base de datos."
+
+msgid "0 means that no entry is deleted."
+msgstr "o siginifica que no se eliminara esa entrada."
 

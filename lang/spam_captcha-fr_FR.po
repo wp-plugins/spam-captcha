@@ -4,10 +4,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-02-27T16:41:48+00:00\n"
+"PO-Revision-Date: 2014-01-14T14:40:18+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Last-Translator: Geraldine <http://www.ministeredesincorrections.com>\n"
 "Last-Translator: fabien <fabien@id-est.fr>\n"
+"Last-Translator: Brugees <www.noukicom.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -198,4 +199,13 @@ msgstr "Remarque : %s sera remplacé par l&#039;image captcha"
 
 msgid "You may add some comment, for instance to make clear that the addition should be responded with the result of the operation."
 msgstr "Vous pouvez ajouter un commentaire, par exemple pour bien indiquer que le résultat de l&#039;addition doit-être correct"
+
+msgid "Advanced parameters"
+msgstr "Paramètres avancés"
+
+msgid "Remove stats older than (in days):"
+msgstr "Enlever statistiques plus vieux que (en jours) :"
+
+msgid "0 means that no entry is deleted."
+msgstr "0 signifie que rien ne sera modifié"
 

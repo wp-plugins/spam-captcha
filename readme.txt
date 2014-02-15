@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr
 Plugin URI: http://wordpress.org/plugins/spam-captcha/
 Tags: spam, captcha, comments, comment, akismet, block
 Requires at least: 3.0
-Tested up to: 3.5
+Tested up to: 3.8.1
 Stable tag: trunk
 
 This plugins avoids spam actions on your website (comments and contact form).
@@ -36,20 +36,23 @@ This plugin works with multisite installation of Wordpress.
 
 * Azeri (Latin) (Azerbaijan) translation provided by BayBakVoiceofaNation
 * Czech (Czech Republic) translation provided by SedLex, Kumerson
-* German (Germany) translation provided by Diego, ThorstenKallnischkies, PatrickEhrler
+* German (Germany) translation provided by Diego, ThorstenKallnischkies, PatrickEhrler, Inoverse
 * English (United States), default language
-* Spanish (Spain) translation provided by Krazz, admin, ThorstenKallnischkies
+* Spanish (Spain) translation provided by Krazz, admin, ThorstenKallnischkies, SecurityNull
+* Spanish (Mexico) translation provided by RUBEN
 * Farsi (Iran) translation provided by BahmanMohadeci, mortezapourmirzai
-* French (France) translation provided by SedLex, Geraldine, fabien
+* French (France) translation provided by SedLex, Geraldine, fabien, Brugees
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
 * Lithuanian (Lithuania) translation provided by marko.estas
 * Dutch (Netherlands) translation provided by Marksremarks
+* Polish (Poland) translation provided by Kobra
 * Portuguese (Brazil) translation provided by MarcosAndrade, AdrianaVandoni, IuriJacob
 * Russian (Russia) translation provided by IgorPulbere
 * Turkish (Turkey) translation provided by AdLX
 * Vietnamese (Viet Nam) translation provided by SilverLight
 * Chinese (People's Republic of China) translation provided by bladin
+* Chinese (Taiwan) translation provided by 
 
 = Features of the framework =
 
@@ -81,6 +84,9 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.3.5 =
+* Various improvements
 
 = 1.3.4 =
 * Update the core
@@ -133,4 +139,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:e10802f55fc4d072efc3baae98e42318
+InfoVersion:901835c093e989c4578c4cbe7b816831
