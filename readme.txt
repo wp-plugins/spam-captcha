@@ -85,6 +85,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.3.6 =
+* NEW : Add banners
+
 = 1.3.5 =
 * Various improvements
 
@@ -139,4 +142,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:996b0f92aa60203285df7f9798f370fa
+InfoVersion:f73e835bb43192a088a7117164153f15

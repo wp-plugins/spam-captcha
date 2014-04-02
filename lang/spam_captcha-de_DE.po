@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-07-25T11:24:42+00:00\n"
+"PO-Revision-Date: 2014-02-18T15:49:07+00:00\n"
 "Last-Translator: Diego <www.diegos.de>\n"
 "Last-Translator: ThorstenKallnischkies <http://desastre.eu>\n"
 "Last-Translator: PatrickEhrler <http://alltech4you.de>\n"
@@ -217,4 +217,10 @@ msgstr "Lösche Statisiken die älter sind als (in Tage):"
 
 msgid "0 means that no entry is deleted."
 msgstr "0 bedeutet, dass keine Einträge gelöscht wurden"
+
+msgid "The image will be slightly distorded:"
+msgstr "Das Bild leicht verzerren:"
+
+msgid "Stats older than the predetermined number of days will be deleted to save database space."
+msgstr "Statistiken älter als die angegebene Anzahl der Tage löschen, um Speicherplatz frei zu geben."
 
