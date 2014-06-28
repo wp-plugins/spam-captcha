@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr
 Plugin URI: http://wordpress.org/plugins/spam-captcha/
 Tags: spam, captcha, comments, comment, akismet, block
 Requires at least: 3.0
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: trunk
 
 This plugins avoids spam actions on your website (comments and contact form).
@@ -40,12 +40,13 @@ This plugin works with multisite installation of Wordpress.
 * English (United States), default language
 * Spanish (Spain) translation provided by Krazz, admin, ThorstenKallnischkies, SecurityNull
 * Spanish (Mexico) translation provided by RUBEN
-* Farsi (Iran) translation provided by BahmanMohadeci, mortezapourmirzai
+* Farsi (Iran) translation provided by BahmanMohadeci, mortezapourmirzai, AmirMaskani
 * French (France) translation provided by SedLex, Geraldine, fabien, Brugees
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
 * Lithuanian (Lithuania) translation provided by marko.estas
 * Dutch (Netherlands) translation provided by Marksremarks
+* Norwegian-Nynorsk (Norway) translation provided by BjornHoel
 * Polish (Poland) translation provided by Kobra
 * Portuguese (Brazil) translation provided by MarcosAndrade, AdrianaVandoni, IuriJacob
 * Russian (Russia) translation provided by IgorPulbere
@@ -56,14 +57,9 @@ This plugin works with multisite installation of Wordpress.
 
 = Features of the framework =
 
-This plugin uses the SL framework. This framework eases the creation of new plugins by providing incredible tools and frames.
+This plugin uses the SL framework. This framework eases the creation of new plugins by providing tools and frames (see dev-toolbox plugin for more info).
 
-For instance, a new created plugin comes with
-
-* A translation interface to simplify the localization of the text of the plugin ; 
-* An embedded SVN client (subversion) to easily commit/update the plugin in wordpress.org repository ; 
-* A detailled documentation of all available classes and methodes ; 
-* etc.
+You may easily translate the text of the plugin and submit it to the developer, send a feedback, or choose the location of the plugin in the admin panel.
 
 Have fun !
 
@@ -84,6 +80,12 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.3.7 =
+* NEW : How to
+* NEW : history chart
+* NEW: new default values for the param
+* NEW: CSS is avalible
 
 = 1.3.6 =
 * NEW : Add banners
@@ -142,4 +144,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:0d9c957839bb53006db4a134befba51d
+InfoVersion:d0ce5bb5438f57b1ec355d07c6b3922135583af4

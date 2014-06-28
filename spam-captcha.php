@@ -3,7 +3,7 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.6
+Version: 1.3.7
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -186,28 +186,49 @@ class spam_captcha extends pluginSedLex {
 			case 'captcha_text' 		: return true 	; break ; 
 			case 'captcha_addition' 	: return false 	; break ; 
 			case 'captcha_logged' 		: return false 	; break ; 
-			case 'captcha_number' 		: return 4 	; break ; 
-			case 'captcha_height' 		: return 32 	; break ; 
-			case 'captcha_width' 		: return 80 	; break ; 
+			case 'captcha_number' 		: return 5 	; break ; 
+			case 'captcha_height' 		: return 80 	; break ; 
+			case 'captcha_width' 		: return 200 	; break ; 
 			case 'captcha_angle' 		: return 35 	; break ; 
-			case 'captcha_size' 		: return 12 	; break ; 
+			case 'captcha_size' 		: return 30 	; break ; 
 			case 'captcha_background' 		: return "555555" 	; break ; 
-			case 'captcha_font_color' 		: return "CCCCCC" 	; break ; 
-			case 'captcha_color_variation_percentage' 		: return 40	; break ; 
+			case 'captcha_font_color' 		: return "BBBBBB" 	; break ; 
+			case 'captcha_color_variation_percentage' 		: return 10	; break ; 
 			case 'captcha_noise' 		: return true 	; break ; 
 			case 'captcha_color_variation' 		: return true 	; break ; 
 			case 'captcha_wave' 		: return false 	; break ; 
-			case 'captcha_wave_period' 		: return 10 	; break ; 
+			case 'captcha_wave_period' 		: return 20 	; break ; 
 			case 'captcha_wave_amplitude' 		: return 10 	; break ; 
 			
-			case 'flush_nb_jours' 		: return 0 	; break ; 
+			case 'flush_nb_jours' 		: return 30 	; break ; 
 			
 			case 'captcha_html' 		: return "*<div class='captcha_image'> 
+<p>Please type the characters of this captcha image in the input box</p>
 %image% 
 <input type='text' id='captcha_comment' name='captcha_comment' />
-<p>Please type the characters of this captcha image in the input box</p></div>" 	; break ; 
+</div>" 	; break ; 
+
+			case 'captcha_css' 		: return "*.captcha_image {
+	
+}
+.captcha_comment {
+	
+}" 	; break ; 
 		}
 		return null ;
+	}
+	
+	/** ====================================================================================================================================================
+	* Init css for the public side
+	* If you want to load a style sheet, please type :
+	*	<code>$this->add_inline_css($css_text);</code>
+	*	<code>$this->add_css($css_url_file);</code>
+	*
+	* @return void
+	*/
+	
+	function _public_css_load() {	
+		$this->add_inline_css($this->get_param('captcha_css')) ; 
 	}
 
 	/** ====================================================================================================================================================
@@ -234,11 +255,10 @@ class spam_captcha extends pluginSedLex {
 			// On verifie que les droits sont corrects
 			$this->check_folder_rights( array() ) ; 
 			
-			$tabs = new adminTabs() ; 
+			$tabs = new SLFramework_Tabs() ; 
 			
 			ob_start() ; 
-				echo "<p>".__("The following table summarizes the number of rejected comments", $this->pluginID)."</p>" ; 
-				
+				echo "<h3>".__("Pie chart summary", $this->pluginID)."</h3>" ; 
 				// We set the javascript 
 				$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha'") ; 
 				$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='spam'") ; 
@@ -246,7 +266,7 @@ class spam_captcha extends pluginSedLex {
 				$nb_false_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='ok'") ; 
 				$nb_false_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='spam'") ; 
 				?>
-						<div style="margin: 0px auto; width:600px; height:500px;">
+						<div style="margin: 0px auto; width:800px; height:500px;">
 							<div id="spam_report" style="float: left; margin: 0; width:500px; height:500px;"></div>
 							<script type="text/javascript">
 								google.setOnLoadCallback(CountSpam);
@@ -268,7 +288,7 @@ class spam_captcha extends pluginSedLex {
 									var options = {
 										title: '<?php echo __("Spam Report", $this->pluginID); ?>',
 										colors:['#FF6060', '#FF9D26', '#FF4F4F', '#14FF56', '#9DFF1E'],
-										width: 500, 
+										width: 800, 
 										height: 500
 									};
 									var chart = new google.visualization.PieChart(document.getElementById('spam_report'));
@@ -277,7 +297,59 @@ class spam_captcha extends pluginSedLex {
 							</script>
 							</div>
 				<?php
-				$table = new adminTable() ; 
+				
+				if ( (is_int($this->get_param('flush_nb_jours'))) && ($this->get_param('flush_nb_jours')!=0) ) {
+					$nb_jours = $this->get_param('flush_nb_jours') ; 
+				} else {
+					$nb_jours = $this->get_default_option('flush_nb_jours') ; 
+				}
+				
+				echo "<h3>".sprintf(__("Last %s days summary", $this->pluginID), $nb_jours)."</h3>" ; 
+				
+				$history = "" ; 
+				$first = true ; 
+				for ($i=0 ; $i<$nb_jours ; $i++) {
+					if (!$first) $history = ",".$history ;
+					$first = false ;  
+					$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND DATE(date)=DATE_SUB(NOW(), INTERVAL ".$i." DAY)") ; 
+					$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND DATE(date)=DATE_SUB(NOW(), INTERVAL ".$i." DAY)") ; 
+					$nb_ok = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND DATE(date)=DATE_SUB(NOW(), INTERVAL ".$i." DAY)") ; 
+					$date_mesure = date_i18n(get_option('date_format') , strtotime("-".$i." day")) ; 
+					$history = "['".$date_mesure."',".$nb_ok.','.$nb_captcha.','.$nb_spam.']'.$history ; 
+				}
+				$history = "[".$history."]" ; 
+				
+				$colors = "['#14FF56', '#FF6060', '#FF9D26', '#FF4F4F']" ; 
+							
+				?>
+				<div id="google_catcha_count" style="margin: 0px auto; width:800px; height:500px;"></div>
+				<script  type="text/javascript">
+					google.setOnLoadCallback(ShowSpamHistory);
+					google.load('visualization', '1', {'packages':['corechart']});
+								
+					function ShowSpamHistory() {
+						var data = new google.visualization.DataTable();
+						data.addColumn('string', '<?php echo __('History', $this->pluginID)?>');
+						data.addColumn('number', '<?php echo __('Normal comment', $this->pluginID)?>');
+						data.addColumn('number', '<?php echo __('Comment blocked by captcha', $this->pluginID)?>');
+						data.addColumn('number', '<?php echo __('Comment blocked by Akismet', $this->pluginID)?>');
+						data.addRows(<?php echo $history ; ?>);
+						var options = {
+							width: 800, 
+							height: 500,
+							colors:<?php echo $colors ?>,
+							title: '<?php echo __("Spam history", $this->pluginID) ?>',
+							hAxis: {title: '<?php echo __('Time Line', $this->pluginID)?>'}
+						};
+
+						var chart = new google.visualization.ColumnChart(document.getElementById('google_catcha_count'));
+						chart.draw(data, options);
+					}
+				</script>
+				<?php
+				
+				echo "<h3>".__("Detailled summary", $this->pluginID)."</h3>" ; 
+				$table = new SLFramework_Table() ; 
 				$table->title(array(__("Type of protection", $this->pluginID), __("Summary", $this->pluginID))) ; 
 				$cel1 = new adminCell("<p>".__("CAPTCHA protection:", $this->pluginID)."</p>") ;	
 				$cel2 = new adminCell("<p>".sprintf(__("%s messages have been blocked as the CAPTCHA test failed", $this->pluginID), "<b>".$nb_captcha."</b>")."</p>") ; 		
@@ -289,7 +361,7 @@ class spam_captcha extends pluginSedLex {
 			$tabs->add_tab(__('Summary of Protection',  $this->pluginID), ob_get_clean() ) ; 	
 			
 			ob_start() ; 	
-				$params = new parametersSedLex($this, "tab-parameters") ; 
+				$params = new SLFramework_Parameters($this, "tab-parameters") ; 
 				
 				$params->add_title(__("Do you want to enable CAPTCHA for posting comments?", $this->pluginID)) ; 
 				if  ( (!function_exists("imagecreate")) || (!function_exists("imagefill")) || (!function_exists("imagecolorallocate")) || (!function_exists("imagettftext")) || (!function_exists("imageline")) || (!function_exists("imagepng")) ) {
@@ -322,13 +394,16 @@ class spam_captcha extends pluginSedLex {
 					$params->add_param('captcha_font_color', __('Color of the font:', $this->pluginID)) ; 
 					$params->add_comment(sprintf(__("Default value %s", $this->pluginID),$this->get_default_option('captcha_font_color'))) ; 
 					$params->add_param('captcha_color_variation', __('Variation of the color of the letters:', $this->pluginID)) ; 
-					$params->add_comment(__("The color of the letters and of the background are not the identical", $this->pluginID)) ; 
-					
+					$params->add_comment(__("The color of the letters are not homogenous", $this->pluginID)) ; 
 					$params->add_param('captcha_noise', __('Variation of the color of the background:', $this->pluginID)) ; 
-					$params->add_comment(__("The color of the background are not the homogenous", $this->pluginID)) ; 
+					$params->add_comment(__("The color of the background are not homogenous", $this->pluginID)) ; 
 					$params->add_param('captcha_color_variation_percentage', __('Percentage of variation (alea) of the colors (background and letters):', $this->pluginID)) ; 
 					$params->add_param('captcha_html', __('The HTML that will be inserted in your page to display captcha image:', $this->pluginID)) ; 
-					$params->add_comment(sprintf(__("The default html is: %s ", $this->pluginID),"<br><code>&lt;div class='captcha_image'&gt; <br>%image%<br>&lt;input type='text' id='captcha_comment' name='captcha_comment' /&gt;<br/>&lt;p&gt;Please type the characters of this captcha image in the input box&lt;/p&gt;&lt;/div&gt;</code><br>", "%image%")) ; 
+					$params->add_comment(__("The default HTML is: ", $this->pluginID)) ;
+					$params->add_comment_default_value('captcha_html') ;  
+					$params->add_param('captcha_css', __('The CSS that will be inserted in your page to display captcha image:', $this->pluginID)) ; 
+					$params->add_comment(__("The default CSS is: ", $this->pluginID)) ;
+					$params->add_comment_default_value('captcha_css') ;  
 					$params->add_comment(__("Please note that %s will be replace with the captcha image.", $this->pluginID)) ; 
 					$params->add_comment(__("You may add some comment, for instance to make clear that the addition should be responded with the result of the operation.", $this->pluginID)) ; 
 					$params->add_param('captcha_wave', __('The image will be slightly distorded:', $this->pluginID), "", "", array('captcha_wave_period','captcha_wave_amplitude')) ; 
@@ -357,20 +432,33 @@ class spam_captcha extends pluginSedLex {
 				$params->flush() ; 
 			$tabs->add_tab(__('Parameters',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
 
+			ob_start() ;
+				echo "<p>".__('This plugin enables the verification that a comment is not a spam.', $this->pluginID)."</p>" ;
+			$howto1 = new SLFramework_Box (__("Purpose of that plugin", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
+				echo "<p>".__('You can configure the look of the captcha by modifying different parameters available in the configuration tab.', $this->pluginID)."</p>" ;
+				echo "<p>".__('I recommend that you test differents values for the options in order to render the image complex enough for a machine but simple for a human.', $this->pluginID)."</p>" ;
+			$howto2 = new SLFramework_Box (__("There are many parameters, no?", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
+				 echo $howto1->flush() ; 
+				 echo $howto2->flush() ; 
+			$tabs->add_tab(__('How To',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_how.png") ; 				
+
+
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
-				$trans = new translationSL($this->pluginID, $plugin) ; 
+				$trans = new SLFramework_Translation($this->pluginID, $plugin) ; 
 				$trans->enable_translation() ; 
 			$tabs->add_tab(__('Manage translations',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_trad.png") ; 	
 
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
-				$trans = new feedbackSL($plugin, $this->pluginID) ; 
+				$trans = new SLFramework_Feedback($plugin, $this->pluginID) ; 
 				$trans->enable_feedback() ; 
 			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_mail.png") ; 	
 			
 			ob_start() ; 
-				$trans = new otherPlugins("sedLex", array('wp-pirates-search')) ; 
+				$trans = new SLFramework_OtherPlugins("sedLex", array('wp-pirates-search')) ; 
 				$trans->list_plugins() ; 
 			$tabs->add_tab(__('Other plugins',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_plug.png") ; 	
 
@@ -420,7 +508,7 @@ class spam_captcha extends pluginSedLex {
 			// If not we check the captcha
 			if ((!isset($_POST['captcha_comment']))||($_POST['captcha_comment']=="")||(!isset($_SESSION['keyCaptcha']))||($_SESSION['keyCaptcha']=="")||($_SESSION['keyCaptcha']!=$_POST['captcha_comment'])) {
 				// we save it...
-				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (0, 'captcha', 'captcha', '".mysql_real_escape_string($comment['comment_author'])."', '".mysql_real_escape_string($comment['comment_content'])."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" but should be ".$_SESSION['keyCaptcha']."')") ; 
+				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (0, 'captcha', 'captcha', '".esc_sql($comment['comment_author'])."', '".esc_sql($comment['comment_content'])."', NOW(), 'The user enters \"".esc_sql($_POST['captcha_comment'])."\" but should be ".$_SESSION['keyCaptcha']."')") ; 
 					
 				$permalink = get_permalink( $comment['comment_post_ID'] );
 				wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>urlencode($comment['comment_author']), "email_spam"=>urlencode($comment['comment_author_email']), "url_spam"=>urlencode($comment['comment_author_url']), "comment_spam"=>urlencode($comment['comment_content'])),$permalink."#error", 302)) ; 
@@ -525,9 +613,12 @@ class spam_captcha extends pluginSedLex {
 	*
 	*/
 	function check_if_captcha_image($vars) {
-		session_start() ; 
+		
 		
 		if (isset($_GET['display_captcha'])) {
+		
+			session_start() ; 
+			
 			$maxX = $this->get_param('captcha_width') ; 
 			$maxY = $this->get_param('captcha_height') ; 
 			$nbLetter = $this->get_param('captcha_number') ; 
@@ -535,7 +626,7 @@ class spam_captcha extends pluginSedLex {
 			$sizeLetter = $this->get_param('captcha_size') ; 
 			
 			if (($this->get_param('captcha_text'))&&(!$this->get_param('captcha_addition'))) {
-				$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+				$text = SLFramework_Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
 				$text_to_type = $text ; 
 			} else if ((!$this->get_param('captcha_text'))&&($this->get_param('captcha_addition'))) {
 				if ($nbLetter>=3) {
@@ -544,12 +635,12 @@ class spam_captcha extends pluginSedLex {
 					$text = $nb1."+".$nb2 ; 
 					$text_to_type = $nb1+$nb2 ; 
 				} else {
-					$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+					$text = SLFramework_Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
 					$text_to_type = $text ; 
 				}
 			} else if (($this->get_param('captcha_text'))&&($this->get_param('captcha_addition'))) {
 				if (rand(0,1)==0) {
-					$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+					$text = SLFramework_Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
 					$text_to_type = $text ; 
 				} else {
 					if ($nbLetter>=3) {
@@ -558,12 +649,12 @@ class spam_captcha extends pluginSedLex {
 						$text = $nb1."+".$nb2 ; 
 						$text_to_type = $nb1+$nb2 ; 
 					} else {
-						$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
+						$text = SLFramework_Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 
 						$text_to_type = $text ; 
 					}
 				}
 			} else {
-				$text = Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 	
+				$text = SLFramework_Utils::rand_str($nbLetter, "abcdefghijklmnopqrstuvwxyz") ; 	
 				$text_to_type = $text ; 		
 			} 
 			
@@ -705,13 +796,13 @@ class spam_captcha extends pluginSedLex {
 					// we mark as spam
 					wp_set_comment_status( $id, "spam" ) ; 
 					// we save it...
-					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'spam', 'spam', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
+					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'spam', 'spam', '".esc_sql($comment->comment_author)."', '".esc_sql($comment->comment_content)."', NOW(), 'The user enters \"".esc_sql($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
 					// we redirect the page to inform the user
 					wp_redirect(add_query_arg(array("error_checker"=>"spam", "author_spam"=>urlencode($comment->comment_author), "email_spam"=>urlencode($comment->comment_author_email), "url_spam"=>urlencode($comment->comment_author_url), "comment_spam"=>urlencode($comment->comment_content) ),get_permalink($comment->comment_post_ID)."#error"),302);
 					die() ; 
 				} else {
 					// we save it...
-					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'ok', 'ok', '".mysql_real_escape_string($comment->comment_author)."', '".mysql_real_escape_string($comment->comment_content)."', NOW(), 'The user enters \"".mysql_real_escape_string($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
+					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'ok', 'ok', '".esc_sql($comment->comment_author)."', '".esc_sql($comment->comment_content)."', NOW(), 'The user enters \"".esc_sql($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
 				}
 			}
 		}
