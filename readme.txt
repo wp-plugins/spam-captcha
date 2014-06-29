@@ -81,6 +81,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.3.8 =
+* BUG: the chart has a bug that render no entry
+
 = 1.3.7 =
 * NEW : How to
 * NEW : history chart
@@ -144,4 +147,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:d0ce5bb5438f57b1ec355d07c6b3922135583af4
+InfoVersion:564eb1d24375a94d2eb2ebf13230a870ac66c40c

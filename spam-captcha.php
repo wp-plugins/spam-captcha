@@ -3,7 +3,7 @@
 Plugin Name: Spam Captcha
 Plugin Tag: spam, captcha, comments, comment, akismet, block
 Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.7
+Version: 1.3.8
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -51,8 +51,8 @@ class spam_captcha extends pluginSedLex {
 		// Be aware that the second argument should be of the form of array($this,"the_function")
 		// For instance add_action( "the_content",  array($this,"modify_content")) : this function will call the function 'modify_content' when the content of a post is displayed
 		
-		add_action('parse_request', array($this,'check_if_captcha_image') , 1);
-
+		$this->check_if_captcha_image() ; 
+		
 		add_action('preprocess_comment', array($this,'check_comment_captcha'), 1, 1);
 		add_action('wp_insert_comment', array($this,'check_comment_akismet'), 100, 2);
 
@@ -311,9 +311,9 @@ class spam_captcha extends pluginSedLex {
 				for ($i=0 ; $i<$nb_jours ; $i++) {
 					if (!$first) $history = ",".$history ;
 					$first = false ;  
-					$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND DATE(date)=DATE_SUB(NOW(), INTERVAL ".$i." DAY)") ; 
-					$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND DATE(date)=DATE_SUB(NOW(), INTERVAL ".$i." DAY)") ; 
-					$nb_ok = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND DATE(date)=DATE_SUB(NOW(), INTERVAL ".$i." DAY)") ; 
+					$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
+					$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
+					$nb_ok = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
 					$date_mesure = date_i18n(get_option('date_format') , strtotime("-".$i." day")) ; 
 					$history = "['".$date_mesure."',".$nb_ok.','.$nb_captcha.','.$nb_spam.']'.$history ; 
 				}
@@ -348,6 +348,12 @@ class spam_captcha extends pluginSedLex {
 				</script>
 				<?php
 				
+				$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha'") ; 
+				$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='spam'") ; 
+				$nb_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='ok'") ; 
+				$nb_false_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='ok'") ; 
+				$nb_false_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='spam'") ; 
+
 				echo "<h3>".__("Detailled summary", $this->pluginID)."</h3>" ; 
 				$table = new SLFramework_Table() ; 
 				$table->title(array(__("Type of protection", $this->pluginID), __("Summary", $this->pluginID))) ; 
@@ -612,13 +618,11 @@ class spam_captcha extends pluginSedLex {
 	* Display the image
 	*
 	*/
-	function check_if_captcha_image($vars) {
-		
+	function check_if_captcha_image() {
 		
 		if (isset($_GET['display_captcha'])) {
-		
+
 			session_start() ; 
-			
 			$maxX = $this->get_param('captcha_width') ; 
 			$maxY = $this->get_param('captcha_height') ; 
 			$nbLetter = $this->get_param('captcha_number') ; 
@@ -754,15 +758,14 @@ class spam_captcha extends pluginSedLex {
 				imagedestroy($img2);
 			}  
 			
-			
-			
 			$_SESSION['keyCaptcha'] = $text_to_type;
 			header("Content-type: image/png");
 			// Do not cache this image
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 			header("Cache-Control: no-cache");
 			header("Pragma: no-cache");
-			echo imagepng($captcha);
+			imagepng($captcha);
+			imagedestroy($captcha) ; 
 			die() ; 
 		}
 	}
