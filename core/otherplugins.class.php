@@ -208,10 +208,4 @@ if (!class_exists("SLFramework_OtherPlugins")) {
 	} 
 }
 
-if (!class_exists("otherPlugins")) {
-	class otherPlugins extends SLFramework_OtherPlugins {
-	
-	}
-}
-
 ?>

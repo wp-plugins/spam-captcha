@@ -218,10 +218,4 @@ if (!class_exists("SLFramework_Treelist")) {
 	}
 }
 
-if (!class_exists("treeList")) {
-	class treeList extends SLFramework_Treelist {
-	
-	}
-}
-
 ?>

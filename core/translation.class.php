@@ -1473,10 +1473,5 @@ if (!class_exists("SLFramework_Translation")) {
 	}
 }
 
-if (!class_exists("translationSL")) {
-	class translationSL extends SLFramework_Translation {
-	
-	}
-}
 
 ?>

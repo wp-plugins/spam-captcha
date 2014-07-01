@@ -81,6 +81,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.3.9 =
+* BUG: only the default values were taken in account for the generation of the captcha
+
 = 1.3.8 =
 * BUG: the chart has a bug that render no entry
 
@@ -147,4 +150,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:564eb1d24375a94d2eb2ebf13230a870ac66c40c
+InfoVersion:ed61cb8a132afbfb4d81b63e8092bfecf98cd0aa
