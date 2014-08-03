@@ -1,10 +1,9 @@
 <?php
 /**
 Plugin Name: Spam Captcha
-Plugin Tag: spam, captcha, comments, comment, akismet, block
-Description: <p>This plugins avoids spam actions on your website (comments and contact form).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.9
-
+Plugin Tag: spam, captcha, comments, comment, akismet, block, Contact Form 7
+Description: <p>This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
+Version: 1.4.0
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -68,6 +67,8 @@ class spam_captcha extends pluginSedLex {
 		add_filter('comments_template', array(&$this, 'detect_start'), 1);
 		add_action('comment_form', array(&$this, 'detect_end'), 1000);
 		add_action('wp_footer', array(&$this, 'detect_end'), 1000);
+		
+		add_shortcode( 'spam_captcha', array( $this, 'spam_captcha_shortcode' ) );
 
 		// Important variables initialisation (Do not modify)
 		$this->path = __FILE__ ; 
@@ -77,6 +78,13 @@ class spam_captcha extends pluginSedLex {
 		register_activation_hook(__FILE__, array($this,'install'));
 		register_deactivation_hook(__FILE__, array($this,'deactivate'));
 		register_uninstall_hook(__FILE__, array('spam_captcha','uninstall_removedata'));
+		
+		if ($this->get_param('contactform7')) {
+			add_filter( 'wpcf7_form_elements', array(&$this, 'wpcf7_form_elements') );
+			add_filter('wpcf7_validate_email*', array(&$this, 'wpcf7_validate_email')) ; 
+		}
+		
+		$this->captcha_ok = true ; 
 	}
 	
 
@@ -202,6 +210,8 @@ class spam_captcha extends pluginSedLex {
 			case 'captcha_wave_amplitude' 		: return 10 	; break ; 
 			
 			case 'flush_nb_jours' 		: return 30 	; break ; 
+
+			case 'contactform7' 		: return false 	; break ; 
 			
 			case 'captcha_html' 		: return "*<div class='captcha_image'> 
 <p>Please type the characters of this captcha image in the input box</p>
@@ -261,7 +271,10 @@ class spam_captcha extends pluginSedLex {
 			ob_start() ; 
 				echo "<h3>".__("Pie chart summary", $this->pluginID)."</h3>" ; 
 				// We set the javascript 
-				$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha'") ; 
+				$nb_captcha_no_enter = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info LIKE '%\"\"%'") ; 
+				$nb_captcha_no_cookie = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info NOT LIKE '%\"\"%' AND captcha_info LIKE '%should be '") ; 
+				$nb_captcha_other = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info NOT LIKE '%\"\"%' AND captcha_info NOT LIKE '%should be '") ; 
+				
 				$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='spam'") ; 
 				$nb_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='ok'") ; 
 				$nb_false_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='ok'") ; 
@@ -279,7 +292,10 @@ class spam_captcha extends pluginSedLex {
 									data.addColumn('number', '<?php echo __('Number of hits', $this->pluginID)?>');
 									data.addRows([
 										<?php
-										echo "['".__('Blocked by CAPTCHA', $this->pluginID)."', ".$nb_captcha."]," ; 
+										echo "['".__('Blocked by CAPTCHA (nothing entered)', $this->pluginID)."', ".$nb_captcha_no_enter."]," ; 
+										echo "['".__('Blocked by CAPTCHA (no session cookie)', $this->pluginID)."', ".$nb_captcha_no_cookie."]," ; 
+										echo "['".__('Blocked by CAPTCHA (mismatch)', $this->pluginID)."', ".$nb_captcha_other."]," ; 
+										
 										echo "['".__('Blocked by AKISMET', $this->pluginID)."', ".$nb_spam."]," ; 
 										echo "['".__('Not Blocked by AKISMET but spam', $this->pluginID)."', ".$nb_false_ham."]," ; 
 										echo "['".__('Normal comment', $this->pluginID)."', ".$nb_ham."]," ; 
@@ -288,7 +304,7 @@ class spam_captcha extends pluginSedLex {
 									]);
 									var options = {
 										title: '<?php echo __("Spam Report", $this->pluginID); ?>',
-										colors:['#FF6060', '#FF9D26', '#FF4F4F', '#14FF56', '#9DFF1E'],
+										colors:['#FF6060','#E65656', '#CF4D4D', '#FF9D26', '#FF4F4F', '#14FF56', '#9DFF1E'],
 										width: 800, 
 										height: 500
 									};
@@ -430,6 +446,11 @@ class spam_captcha extends pluginSedLex {
 				} else {
 					$params->add_comment(sprintf(__("To get an Akismet ID, see %s here %s.", $this->pluginID),"<a href='http://akismet.com/get/'>", "</a>")) ; 
 				}
+				
+				$params->add_title(__("Captcha in Contact Forms", $this->pluginID)) ; 
+				$params->add_param('contactform7', sprintf(__('Add a captcha on %s:', $this->pluginID), '<code>Contact Form 7</code>')) ; 
+				$params->add_comment(sprintf(__("Please install first this plugin %s.", $this->pluginID), '<code>Contact Form 7</code>')) ; 
+				$params->add_comment(sprintf(__("In the form, please use the shortcode %s to display the captcha.", $this->pluginID), '<code>[spam_captcha]</code>')) ; 
 				
 				$params->add_title(__("Advanced parameters", $this->pluginID)) ; 
 				$params->add_param('flush_nb_jours', __('Remove stats older than (in days):', $this->pluginID)) ; 
@@ -615,6 +636,35 @@ class spam_captcha extends pluginSedLex {
 		return $content;
 	}
 	
+	/** ====================================================================================================================================================
+	* Display the captcha in the Content Form 7
+	*
+	*/
+	function spam_captcha_shortcode ( $_atts, $string ) {
+		$result = "<img src='".add_query_arg(array("display_captcha"=>"true"))."' alt='".__("Please type the characters of this captcha image in the input box", $this->pluginID)."'>" ; 
+		$result .= '<br/><span class="wpcf7-form-control-wrap your-captcha"><input name="your-captcha" value="" size="40" class="wpcf7-form-control wpcf7-text" aria-required="true" aria-invalid="false" type="captcha"></span>' ; 
+		return $result ; 
+	}
+	
+	function wpcf7_form_elements($content) {
+		$content = do_shortcode( $content );
+		return $content ; 
+	}
+
+	function wpcf7_validate_email($result, $tag="") {
+		global $wpdb ; 
+		@session_start() ; 
+		
+		// If not we check the captcha
+		if ((!isset($_SESSION['keyCaptcha']))||($_SESSION['keyCaptcha']=="")||($_SESSION['keyCaptcha']!=$_POST['your-captcha'])) {
+			// we save it...
+			$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (0, 'captcha', 'captcha', 'CONTACT FORM 7: ".esc_sql($_POST['your-name'])."', '".esc_sql($_POST['your-subject'])." : ".esc_sql($_POST['your-message'])."', NOW(), 'The user enters \"".esc_sql($_POST['your-captcha'])."\" but should be ".$_SESSION['keyCaptcha']."')") ; 
+			$result['valid'] = false;
+			$result['reason']['your-captcha'] = __("You do not have typed the correct captcha", $this->pluginID) ; 
+		}
+		
+		return $result	;	
+	}
 	/** ====================================================================================================================================================
 	* Display the image
 	*

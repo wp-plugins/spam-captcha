@@ -4,16 +4,16 @@ Author: SedLex
 Contributors: SedLex
 Author URI: http://www.sedlex.fr
 Plugin URI: http://wordpress.org/plugins/spam-captcha/
-Tags: spam, captcha, comments, comment, akismet, block
+Tags: spam, captcha, comments, comment, akismet, block, Contact Form 7
 Requires at least: 3.0
 Tested up to: 3.9.1
 Stable tag: trunk
 
-This plugins avoids spam actions on your website (comments and contact form).
+This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).
 
 == Description ==
 
-This plugins avoids spam actions on your website (comments and contact form).
+This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).
 
 Captcha image and Akismet API are available for this plugin.
 
@@ -80,6 +80,10 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.4.0 =
+* NEW: Support of Contact Form 7
+* NEW: the chart differentiates the causes of mismatch for the captcha
 
 = 1.3.9 =
 * BUG: only the default values were taken in account for the generation of the captcha
@@ -150,4 +154,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:ed61cb8a132afbfb4d81b63e8092bfecf98cd0aa
+InfoVersion:3ecf74cfc62873f663aad8e631203c5bd17b1f7e

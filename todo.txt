@@ -1,1 +1,2 @@
-add captcha on contact
+differencie les spams complement foireux et ceux qui essayent un peu
+
