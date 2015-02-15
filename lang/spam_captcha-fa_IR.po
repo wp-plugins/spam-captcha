@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-06-12T13:54:36+00:00\n"
+"PO-Revision-Date: 2014-11-03T08:24:59+00:00\n"
 "Last-Translator: BahmanMohadeci <http://ensahr.com/>\n"
 "Last-Translator: mortezapourmirzai <www.seshanbeh.com>\n"
 "Last-Translator: AmirMaskani <amirmaskani@gmail.com>\n"
@@ -165,4 +165,7 @@ msgstr "دوره ی موج:"
 
 msgid "Advanced parameters"
 msgstr "پارامتر های پیشرفته"
+
+msgid "You do not have typed the correct captcha"
+msgstr "کد وارد شده اشتباه است !!"
 

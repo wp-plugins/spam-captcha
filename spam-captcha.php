@@ -1,9 +1,9 @@
 <?php
 /**
 Plugin Name: Spam Captcha
-Plugin Tag: spam, captcha, comments, comment, akismet, block, Contact Form 7
-Description: <p>This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).</p><p>Captcha image and Akismet API are available for this plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.4.0
+Plugin Tag: spam, captcha, comments, comment, akismet, block, Contact Form 7, ban, block, Automatic Ban IP
+Description: <p>This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).</p><p>Captcha image and Akismet API are available to detect spam for this plugin.</p><p>In addition, it is possible to ban spammers using Automatic Ban IP plugin.</p><p>You may configure (for the captcha): </p><ul><li>The color of the background</li><li>The color of the letters</li><li>The size of the image</li><li>The size of the letters</li><li>The slant of the letters</li><li>...</li></ul><p>This plugin is under GPL licence</p>
+Version: 1.4.1
 Framework: SL_Framework
 Author: SedLex
 Author URI: http://www.sedlex.fr
@@ -118,6 +118,20 @@ class spam_captcha extends pluginSedLex {
 		} else {
 			$wpdb->query("DROP TABLE ".$wpdb->prefix . "pluginSL_" . 'spam_captcha' ) ; 
 		}
+		
+		// DELETE FILES if needed
+		//SLFramework_Utils::rm_rec(WP_CONTENT_DIR."/sedlex/my_plugin/"); 
+		$plugins_all = 	get_plugins() ; 
+		$nb_SL = 0 ; 	
+		foreach($plugins_all as $url => $pa) {
+			$info = pluginSedlex::get_plugins_data(WP_PLUGIN_DIR."/".$url);
+			if ($info['Framework_Email']=="sedlex@sedlex.fr"){
+				$nb_SL++ ; 
+			}
+		}
+		if ($nb_SL==1) {
+			SLFramework_Utils::rm_rec(WP_CONTENT_DIR."/sedlex/"); 
+		}
 	}
 
 	/**====================================================================================================================================================
@@ -169,7 +183,9 @@ class spam_captcha extends pluginSedLex {
 	*/
 	
 	function _admin_js_load() {	
-		wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');
+		$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/raphael-min.js') ; 
+		$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/elycharts.min.js') ; 
+
 		return ; 
 	}
 		
@@ -210,9 +226,13 @@ class spam_captcha extends pluginSedLex {
 			case 'captcha_wave_amplitude' 		: return 10 	; break ; 
 			
 			case 'flush_nb_jours' 		: return 30 	; break ; 
-
+			case 'flush_max_entry' 		: return 10000 	; break ; 
+			
 			case 'contactform7' 		: return false 	; break ; 
 			
+			case 'ban_ip_cookies' 		: return false 	; break ; 
+			case 'ban_ip_akismet' 		: return false 	; break ; 
+
 			case 'captcha_html' 		: return "*<div class='captcha_image'> 
 <p>Please type the characters of this captcha image in the input box</p>
 %image% 
@@ -270,6 +290,7 @@ class spam_captcha extends pluginSedLex {
 			
 			ob_start() ; 
 				echo "<h3>".__("Pie chart summary", $this->pluginID)."</h3>" ; 
+				
 				// We set the javascript 
 				$nb_captcha_no_enter = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info LIKE '%\"\"%'") ; 
 				$nb_captcha_no_cookie = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info NOT LIKE '%\"\"%' AND captcha_info LIKE '%should be '") ; 
@@ -280,88 +301,278 @@ class spam_captcha extends pluginSedLex {
 				$nb_false_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND new_status='ok'") ; 
 				$nb_false_ham = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND new_status='spam'") ; 
 				?>
-						<div style="margin: 0px auto; width:800px; height:500px;">
-							<div id="spam_report" style="float: left; margin: 0; width:500px; height:500px;"></div>
+							<div id="spam_report" style="margin: 0; width:800px; height:500px;"></div>
 							<script type="text/javascript">
-								google.setOnLoadCallback(CountSpam);
-								google.load('visualization', '1', {'packages':['corechart']});
-
-								function CountSpam() {
-									var data = new google.visualization.DataTable();
-									data.addColumn('string', '<?php echo __('Type', $this->pluginID)?>');
-									data.addColumn('number', '<?php echo __('Number of hits', $this->pluginID)?>');
-									data.addRows([
-										<?php
-										echo "['".__('Blocked by CAPTCHA (nothing entered)', $this->pluginID)."', ".$nb_captcha_no_enter."]," ; 
-										echo "['".__('Blocked by CAPTCHA (no session cookie)', $this->pluginID)."', ".$nb_captcha_no_cookie."]," ; 
-										echo "['".__('Blocked by CAPTCHA (mismatch)', $this->pluginID)."', ".$nb_captcha_other."]," ; 
-										
-										echo "['".__('Blocked by AKISMET', $this->pluginID)."', ".$nb_spam."]," ; 
-										echo "['".__('Not Blocked by AKISMET but spam', $this->pluginID)."', ".$nb_false_ham."]," ; 
-										echo "['".__('Normal comment', $this->pluginID)."', ".$nb_ham."]," ; 
-										echo "['".__('Blocked by AKISMET but normal', $this->pluginID)."', ".$nb_false_spam."]" ; 
-										?>
-									]);
-									var options = {
-										title: '<?php echo __("Spam Report", $this->pluginID); ?>',
-										colors:['#FF6060','#E65656', '#CF4D4D', '#FF9D26', '#FF4F4F', '#14FF56', '#9DFF1E'],
-										width: 800, 
-										height: 500
-									};
-									var chart = new google.visualization.PieChart(document.getElementById('spam_report'));
-									chart.draw(data, options);
-								}
+							jQuery(function() {
+								jQuery.elycharts.templates['spam_pie'] = {
+									type : "pie",
+									defaultSeries : {
+										plotProps : {
+											stroke : "white",
+											"stroke-width" : 1,
+											opacity : 0.8
+										},
+										highlight : {
+											move : 10
+										},
+										tooltip : {
+											frameProps : {
+												opacity: 0.95,
+												fill: "#292929",
+												stroke: "#CDCDCD",
+												'stroke-width': 1
+											},
+											height : 20,
+											width : 300,
+											padding: [3, 3],
+											offset : [10, 0],
+											contentStyle : {
+												"font-weight": "normal",
+												"font-family": "sans-serif, Verdana", 
+												color: "#FFFFFF",
+												"text-align": "center"
+											}
+										}
+									},
+									features : {
+										legend : {
+											horizontal : false,
+											width : 300,
+											height : 200,
+											x : 1,
+											y : 60,
+											borderProps : {
+												"fill-opacity" : 0.3
+											}
+										}
+									}
+								};
+								
+								jQuery('#spam_report').chart({
+									template : "spam_pie",
+									values : {
+										serie1 : [<?php
+											echo $nb_captcha_no_enter."," ; 
+											echo $nb_captcha_no_cookie."," ; 
+											echo $nb_captcha_other."," ; 
+											echo $nb_spam."," ; 
+											echo $nb_false_ham."," ; 
+											echo $nb_ham."," ; 
+											echo $nb_false_spam ; 
+										?>]
+									},
+									labels : [<?php
+										echo "'".__('Blocked by CAPTCHA (nothing entered)', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by CAPTCHA (no session cookie)', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by CAPTCHA (mismatch)', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by AKISMET', $this->pluginID)."'," ; 
+										echo "'".__('Not Blocked by AKISMET but spam', $this->pluginID)."'," ; 
+										echo "'".__('Normal comment', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by AKISMET but normal', $this->pluginID)."'" ; 
+									?>],
+									legend : [<?php
+										echo "'".__('Blocked by CAPTCHA (nothing entered)', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by CAPTCHA (no session cookie)', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by CAPTCHA (mismatch)', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by AKISMET', $this->pluginID)."'," ; 
+										echo "'".__('Not Blocked by AKISMET but spam', $this->pluginID)."'," ; 
+										echo "'".__('Normal comment', $this->pluginID)."'," ; 
+										echo "'".__('Blocked by AKISMET but normal', $this->pluginID)."'" ; 
+									?>],
+									tooltips : {
+										serie1 : [<?php
+										echo "'".__('Blocked by CAPTCHA (nothing entered)', $this->pluginID).': '.$nb_captcha_no_enter."'," ; 
+										echo "'".__('Blocked by CAPTCHA (no session cookie)', $this->pluginID).': '.$nb_captcha_no_cookie."'," ; 
+										echo "'".__('Blocked by CAPTCHA (mismatch)', $this->pluginID).': '.$nb_captcha_other."'," ; 
+										echo "'".__('Blocked by AKISMET', $this->pluginID).': '.$nb_spam."'," ; 
+										echo "'".__('Not Blocked by AKISMET but spam', $this->pluginID).': '.$nb_false_ham."'," ; 
+										echo "'".__('Normal comment', $this->pluginID).': '.$nb_ham."'," ; 
+										echo "'".__('Blocked by AKISMET but normal', $this->pluginID).': '.$nb_false_spam."'" ; 
+										?>]
+									},
+									defaultSeries : {
+										values : [<?php
+											echo '{plotProps : {fill : "#FF6060" }},' ; 
+											echo '{plotProps : {fill : "#E65656" }},' ; 
+											echo '{plotProps : {fill : "#CF4D4D" }},' ; 
+											echo '{plotProps : {fill : "#FF9D26" }},' ; 
+											echo '{plotProps : {fill : "#FF4F4F" }},' ; 
+											echo '{plotProps : {fill : "#14FF56" }},' ; 
+											echo '{plotProps : {fill : "#9DFF1E" }}' ; 
+										?>]
+									}
+								});
+							});
 							</script>
-							</div>
 				<?php
 				
-				if ( (is_int($this->get_param('flush_nb_jours'))) && ($this->get_param('flush_nb_jours')!=0) ) {
-					$nb_jours = $this->get_param('flush_nb_jours') ; 
-				} else {
-					$nb_jours = $this->get_default_option('flush_nb_jours') ; 
-				}
+				$nb_jours = 15 ; 
 				
 				echo "<h3>".sprintf(__("Last %s days summary", $this->pluginID), $nb_jours)."</h3>" ; 
 				
 				$history = "" ; 
 				$first = true ; 
+				
+				$max_value = 0 ; 
+				
+				$rows_series1 = "" ;
+				$rows_series2 = "" ;
+				$rows_series3 = "" ;
+				$rows_series4 = "" ;
+				$rows_series5 = "" ;
+				$rows_series1_t = "" ;
+				$rows_series2_t = "" ;
+				$rows_series3_t = "" ;
+				$rows_series4_t = "" ;
+				$rows_series5_t = "" ;
+				$rows_legend = "" ;
+				
 				for ($i=0 ; $i<$nb_jours ; $i++) {
-					if (!$first) $history = ",".$history ;
+					if (!$first) {
+						$rows_series1 = ",".$rows_series1 ;
+						$rows_series2 = ",".$rows_series2 ;
+						$rows_series3 = ",".$rows_series3 ;
+						$rows_series4 = ",".$rows_series4 ;
+						$rows_series5 = ",".$rows_series5 ;
+						$rows_series1_t = ",".$rows_series1_t ;
+						$rows_series2_t = ",".$rows_series2_t ;
+						$rows_series3_t = ",".$rows_series3_t ;
+						$rows_series4_t = ",".$rows_series4_t ;
+						$rows_series5_t = ",".$rows_series5_t ;
+						$rows_legend = ",".$rows_legend ;
+					}
 					$first = false ;  
-					$nb_captcha = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
-					$nb_spam = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='spam' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
+					$nb_captcha_no_enter = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info LIKE '%\"\"%' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
+					$nb_captcha_no_cookie = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info NOT LIKE '%\"\"%' AND captcha_info LIKE '%should be ' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
+					$nb_captcha_other = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='captcha' AND captcha_info NOT LIKE '%\"\"%' AND captcha_info NOT LIKE '%should be ' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
+				
 					$nb_ok = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE status='ok' AND DATE(date)=DATE(DATE_SUB(NOW(), INTERVAL ".$i." DAY))") ; 
 					$date_mesure = date_i18n(get_option('date_format') , strtotime("-".$i." day")) ; 
-					$history = "['".$date_mesure."',".$nb_ok.','.$nb_captcha.','.$nb_spam.']'.$history ; 
+					
+					$rows_legend = "'".$date_mesure."'".$rows_legend ; 
+					$rows_series1 = $nb_ok.$rows_series1 ; 
+					$rows_series2 = $nb_captcha_no_enter.$rows_series2 ; 
+					$rows_series3 = $nb_captcha_no_cookie.$rows_series3 ; 
+					$rows_series4 = $nb_captcha_other.$rows_series4 ; 
+					$rows_series5 = $nb_spam.$rows_series5 ; 
+					$rows_series1_t = "'".__('Normal comment', $this->pluginID).": ".$nb_ok."'".$rows_series1_t ; 
+					$rows_series2_t = "'".__('Blocked by CAPTCHA (nothing entered)', $this->pluginID).": ".$nb_captcha_no_enter."'".$rows_series2_t ; 
+					$rows_series3_t = "'".__('Blocked by CAPTCHA (no session cookie)', $this->pluginID).": ".$nb_captcha_no_cookie."'".$rows_series3_t ; 
+					$rows_series4_t = "'".__('Blocked by CAPTCHA (mismatch)', $this->pluginID).": ".$nb_captcha_other."'".$rows_series4_t ; 
+					$rows_series5_t = "'".__('Comment blocked by Akismet', $this->pluginID).": ".$nb_spam."'".$rows_series5_t ; 
+					
+					$max_value = max($max_value, $nb_ok, $nb_captcha_no_enter, $nb_captcha_no_cookie, $nb_captcha_other, $nb_spam) ; 
 				}
-				$history = "[".$history."]" ; 
-				
-				$colors = "['#14FF56', '#FF6060', '#FF9D26', '#FF4F4F']" ; 
-							
+											
 				?>
-				<div id="google_catcha_count" style="margin: 0px auto; width:800px; height:500px;"></div>
+				<div id="catcha_count" style="margin: 0px auto; width:800px; height:500px;"></div>
 				<script  type="text/javascript">
-					google.setOnLoadCallback(ShowSpamHistory);
-					google.load('visualization', '1', {'packages':['corechart']});
-								
-					function ShowSpamHistory() {
-						var data = new google.visualization.DataTable();
-						data.addColumn('string', '<?php echo __('History', $this->pluginID)?>');
-						data.addColumn('number', '<?php echo __('Normal comment', $this->pluginID)?>');
-						data.addColumn('number', '<?php echo __('Comment blocked by captcha', $this->pluginID)?>');
-						data.addColumn('number', '<?php echo __('Comment blocked by Akismet', $this->pluginID)?>');
-						data.addRows(<?php echo $history ; ?>);
-						var options = {
-							width: 800, 
-							height: 500,
-							colors:<?php echo $colors ?>,
-							title: '<?php echo __("Spam history", $this->pluginID) ?>',
-							hAxis: {title: '<?php echo __('Time Line', $this->pluginID)?>'}
+					jQuery(function(){
+						jQuery.elycharts.templates['spam_count'] = {
+							type : "line",
+							margins : [10, 10, 80, 50],
+							defaultSeries : {
+								plotProps : {
+									opacity : 0.6
+								},
+								highlight : {
+									overlayProps : {
+										fill : "white",
+										opacity : 0.2
+									}
+								},
+								tooltip : {
+									frameProps : {
+										opacity: 0.95,
+										fill: "#292929",
+										stroke: "#CDCDCD",
+										'stroke-width': 1
+									},
+									height : 20,
+									width : 300,
+									padding: [3, 3],
+									offset : [10, 0],
+									contentStyle : {
+										"font-weight": "normal",
+										"font-family": "sans-serif, Verdana", 
+										color: "#FFFFFF",
+										"text-align": "center"
+									}
+								},
+							},
+							series : {
+								serie1 : {
+									color : "#14FF56"
+								},
+								serie2 : {
+									color : "#FF6060"
+								},
+								serie3 : {
+									color : "#E65656"
+								},
+								serie4 : {
+									color : "#CF4D4D"
+								},
+								serie5 : {
+									color : "#FF9D26"
+								}
+							},
+							defaultAxis : {
+								labels : true
+							},
+							axis : {
+								l  : {
+									max:<?php echo $max_value?>, 
+									labelsProps : {
+									font : "10px Verdana"
+									}
+								}, 
+								x : {
+									labelsRotate : 35,
+									labelsProps : {
+									font : "10px bold Verdana"
+									}
+								}
+							},
+							features : {
+								grid : {
+									draw : [true, false],
+									forceBorder : false,
+									evenHProps : {
+										fill : "#FFFFFF",
+										opacity : 0.2
+									},
+									oddHProps : {
+										fill : "#AAAAAA",
+										opacity : 0.2
+									}
+								}
+							}
 						};
-
-						var chart = new google.visualization.ColumnChart(document.getElementById('google_catcha_count'));
-						chart.draw(data, options);
-					}
+					
+						jQuery("#catcha_count").chart({
+							 template : "spam_count",
+							 tooltips : {
+							  serie1 : <?php echo "[$rows_series1_t]" ; ?>,
+							  serie2 : <?php echo "[$rows_series2_t]" ; ?>,
+							  serie3 : <?php echo "[$rows_series3_t]" ; ?>,
+							  serie4 : <?php echo "[$rows_series4_t]" ; ?>,
+							  serie5 : <?php echo "[$rows_series5_t]" ; ?>
+							 },
+							 values : {
+							  serie1 : <?php echo "[$rows_series1]" ; ?>,
+							  serie2 : <?php echo "[$rows_series2]" ; ?>,
+							  serie3 : <?php echo "[$rows_series3]" ; ?>,
+							  serie4 : <?php echo "[$rows_series4]" ; ?>,
+							  serie5 : <?php echo "[$rows_series5]" ; ?>
+							 },
+							 labels : <?php echo "[$rows_legend]" ; ?>,
+							 defaultSeries : {
+							  type : "bar"
+							 },
+							 barMargins : 10
+						});
+					});								
 				</script>
 				<?php
 				
@@ -451,11 +662,28 @@ class spam_captcha extends pluginSedLex {
 				$params->add_param('contactform7', sprintf(__('Add a captcha on %s:', $this->pluginID), '<code>Contact Form 7</code>')) ; 
 				$params->add_comment(sprintf(__("Please install first this plugin %s.", $this->pluginID), '<code>Contact Form 7</code>')) ; 
 				$params->add_comment(sprintf(__("In the form, please use the shortcode %s to display the captcha.", $this->pluginID), '<code>[spam_captcha]</code>')) ; 
-				
+
+				$params->add_title(__("Ban Spammer's IP addresses", $this->pluginID)) ; 
+				$params->add_param('ban_ip_cookies', sprintf(__('Block IP of spammers that fails the CAPTCHA and do not have cookies (using %s plugin):', $this->pluginID), '<code>Automatic Ban IP</code>')) ; 
+				if (class_exists('automatic_ban_ip')){
+					$params->add_comment(sprintf(__("%s plugin is correctly installed and activated.", $this->pluginID), '<code>Automatic Ban IP</code>')) ; 
+				} else {
+					$params->add_comment(sprintf(__("Please install and activate %s plugin.", $this->pluginID), '<code>Automatic Ban IP</code>')) ; 					
+				}				
+				$params->add_param('ban_ip_akismet', sprintf(__('Block IP of spammers for which %s has detect spam (via %s plugin):', $this->pluginID), 'Akismet', '<code>Automatic Ban IP</code>')) ; 
+				if (class_exists('automatic_ban_ip')){
+					$params->add_comment(sprintf(__("The plugin %s is correctly installed and activated.", $this->pluginID), '<code>Automatic Ban IP</code>')) ; 
+				} else {
+					$params->add_comment(sprintf(__("Please install and activate %s plugin.", $this->pluginID), '<code>Automatic Ban IP</code>')) ; 					
+				}				
+
 				$params->add_title(__("Advanced parameters", $this->pluginID)) ; 
 				$params->add_param('flush_nb_jours', __('Remove stats older than (in days):', $this->pluginID)) ; 
 				$params->add_comment(__("Stats older than the predetermined number of days will be deleted to save database space.", $this->pluginID)) ; 
 				$params->add_comment(__("0 means that no entry is deleted.", $this->pluginID)) ; 
+				$params->add_param('flush_max_entry', __('Remove stats if there are more than (entries):', $this->pluginID)) ; 
+				$params->add_comment(__("In order to avoid the SQL saturation.", $this->pluginID)) ; 
+				
 
 				$params->flush() ; 
 			$tabs->add_tab(__('Parameters',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
@@ -468,8 +696,12 @@ class spam_captcha extends pluginSedLex {
 				echo "<p>".__('I recommend that you test differents values for the options in order to render the image complex enough for a machine but simple for a human.', $this->pluginID)."</p>" ;
 			$howto2 = new SLFramework_Box (__("There are many parameters, no?", $this->pluginID), ob_get_clean()) ; 
 			ob_start() ;
+				echo "<p>".sprintf(__('The present plugin may be connected to the %s plugin i order to add the IP address of the spammer in the ban list.', $this->pluginID), "<code>Automatic Ban IP</code>")."</p>" ;
+			$howto3 = new SLFramework_Box (__("Block spammer", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
 				 echo $howto1->flush() ; 
 				 echo $howto2->flush() ; 
+				 echo $howto3->flush() ; 
 			$tabs->add_tab(__('How To',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_how.png") ; 				
 
 
@@ -518,7 +750,11 @@ class spam_captcha extends pluginSedLex {
 		if ((is_int($this->get_param('flush_nb_jours')))&&($this->get_param('flush_nb_jours')>0)) {
 			$wpdb->query("DELETE FROM ".$this->table_name." WHERE date<DATE_SUB(NOW(), INTERVAL ".$this->get_param('flush_nb_jours')." DAY)") ; 
 		}
-		
+		// on efface les entrées trop vieilles
+		if ((is_int($this->get_param('flush_max_entry')))&&($this->get_param('flush_max_entry')>0)) {
+			$wpdb->query("DELETE FROM ".$this->table_name." WHERE id NOT IN (SELECT id FROM ".$this->table_name." ORDER BY date DESC LIMIT ".$this->get_param('flush_max_entry').")") ; 
+		}
+				
 		if (($this->get_param('captcha_enable')==true)&&((!is_user_logged_in())||($this->get_param('captcha_logged')))) {
 			
 			// First we check if the user may edit comment... if so we return the comment 
@@ -534,10 +770,16 @@ class spam_captcha extends pluginSedLex {
 			}
 			
 			// If not we check the captcha
-			if ((!isset($_POST['captcha_comment']))||($_POST['captcha_comment']=="")||(!isset($_SESSION['keyCaptcha']))||($_SESSION['keyCaptcha']=="")||($_SESSION['keyCaptcha']!=$_POST['captcha_comment'])) {
+			if ((!isset($_POST['captcha_comment']))||($_POST['captcha_comment']=="")||(!isset($_SESSION['keyCaptcha']))||((isset($_SESSION['keyCaptcha']))&&($_SESSION['keyCaptcha']==""))||((isset($_SESSION['keyCaptcha']))&&($_SESSION['keyCaptcha']!=$_POST['captcha_comment']))) {
 				// we save it...
 				$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (0, 'captcha', 'captcha', '".esc_sql($comment['comment_author'])."', '".esc_sql($comment['comment_content'])."', NOW(), 'The user enters \"".esc_sql($_POST['captcha_comment'])."\" but should be ".$_SESSION['keyCaptcha']."')") ; 
-					
+
+				// If Automatic Ban IP exists and that no session exists (it is a spam) !
+				if (($this->get_param('ban_ip_cookies'))&&(class_exists('automatic_ban_ip'))&&(trim($_SESSION['keyCaptcha'])=="")) {
+					$automatic_ban_ip = automatic_ban_ip::getInstance();
+					$automatic_ban_ip->blockIP("SPAM-CAPTCHA: Captch mismatch - no cookie") ; 
+				}
+										
 				$permalink = get_permalink( $comment['comment_post_ID'] );
 				wp_redirect(add_query_arg(array("error_checker"=>"captcha", "author_spam"=>urlencode($comment['comment_author']), "email_spam"=>urlencode($comment['comment_author_email']), "url_spam"=>urlencode($comment['comment_author_url']), "comment_spam"=>urlencode($comment['comment_content'])),$permalink."#error", 302)) ; 
 				die();
@@ -851,6 +1093,13 @@ class spam_captcha extends pluginSedLex {
 					wp_set_comment_status( $id, "spam" ) ; 
 					// we save it...
 					$wpdb->query("INSERT INTO ".$this->table_name." (id_comment, status, new_status, author, content, date, captcha_info) VALUES (".$id.", 'spam', 'spam', '".esc_sql($comment->comment_author)."', '".esc_sql($comment->comment_content)."', NOW(), 'The user enters \"".esc_sql($_POST['captcha_comment'])."\" ! Should be ".$_SESSION['keyCaptcha']."')") ; 
+					
+					// If Automatic Ban IP exists and that no session exists (it is a spam) !
+					if (($this->get_param('ban_ip_akismet'))&&(class_exists('automatic_ban_ip'))) {
+						$automatic_ban_ip = automatic_ban_ip::getInstance();
+						$automatic_ban_ip->blockIP("SPAM-CAPTCHA: Akismet says it is a spam") ; 
+					}
+
 					// we redirect the page to inform the user
 					wp_redirect(add_query_arg(array("error_checker"=>"spam", "author_spam"=>urlencode($comment->comment_author), "email_spam"=>urlencode($comment->comment_author_email), "url_spam"=>urlencode($comment->comment_author_url), "comment_spam"=>urlencode($comment->comment_content) ),get_permalink($comment->comment_post_ID)."#error"),302);
 					die() ; 

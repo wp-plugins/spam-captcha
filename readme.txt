@@ -4,10 +4,11 @@ Author: SedLex
 Contributors: SedLex
 Author URI: http://www.sedlex.fr
 Plugin URI: http://wordpress.org/plugins/spam-captcha/
-Tags: spam, captcha, comments, comment, akismet, block, Contact Form 7
+Tags: spam, captcha, comments, comment, akismet, block, Contact Form 7, ban, block, Automatic Ban IP
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 4.2
 Stable tag: trunk
+License: GPLv3
 
 This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).
 
@@ -15,7 +16,9 @@ This plugins avoids spam actions on your website (comments and contact form if y
 
 This plugins avoids spam actions on your website (comments and contact form if you use Contact Form 7).
 
-Captcha image and Akismet API are available for this plugin.
+Captcha image and Akismet API are available to detect spam for this plugin.
+
+In addition, it is possible to ban spammers using Automatic Ban IP plugin.
 
 You may configure (for the captcha): 
 
@@ -36,11 +39,12 @@ This plugin works with multisite installation of Wordpress.
 
 * Azeri (Latin) (Azerbaijan) translation provided by BayBakVoiceofaNation
 * Czech (Czech Republic) translation provided by SedLex, Kumerson
-* German (Germany) translation provided by Diego, ThorstenKallnischkies, PatrickEhrler, Inoverse
+* German (Germany) translation provided by SedLex, Diego, ThorstenKallnischkies, PatrickEhrler, Inoverse
 * English (United States), default language
-* Spanish (Spain) translation provided by Krazz, admin, ThorstenKallnischkies, SecurityNull
+* Spanish (Spain) translation provided by SedLex, Krazz, admin, ThorstenKallnischkies, SecurityNull
 * Spanish (Mexico) translation provided by RUBEN
 * Farsi (Iran) translation provided by BahmanMohadeci, mortezapourmirzai, AmirMaskani
+* Finnish (Finland) translation provided by 
 * French (France) translation provided by SedLex, Geraldine, fabien, Brugees
 * Italian (Italy) translation provided by GimmiGIS
 * Japanese (Japan) translation provided by hasegawa
@@ -80,6 +84,11 @@ Have fun !
 5. Spam Report
 
 == Changelog ==
+
+= 1.4.1 =
+* NEW: icon
+* NEW: delete content on uninstall
+* NEW: change the javascript library for the charts (elycharts and raphaeljs)
 
 = 1.4.0 =
 * NEW: Support of Contact Form 7
@@ -154,4 +163,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:3ecf74cfc62873f663aad8e631203c5bd17b1f7e
+InfoVersion:c22c4a127853ded0fce036363ec08dbe4cdac97f

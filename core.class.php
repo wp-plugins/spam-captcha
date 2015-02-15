@@ -93,7 +93,7 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_ajax_add_param', array($this,'add_param_callback')) ; 
 			
 			// We add an ajax call for the feedback class
-			add_action('wp_ajax_send_feedback', array('feedbackSL','send_feedback')) ; 
+			add_action('wp_ajax_send_feedback', array('SLFramework_Feedback','send_feedback')) ; 
 						
 			// Enable the modification of the content and of the excerpt
 			add_filter('the_content', array($this,'the_content_SL'), 1000);

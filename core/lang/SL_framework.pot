@@ -304,57 +304,57 @@ msgid "Plugin not yet installed"
 msgstr ""
 
 #: core/otherplugins.class.php:56
-#: core/otherplugins.class.php:87
+#: core/otherplugins.class.php:89
 #@ SL_framework
 msgid "Description and Screenshots"
 msgstr ""
 
-#: core/otherplugins.class.php:78
+#: core/otherplugins.class.php:80
 #@ SL_framework
 msgid "All author's plugins have been installed. Thank you!"
 msgstr ""
 
-#: core/otherplugins.class.php:84
+#: core/otherplugins.class.php:86
 #@ SL_framework
 msgid "Installed plugins"
 msgstr ""
 
-#: core/otherplugins.class.php:85
+#: core/otherplugins.class.php:87
 #@ SL_framework
 msgid "You have already installed the following author's plugins:"
 msgstr ""
 
-#: core/otherplugins.class.php:87
+#: core/otherplugins.class.php:89
 #@ SL_framework
 msgid "Plugin already installed"
 msgstr ""
 
-#: core/otherplugins.class.php:144
+#: core/otherplugins.class.php:148
 #@ SL_framework
 msgid "The Wordpress page: %s"
 msgstr ""
 
-#: core/otherplugins.class.php:170
+#: core/otherplugins.class.php:174
 #@ SL_framework
 msgid "An Unexpected HTTP Error occurred during the API request."
 msgstr ""
 
-#: core/otherplugins.class.php:175
+#: core/otherplugins.class.php:179
 #@ SL_framework
 msgid "Last update:"
 msgstr ""
 
-#: core/otherplugins.class.php:176
+#: core/otherplugins.class.php:180
 #@ SL_framework
 msgid "Rating: %s"
 msgstr ""
 
-#: core/otherplugins.class.php:185
+#: core/otherplugins.class.php:189
 #@ SL_framework
 msgid "by %s persons"
 msgstr ""
 
-#: core/otherplugins.class.php:187
+#: core/otherplugins.class.php:191
 #@ SL_framework
 msgid "Number of download:"
 msgstr ""
